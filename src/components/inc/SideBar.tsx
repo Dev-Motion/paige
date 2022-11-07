@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { Box, Text } from "@component/base";
+import { Box, Text } from "@components/base";
 import Portal from "@utils/Portals";
 import { AnimatePresence, motion } from "framer-motion";
 import { styled } from "stitches.config";
@@ -44,17 +44,17 @@ const SideBar = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
                 x: "-100%",
                 transition: { delay: 0.2, type: "tween", ease: "easeInOut" },
               }}
-              css={{zIndex:'calc($max - 1)'}}
-              ></LeftSide>
+              css={{ zIndex: "calc($max - 1)" }}
+            ></LeftSide>
             <RightSide
-              initial={{ x: "-100%",opacity:0 }}
-              css={{zIndex:'calc($max - 2)'}}
+              initial={{ x: "-100%", opacity: 0 }}
+              css={{ zIndex: "calc($max - 2)" }}
               animate={{
                 x: 0,
-                opacity:1,
+                opacity: 1,
                 transition: { delay: 0.2, type: "tween", ease: "easeInOut" },
               }}
-              exit={{ x: "-100%",opacity:0, type: "tween" }}
+              exit={{ x: "-100%", opacity: 0, type: "tween" }}
             ></RightSide>
           </SideBarContainer>
         </SideBarOverlay>

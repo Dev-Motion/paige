@@ -1,8 +1,8 @@
-import { Box, Flex, Grid, Text } from "@component/base";
-import { Time, Search, Mantra, Remainder, SideBar } from "@component/inc";
+import { Box, Flex, Grid, Text } from "@components/base";
+import { Time, Search, Mantra, Remainder, SideBar } from "@components/inc";
 import { styled } from "stitches.config";
 import React, { useState } from "react";
-import { Hamburger, Todo } from "@component/icons";
+import { Hamburger, Todo } from "@components/icons";
 import Portal from "@utils/Portals";
 
 const Main = () => {

@@ -1,4 +1,4 @@
-import { Box, Text } from "@component/base";
+import { Box, Text } from "@components/base";
 import React, { useCallback } from "react";
 import { styled, css } from "stitches.config";
 
@@ -69,4 +69,3 @@ const Mantra = () => {
 };
 
 export default Mantra;
-

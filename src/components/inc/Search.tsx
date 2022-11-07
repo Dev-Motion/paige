@@ -1,7 +1,7 @@
 import React from "react";
 import { styled } from "stitches.config";
 import { AnimatePresence, motion } from "framer-motion";
-import { More, SearchIcon } from "@component/icons";
+import { More, SearchIcon } from "@components/icons";
 const Box = styled(motion.div, {});
 const Input = styled(motion.input, {
   bg: "transparent",

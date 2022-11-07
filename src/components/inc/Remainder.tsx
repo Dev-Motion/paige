@@ -1,4 +1,4 @@
-import { Box, Text, Flex } from "@component/base";
+import { Box, Text, Flex } from "@components/base";
 import React from "react";
 import { styled } from "stitches.config";
 

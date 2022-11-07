@@ -1,6 +1,6 @@
 import React from "react";
-import { Box, Text } from "@component/base";
-import { More } from "@component/icons";
+import { Box, Text } from "@components/base";
+import { More } from "@components/icons";
 
 const getDaySegment = (time: Date | null) => {
   const hours = time?.getHours() || 0;

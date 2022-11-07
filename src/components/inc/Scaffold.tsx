@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Image, Box } from "@component/base";
+import { Box } from "@components/base";
 import { useLocalStorage } from "react-use";
 import getImage from "@utils/getImage";
 
@@ -45,10 +45,9 @@ const Scaffold = ({ show }: { show: () => void }) => {
     >
       {imageState!.map((image, index) => {
         return (
-          <Image
+          <img
             key={index}
             alt={"scaffold image"}
-            fill={true}
             sizes="(min-width: 240px) 100vw,
               80vw"
             src={image.imageUrl}
