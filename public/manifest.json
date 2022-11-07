@@ -4,9 +4,9 @@
   "version": "0.1.0",
   "manifest_version": 3,
   "icons": {
-    "16": "./vercel.svg",
-    "48": "./vercel.svg",
-    "128": "./vercel.svg"
+    "16": "./paige.svg",
+    "48": "./paige.svg",
+    "128": "./paige.svg"
   },
   "chrome_url_overrides": {
     "newtab": "./index.html"
