@@ -1,12 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <style>
+      .loading_screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: gainsboro;
+        z-index: 0;
+        display: grid;
+        place-items: center;
+      }
+    </style>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + React + TS</title>
   </head>
   <body>
+    <div class="loading_screen">
+      <img src="/public/paige.svg" alt="Paige logo" />
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
