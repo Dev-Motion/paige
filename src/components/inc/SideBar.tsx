@@ -11,9 +11,12 @@ const SideBarContainer = styled("div", {
   minWidth: "600px",
   display: "grid",
   gridTemplateColumns: "repeat(3,1fr)",
+  position: "fixed",
+  zIndex: "$max",
+  top: 0,
+  left: 0,
 });
 const SideBarOverlay = styled(motion.div, {
-  zIndex: "$max",
   position: "fixed",
   inset: 0,
   bg: "rgba(0,0,0,0.2)",
@@ -30,11 +33,13 @@ const SideBar = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
   return (
     <AnimatePresence>
       {open && (
-        <SideBarOverlay
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          onClick={onClose}
-        >
+        <>
+          <SideBarOverlay
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+          />
           <SideBarContainer onClick={(e) => e.stopPropagation()}>
             <LeftSide
               initial={{ x: "-100%" }}
@@ -57,7 +62,7 @@ const SideBar = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
               exit={{ x: "-100%", opacity: 0, type: "tween" }}
             ></RightSide>
           </SideBarContainer>
-        </SideBarOverlay>
+        </>
       )}
     </AnimatePresence>
   );
