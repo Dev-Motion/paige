@@ -15,17 +15,21 @@ interface unsplashReturnType {
   id: string;
   blur_hash: string;
   description: string;
-  links:{
-    html:string
-  }
-  user:{
+  alt_description: string;
+  links: {
+    html: string;
+  };
+  user: {
     name: string;
-    links:{
+    links: {
       html: string;
-    }
-  }
+    };
+  };
   urls: {
     raw: string;
+  };
+  location: {
+    name: string;
   };
 }
 
@@ -54,10 +58,11 @@ export default async function getImage(req: {
       result: response.data.map((d) => ({
         blur_hash: d.blur_hash,
         raw: d.urls.raw,
-        description: d.description,
+        description: d.description || d.alt_description || d.location.name,
         img_url: d.links.html,
         user_name: d.user.name,
         user_link: d.user.links.html,
       })),
-    })).catch();
+    }))
+    .catch();
 }
