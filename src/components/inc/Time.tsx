@@ -15,9 +15,9 @@ const getDaySegment = (time: Date | null) => {
   }
 };
 const Time = () => {
-  const [time, setTime] = React.useState<Date | null>(null);
-  const Hours = time?.getHours() || 0;
-  const Minutes = time?.getMinutes() || 0;
+  const [time, setTime] = React.useState(new Date());
+  const Hours = time.getHours();
+  const Minutes = time.getMinutes();
   const isAM = Hours < 12;
   const Hours12 = Hours % 12;
   const timeString = `${Hours.toString().padStart(
@@ -35,7 +35,6 @@ const Time = () => {
       css={{
         justifySelf: "flex-start",
         color: "$text",
-        opacity: time === null ? 0 : 1,
         transition: "opacity 0.3s ease-in-out",
       }}
     >
