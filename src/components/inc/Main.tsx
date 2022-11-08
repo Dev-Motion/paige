@@ -1,14 +1,38 @@
 import { Box, Flex, Grid, Text } from "@components/base";
-import { Time, Search, Mantra, Remainder, SideBar } from "@components/inc";
+import {
+  Time,
+  Search,
+  Mantra,
+  Remainder,
+  SideBar,
+  HoverToReveal,
+} from "@components/inc";
 import { styled } from "stitches.config";
 import React, { useState } from "react";
 import { Hamburger, Todo } from "@components/icons";
 import Portal from "@utils/Portals";
+import { useImage } from "@utils/ImageContext";
+import { formatDate } from "@utils/index";
 
 const Main = () => {
   const [open, setOpen] = useState(false);
+  const image = useImage();
+  const today = new Date();
+
+  const todayImage = image?.filter(
+    (image) => image.for === formatDate(today)
+  )[0];
+
   return (
-    <Flex fd="column" css={{ minHeight: "100vh" }}>
+    <Flex
+      fd="column"
+      css={{
+        minHeight: "100vh",
+        background: `url(${todayImage?.raw}w=1920q=80&auto=format)`,
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+      }}
+    >
       <Portal root="side_bar_root">
         <SideBar open={open} onClose={() => setOpen(false)} />
       </Portal>
@@ -33,7 +57,7 @@ const Main = () => {
           <Remainder />
         </Flex>
       </Grid>
-      <BottomBar />
+      <BottomBar todayImage={todayImage} />
     </Flex>
   );
 };
@@ -59,7 +83,7 @@ const TopBar = ({ setOpen }: { setOpen: () => void }) => {
   );
 };
 
-const BottomBar = () => {
+const BottomBar = ({ todayImage }: { todayImage: any }) => {
   return (
     <Flex
       jc="between"
@@ -76,8 +100,9 @@ const BottomBar = () => {
       }}
     >
       <HoverToReveal
-        heading="a sight of north atlantic world.”"
-        subscript="Miyamoto Musashi"
+        link
+        heading={{ text: todayImage?.description, link: todayImage?.img_url }}
+        subscript={{ text: todayImage?.user_name, link: todayImage?.user_link }}
         ai="start"
         className="fixed"
       />
@@ -94,51 +119,3 @@ const BottomBar = () => {
 };
 
 export default Main;
-
-type flexProps = React.ComponentProps<typeof Flex>;
-const HoverToReveal = ({
-  heading,
-  subscript,
-  ...flexProps
-}: { heading: string; subscript: string } & flexProps) => {
-  return (
-    <Flex
-      fd="column"
-      ai={"center"}
-      gap={2}
-      css={{
-        minHeight: 50,
-        transition: "all 0.3s ease-in-out",
-        cursor: "pointer",
-        "&:hover": {
-          minHeight: 40,
-          h3: {
-            transform: "translateY(0px)",
-          },
-          p: {
-            opacity: 1,
-          },
-        },
-      }}
-      {...flexProps}
-    >
-      <Text
-        as="h3"
-        fs="sm"
-        css={{
-          transform: "translateY(calc(100% + 8px))",
-          transition: "transform 0.3s ease-in-out",
-        }}
-      >
-        {heading}
-      </Text>
-      <Text
-        as="p"
-        fs="2xs"
-        css={{ opacity: 0, transition: "opacity 0.3s ease-in-out" }}
-      >
-        {subscript}
-      </Text>
-    </Flex>
-  );
-};
