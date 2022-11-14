@@ -1,35 +1,34 @@
-import React from "react"
-import { Box, Text } from "@components/base"
-import { More } from "@components/icons"
+import React from "react";
+import { Box, Text } from "@components/base";
+import { More } from "@components/icons";
 
 const getDaySegment = (time: Date | null) => {
-  const hours = time?.getHours() || 0
+  const hours = time?.getHours() || 0;
   if (hours < 12 && hours >= 5) {
-    return "morning"
+    return "morning";
   } else if (hours >= 12 && hours < 17) {
-    return "afternoon"
+    return "afternoon";
   } else if (hours >= 17 && hours < 21) {
-    return "evening"
+    return "evening";
   } else {
-    return "night"
+    return "night";
   }
-}
+};
 const Time = () => {
-  const [time, setTime] = React.useState(new Date())
-  const Hours = time.getHours()
-  const Minutes = time.getMinutes()
-  const isAM = Hours < 12
-  const Hours12 = Hours % 12
+  const [time, setTime] = React.useState(new Date());
+  const Hours = time.getHours();
+  const Minutes = time.getMinutes();
+  const isAM = Hours < 12;
   const timeString = `${Hours.toString().padStart(
     2,
     "0"
-  )}:${Minutes.toString().padStart(2, "0")}`
+  )}:${Minutes.toString().padStart(2, "0")}`;
   React.useEffect(() => {
     const interval = setInterval(() => {
-      setTime(new Date())
-    }, 1000)
-    return () => clearInterval(interval)
-  }, [])
+      setTime(new Date());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
   return (
     <Box
       css={{
@@ -72,7 +71,7 @@ const Time = () => {
         Good {getDaySegment(time)} Victor
       </Text>
     </Box>
-  )
-}
+  );
+};
 
-export default Time
+export default Time;

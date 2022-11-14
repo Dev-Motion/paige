@@ -1,18 +1,6 @@
-import { Box, Text } from "@components/base"
-import React, { useCallback } from "react"
-import { styled, css } from "stitches.config"
-
-const srOnly = css({
-  position: "absolute",
-  width: 1,
-  height: 1,
-  padding: 0,
-  margin: -1,
-  overflow: "hidden",
-  clip: "rect(0, 0, 0, 0)",
-  whiteSpace: "nowrap",
-  borderWidth: 0,
-})
+import React from "react";
+import { Box, Text } from "@components/base";
+import { styled } from "stitches.config";
 
 const Input = styled("input", {
   fontSize: "$xl",
@@ -26,10 +14,10 @@ const Input = styled("input", {
   "&:focus": {
     borderBottom: "2px solid $text",
   },
-})
+});
 const Mantra = () => {
-  const [value, setValue] = React.useState("Learning how to teach")
-  const [active, setActive] = React.useState(false)
+  const [value, setValue] = React.useState("Learning how to teach");
+  const [active, setActive] = React.useState(false);
 
   return (
     <Box css={{ color: "white", fontWeight: "$4" }}>
@@ -41,7 +29,7 @@ const Mantra = () => {
           as="form"
           onKeyDown={(e) => {
             if (e.key === "Escape" || e.key === "Enter") {
-              setActive(false)
+              setActive(false);
             }
           }}
         >
@@ -57,15 +45,15 @@ const Mantra = () => {
           fs="xl"
           ta="center"
           onDoubleClick={() => {
-            console.log("double click")
-            setActive(true)
+            console.log("double click");
+            setActive(true);
           }}
         >
           {value}
         </Text>
       )}
     </Box>
-  )
-}
+  );
+};
 
-export default Mantra
+export default Mantra;

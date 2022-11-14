@@ -1,5 +1,5 @@
-import { styled } from "stitches.config"
-import { generatePropertyVariants } from "@utils/getPropertyVariants"
+import { styled } from "stitches.config";
+import { generatePropertyVariants } from "@utils/getPropertyVariants";
 
 const Text = styled("p", {
   variants: {
@@ -43,6 +43,6 @@ const Text = styled("p", {
     fw: "normal",
     ta: "left",
   },
-})
+});
 
-export default Text
+export default Text;

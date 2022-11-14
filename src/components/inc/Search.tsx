@@ -1,8 +1,8 @@
-import React from "react"
-import { styled } from "stitches.config"
-import { AnimatePresence, motion } from "framer-motion"
-import { More, SearchIcon } from "@components/icons"
-const Box = styled(motion.div, {})
+import React from "react";
+import { styled } from "stitches.config";
+import { AnimatePresence, motion } from "framer-motion";
+import { More, SearchIcon } from "@components/icons";
+const Box = styled(motion.div, {});
 const Input = styled(motion.input, {
   bg: "transparent",
   appearance: "none",
@@ -11,11 +11,11 @@ const Input = styled(motion.input, {
   height: "100%",
   color: "$text",
   paddingLeft: "$2",
-})
-const Label = styled(motion.label, {})
+});
+const Label = styled(motion.label, {});
 const Search = () => {
-  const [active, setActive] = React.useState(false)
-  const [value, setValue] = React.useState("")
+  const [active, setActive] = React.useState(false);
+  const [value, setValue] = React.useState("");
   return (
     <Box>
       <Box
@@ -72,8 +72,8 @@ const Search = () => {
         <AnimatePresence>{active && value && <Stagger />}</AnimatePresence>
       </Box>
     </Box>
-  )
-}
+  );
+};
 
 const Stagger = () => {
   return (
@@ -112,7 +112,7 @@ const Stagger = () => {
         />
       ))}
     </Box>
-  )
-}
+  );
+};
 
-export default Search
+export default Search;

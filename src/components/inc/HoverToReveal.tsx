@@ -1,9 +1,9 @@
-import { Box, Flex, Grid, Text } from "@components/base"
-import { motion } from "framer-motion"
-import { useState } from "react"
-import { styled } from "stitches.config"
+import React,{ useState } from "react";
+import { Box, Grid, Text } from "@components/base";
+import { motion } from "framer-motion";
+import { styled } from "stitches.config";
 
-const MAXCHARS = 10
+const MAXCHARS = 10;
 const ReadMore = styled("button", {
   appearance: "none",
   background: "none",
@@ -15,7 +15,7 @@ const ReadMore = styled("button", {
   "&:hover": {
     textDecoration: "underline",
   },
-})
+});
 type textProps =
   | {
       link?: false;
@@ -34,17 +34,17 @@ const HoverToReveal = ({
   link = false,
   ...gridProps
 }: textProps & gridProps) => {
-  const [readMore, setReadMore] = useState(false)
-  const headingText = typeof heading === "string" ? heading : heading.text
+  const [readMore, setReadMore] = useState(false);
+  const headingText = typeof heading === "string" ? heading : heading.text;
   const subscriptText =
-    typeof subscript === "string" ? subscript : subscript.text
-  const splitHeading = headingText?.split(" ")
+    typeof subscript === "string" ? subscript : subscript.text;
+  const splitHeading = headingText?.split(" ");
   const toggleReadMore = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    e.stopPropagation()
-    setReadMore((r) => !r)
-  }
+    e.stopPropagation();
+    setReadMore((r) => !r);
+  };
   return (
     <Grid
       ai={"center"}
@@ -135,7 +135,7 @@ const HoverToReveal = ({
         {subscriptText}
       </Text>
     </Grid>
-  )
-}
+  );
+};
 
-export default HoverToReveal
+export default HoverToReveal;
