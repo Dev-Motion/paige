@@ -38,7 +38,7 @@ const HoverToReveal = ({
   const headingText = typeof heading === "string" ? heading : heading.text;
   const subscriptText =
     typeof subscript === "string" ? subscript : subscript.text;
-  const splitHeading = headingText.split(" ");
+  const splitHeading = headingText?.split(" ");
   const toggleReadMore = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -69,7 +69,7 @@ const HoverToReveal = ({
       }}
       {...gridProps}
     >
-      {splitHeading.length > MAXCHARS ? (
+      {splitHeading?.length > MAXCHARS ? (
         <Box
           className="heading"
           css={{
@@ -128,7 +128,7 @@ const HoverToReveal = ({
           transform: "translateY(-100%)",
           opacity: 0,
           pointerEvents: "none",
-          width:'fit-content'
+          width: "fit-content",
         }}
         {...(link && { as: "a", href: subscript.link, target: "_blank" })}
       >
