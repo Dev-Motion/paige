@@ -7,13 +7,14 @@ const STALE_TIME = 10; // minute
 
 type imageContextType =
   | {
-      for?: string;
+      for: string;
       blur_hash: string;
       raw: string;
       description: string;
       img_url: string;
       user_name: string;
       user_link: string;
+      color: string;
     }[]
   | null;
 const ImageContext = createContext<imageContextType>(null);
@@ -32,11 +33,16 @@ const ImageProvider = ({ children }: { children: React.ReactNode }) => {
     null
   );
   useEffect(() => {
+    const today = new Date();
     if (!image) {
       getNewImages(setImage);
     } else {
-      if (image[1].for === formatDate(new Date())) {
+      const imageDate = new Date(image![1].for);
+
+      if (imageDate === today) {
         getNewImages(setImage, true);
+      } else if (today > imageDate) {
+        getNewImages(setImage);
       }
     }
   }, []);
@@ -69,6 +75,7 @@ function getNewImages(
             description: image.description,
             blur_hash: image.blur_hash,
             raw: image.raw,
+            color: image.color,
           };
         }
         return {
@@ -79,6 +86,7 @@ function getNewImages(
           description: image.description,
           blur_hash: image.blur_hash,
           raw: image.raw,
+          color: image.color,
         };
       });
       setImageState(newImages);
@@ -96,6 +104,7 @@ function getNewImages(
           description: image.description,
           blur_hash: image.blur_hash,
           raw: image.raw,
+          color: image.color,
         },
       ]);
       return;

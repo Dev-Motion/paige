@@ -9,12 +9,14 @@ interface returnType {
     img_url: string;
     user_name: string;
     user_link: string;
+    color: string;
   }[];
 }
 interface unsplashReturnType {
   id: string;
   blur_hash: string;
   description: string;
+  color: string;
   alt_description: string;
   links: {
     html: string;
@@ -62,6 +64,7 @@ export default async function getImage(req: {
         img_url: d.links.html,
         user_name: d.user.name,
         user_link: d.user.links.html,
+        color: d.color,
       })),
     }))
     .catch();
