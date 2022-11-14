@@ -22,13 +22,12 @@ const Main = () => {
   const todayImage = image?.filter(
     (image) => image.for === formatDate(today)
   )[0];
-
   return (
     <Flex
       fd="column"
       css={{
         minHeight: "100vh",
-        background: `url(${todayImage?.raw}w=1920q=80&auto=format)`,
+        background: `url(${todayImage?.raw}&w=2048&q=80&auto=format),${todayImage?.color}`,
         backgroundPosition: "center",
         backgroundSize: "cover",
       }}

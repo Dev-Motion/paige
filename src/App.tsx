@@ -24,8 +24,9 @@ const ImageCache = () => {
         return (
           <img
             key={index}
-            src={img.raw + "w=1920q=80&auto=format"}
+            src={img.raw + "&w=2048&q=80&auto=format"}
             alt="image"
+            
           />
         );
       })}
