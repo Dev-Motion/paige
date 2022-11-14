@@ -56,6 +56,7 @@ const Main = () => {
           <Remainder />
         </Flex>
       </Grid>
+      {/* {  eslint-disable-next-line @typescript-eslint/no-non-null-assertion} */}
       <BottomBar todayImage={todayImage} />
     </Flex>
   );
@@ -82,7 +83,7 @@ const TopBar = ({ setOpen }: { setOpen: () => void }) => {
   );
 };
 
-const BottomBar = ({ todayImage }: { todayImage: ImageResponse }) => {
+const BottomBar = ({ todayImage }: { todayImage?: ImageResponse }) => {
   return (
     <Flex
       jc="between"
@@ -100,8 +101,14 @@ const BottomBar = ({ todayImage }: { todayImage: ImageResponse }) => {
     >
       <HoverToReveal
         link
-        heading={{ text: todayImage?.description, link: todayImage?.img_url }}
-        subscript={{ text: todayImage?.user_name, link: todayImage?.user_link }}
+        heading={{
+          text: todayImage?.description ?? "",
+          link: todayImage?.img_url ?? "",
+        }}
+        subscript={{
+          text: todayImage?.user_name ?? "",
+          link: todayImage?.user_link ?? "",
+        }}
         ai="start"
         className="fixed"
       />
