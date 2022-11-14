@@ -1,20 +1,20 @@
-import * as Tabs from "@radix-ui/react-tabs";
-import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
-import { styled } from "stitches.config";
+import * as Tabs from "@radix-ui/react-tabs"
+import { AnimatePresence, motion } from "framer-motion"
+import { useState } from "react"
+import { styled } from "stitches.config"
 
-const TabRoot = styled(Tabs.Root, {});
+const TabRoot = styled(Tabs.Root, {})
 const TabList = styled(Tabs.List, {
   bg: "$bg",
   pt: "$9",
   px: "$4",
-});
-const TabTrigger = styled(Tabs.Trigger);
+})
+const TabTrigger = styled(Tabs.Trigger)
 const TabContent = styled(Tabs.Content, {
   gridColumn: "span 2",
   bg: "rgba(0,0,0,0.25)",
   backdropFilter: "blur(50px)",
-});
+})
 
 const MotionContainer = styled(motion.div, {
   height: "100vh",
@@ -27,13 +27,13 @@ const MotionContainer = styled(motion.div, {
   zIndex: "$max",
   top: 0,
   left: 0,
-});
+})
 
 const SideBarOverlay = styled(motion.div, {
   position: "fixed",
   inset: 0,
   bg: "rgba(0,0,0,0.25)",
-});
+})
 
 const MenuButton = styled("button", {
   appearance: "none",
@@ -45,7 +45,7 @@ const MenuButton = styled("button", {
   ta: "left",
   br: "$2",
   position: "relative",
-});
+})
 const MenuBg = styled(motion.div, {
   $$opacity: 0.2,
   $$white: "255,255,255",
@@ -59,7 +59,7 @@ const MenuBg = styled(motion.div, {
   right: 0,
   bottom: 0,
   "&::after": {
-    content: '""',
+    content: "\"\"",
     position: "absolute",
     right: 4,
     opacity: 1,
@@ -70,9 +70,9 @@ const MenuBg = styled(motion.div, {
     transform: "translateY(-50%)",
     width: 2,
   },
-});
+})
 const SideBar = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
-  const [activeTab, setActiveTab] = useState("account");
+  const [activeTab, setActiveTab] = useState("account")
   return (
     <AnimatePresence>
       {open && (
@@ -123,7 +123,7 @@ const SideBar = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
         </>
       )}
     </AnimatePresence>
-  );
-};
+  )
+}
 
-export default SideBar;
+export default SideBar

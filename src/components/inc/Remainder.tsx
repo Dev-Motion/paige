@@ -1,6 +1,6 @@
-import { Box, Text, Flex } from "@components/base";
-import React from "react";
-import { styled } from "stitches.config";
+import { Box, Text, Flex } from "@components/base"
+import React from "react"
+import { styled } from "stitches.config"
 
 const Card = styled("div", {
   backdropFilter: "blur(40px)",
@@ -9,7 +9,7 @@ const Card = styled("div", {
   pd: "$6",
   color: "$text",
   minWidth: 420,
-});
+})
 const Remainder = () => {
   return (
     <Card>
@@ -37,12 +37,12 @@ const Remainder = () => {
                 {reminder.date}
               </Box>
             </Box>
-          );
+          )
         })}
       </Flex>
     </Card>
-  );
-};
+  )
+}
 
 const reminders = [
   {
@@ -57,5 +57,5 @@ const reminders = [
     description: "I need to set up my laptop and get it running",
     date: "Today, 10:00 AM",
   },
-];
-export default Remainder;
+]
+export default Remainder

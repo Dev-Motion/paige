@@ -1,4 +1,4 @@
-import { styled } from "stitches.config";
+import { styled } from "stitches.config"
 
 const Grid = styled("div", {
   boxSizing: "border-box",
@@ -159,6 +159,6 @@ const Grid = styled("div", {
       },
     },
   },
-});
+})
 
-export default Grid;
+export default Grid

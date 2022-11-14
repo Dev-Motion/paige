@@ -1,6 +1,6 @@
-import { createPortal } from "react-dom";
-import { ComponentProps, ReactNode, useEffect, useState } from "react";
-import { Box } from "@components/base";
+import { createPortal } from "react-dom"
+import { ComponentProps, ReactNode, useEffect, useState } from "react"
+import { Box } from "@components/base"
 type AvailableRoots = "side_bar_root" | "modal_root";
 
 const Portal = ({
@@ -10,20 +10,20 @@ const Portal = ({
   children: ReactNode;
   root: AvailableRoots;
 }) => {
-  const [mounted, setMounted] = useState(false);
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    setMounted(true);
+    setMounted(true)
 
-    return () => setMounted(false);
-  }, []);
+    return () => setMounted(false)
+  }, [])
   if (mounted) {
     return (
       <Box>
         {createPortal(children, document.getElementById(root) as Element)}
       </Box>
-    );
+    )
   }
-  return null;
-};
-export default Portal;
+  return null
+}
+export default Portal

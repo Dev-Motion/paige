@@ -1,11 +1,11 @@
-import { Box, Text } from "@components/base";
-import { Main } from "@components/inc";
-import ImageProvider, { useImage } from "@utils/ImageContext";
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
+import { Box, Text } from "@components/base"
+import { Main } from "@components/inc"
+import ImageProvider, { useImage } from "@utils/ImageContext"
+import { useState } from "react"
+import reactLogo from "./assets/react.svg"
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0)
 
   return (
     <ImageProvider>
@@ -13,11 +13,11 @@ function App() {
       {/* <Test /> */}
       <ImageCache />
     </ImageProvider>
-  );
+  )
 }
 
 const ImageCache = () => {
-  const image = useImage();
+  const image = useImage()
   return (
     <Box css={{ display: "none" }}>
       {image?.map((img, index) => {
@@ -26,11 +26,10 @@ const ImageCache = () => {
             key={index}
             src={img.raw + "&w=2048&q=80&auto=format"}
             alt="image"
-            
           />
-        );
+        )
       })}
     </Box>
-  );
-};
-export default App;
+  )
+}
+export default App

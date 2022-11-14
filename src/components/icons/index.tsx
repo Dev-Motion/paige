@@ -1,5 +1,5 @@
-import { CSS, css as styledCss } from "stitches.config";
-import React from "react";
+import { CSS, css as styledCss } from "stitches.config"
+import React from "react"
 
 export const Hamburger = ({ css = {} }: { css?: CSS }) => {
   return (
@@ -32,8 +32,8 @@ export const Hamburger = ({ css = {} }: { css?: CSS }) => {
         strokeWidth="1.25"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const SearchIcon = ({ css = {} }: { css?: CSS }) => {
   return (
@@ -52,8 +52,8 @@ export const SearchIcon = ({ css = {} }: { css?: CSS }) => {
         strokeLinecap="round"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const Settings = ({ css = {} }: { css?: CSS }) => {
   return (
@@ -70,8 +70,8 @@ export const Settings = ({ css = {} }: { css?: CSS }) => {
         fill="white"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const Todo = ({ css = {} }: { css?: CSS }) => {
   return (
@@ -90,8 +90,8 @@ export const Todo = ({ css = {} }: { css?: CSS }) => {
         fill="white"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const More = ({ css = {} }: { css?: CSS }) => {
   return (
@@ -107,5 +107,5 @@ export const More = ({ css = {} }: { css?: CSS }) => {
       <circle cx="12.5" cy="11.5" r="2.5" fill="white" />
       <circle cx="20.5" cy="11.5" r="2.5" fill="white" />
     </svg>
-  );
-};
+  )
+}

@@ -1,4 +1,4 @@
-import { Box, Flex, Grid, Text } from "@components/base";
+import { Box, Flex, Grid, Text } from "@components/base"
 import {
   Time,
   Search,
@@ -6,22 +6,22 @@ import {
   Remainder,
   SideBar,
   HoverToReveal,
-} from "@components/inc";
-import { styled } from "stitches.config";
-import React, { useState } from "react";
-import { Hamburger, Todo } from "@components/icons";
-import Portal from "@utils/Portals";
-import { useImage } from "@utils/ImageContext";
-import { formatDate } from "@utils/index";
+} from "@components/inc"
+import { styled } from "stitches.config"
+import React, { useState } from "react"
+import { Hamburger, Todo } from "@components/icons"
+import Portal from "@utils/Portals"
+import { useImage } from "@utils/ImageContext"
+import { formatDate } from "@utils/index"
 
 const Main = () => {
-  const [open, setOpen] = useState(false);
-  const image = useImage();
-  const today = new Date();
+  const [open, setOpen] = useState(false)
+  const image = useImage()
+  const today = new Date()
 
   const todayImage = image?.filter(
     (image) => image.for === formatDate(today)
-  )[0];
+  )[0]
   return (
     <Flex
       fd="column"
@@ -58,8 +58,8 @@ const Main = () => {
       </Grid>
       <BottomBar todayImage={todayImage} />
     </Flex>
-  );
-};
+  )
+}
 
 const IconButton = styled("button", {
   appearance: "none",
@@ -71,7 +71,7 @@ const IconButton = styled("button", {
   size: 50,
   bg: "rgba(0, 0, 0, 0.2)",
   br: "$round",
-});
+})
 const TopBar = ({ setOpen }: { setOpen: () => void }) => {
   return (
     <Flex jc="between" ai="center" css={{ height: "8vh", px: "$6" }}>
@@ -79,8 +79,8 @@ const TopBar = ({ setOpen }: { setOpen: () => void }) => {
         <Hamburger />
       </IconButton>
     </Flex>
-  );
-};
+  )
+}
 
 const BottomBar = ({ todayImage }: { todayImage: any }) => {
   return (
@@ -114,7 +114,7 @@ const BottomBar = ({ todayImage }: { todayImage: any }) => {
         <Text>Todo</Text>
       </Flex>
     </Flex>
-  );
-};
+  )
+}
 
-export default Main;
+export default Main

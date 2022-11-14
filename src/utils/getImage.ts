@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios"
 
 interface returnType {
   query: string;
@@ -39,11 +39,11 @@ export default async function getImage(req: {
   query: string;
   count?: number;
 }): Promise<returnType> {
-  const { query, count = 1 } = req;
+  const { query, count = 1 } = req
   // let returnValue: {query?:string; blur_hash?: string; raw?: string; error?: string } = {};
   return axios
     .get<any, AxiosResponse<unsplashReturnType[]>>(
-      `https://api.unsplash.com/photos/random`,
+      "https://api.unsplash.com/photos/random",
       {
         params: {
           count,
@@ -51,7 +51,7 @@ export default async function getImage(req: {
           query,
         },
         headers: {
-          Authorization: `Client-ID KxpNPWHtw7i2ylXHm1MRNLLReT1rabDWHSfU61zpUfg`,
+          Authorization: "Client-ID KxpNPWHtw7i2ylXHm1MRNLLReT1rabDWHSfU61zpUfg",
         },
       }
     )
@@ -67,5 +67,5 @@ export default async function getImage(req: {
         color: d.color,
       })),
     }))
-    .catch();
+    .catch()
 }

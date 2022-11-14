@@ -1,6 +1,6 @@
-import { createStitches } from "@stitches/react";
-import type * as Stitches from "@stitches/react";
-export type { VariantProps } from "@stitches/react";
+import { createStitches } from "@stitches/react"
+import type * as Stitches from "@stitches/react"
+export type { VariantProps } from "@stitches/react"
 
 export const {
   styled,
@@ -93,7 +93,7 @@ export const {
     light: "(prefers-color-scheme: light)",
   },
   utils: {
-  pd: (value: Stitches.PropertyValue<"padding">) => ({
+    pd: (value: Stitches.PropertyValue<"padding">) => ({
       padding: value,
     }),
     pt: (value: Stitches.PropertyValue<"paddingTop">) => ({
@@ -238,7 +238,7 @@ export const {
       backgroundClip: value,
     }),
   },
-});
+})
 
 export const darkTheme = createTheme({
   colors: {
@@ -248,7 +248,7 @@ export const darkTheme = createTheme({
     backgroundSecondary: "#000000",
     tab: "#1F1E1E",
   },
-});
+})
 export type CSS = Stitches.CSS<typeof config>;
 
 export const GlobalStyles = globalCss({
@@ -273,6 +273,6 @@ export const GlobalStyles = globalCss({
     color: "inherit",
     textDecoration: " none",
   },
-});
+})
 
-GlobalStyles();
+GlobalStyles()
