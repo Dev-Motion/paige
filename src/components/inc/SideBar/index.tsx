@@ -1,4 +1,4 @@
-import React,{ useState } from "react";
+import React, { useState } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import { AnimatePresence, motion } from "framer-motion";
 import { styled } from "stitches.config";
@@ -11,7 +11,6 @@ const TabList = styled(Tabs.List, {
 });
 const TabTrigger = styled(Tabs.Trigger);
 const TabContent = styled(Tabs.Content, {
-  gridColumn: "span 2",
   bg: "rgba(0,0,0,0.25)",
   backdropFilter: "blur(50px)",
 });
@@ -22,7 +21,7 @@ const MotionContainer = styled(motion.div, {
   maxWidth: 550,
   minWidth: "200px",
   display: "grid",
-  gridTemplateColumns: "repeat(3,1fr)",
+  gridTemplateColumns: "minmax(180px,200px) minmax(260px,1fr)",
   position: "fixed",
   zIndex: "$max",
   top: 0,
@@ -59,7 +58,7 @@ const MenuBg = styled(motion.div, {
   right: 0,
   bottom: 0,
   "&::after": {
-    content: "\"\"",
+    content: "''",
     position: "absolute",
     right: 4,
     opacity: 1,
