@@ -56,7 +56,6 @@ const Main = () => {
           <Remainder />
         </Flex>
       </Grid>
-      {/* {  eslint-disable-next-line @typescript-eslint/no-non-null-assertion} */}
       <BottomBar todayImage={todayImage} />
     </Flex>
   );
