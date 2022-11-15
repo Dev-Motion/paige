@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import { AnimatePresence, motion } from "framer-motion";
 import { styled } from "stitches.config";
+import GeneralTab from "./GeneralTab";
+import ThemesTab from "./ThemesTab";
 
 const TabRoot = styled(Tabs.Root, {});
 const TabList = styled(Tabs.List, {
@@ -13,6 +15,9 @@ const TabTrigger = styled(Tabs.Trigger);
 const TabContent = styled(Tabs.Content, {
   bg: "rgba(0,0,0,0.25)",
   backdropFilter: "blur(50px)",
+  pt: "$9",
+  px: "$5",
+  color: "$text",
 });
 
 const MotionContainer = styled(motion.div, {
@@ -40,7 +45,8 @@ const MenuButton = styled("button", {
   color: "$text",
   width: "100%",
   py: "$2",
-  px: "$1",
+  pl: "$2",
+  pr: "$1",
   ta: "left",
   br: "$2",
   position: "relative",
@@ -71,7 +77,7 @@ const MenuBg = styled(motion.div, {
   },
 });
 const SideBar = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
-  const [activeTab, setActiveTab] = useState("account");
+  const [activeTab, setActiveTab] = useState("general");
   return (
     <AnimatePresence>
       {open && (
@@ -94,7 +100,7 @@ const SideBar = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
               transition={{ type: "tween" }}
             >
               <TabList css={{ zIndex: "calc($max - 1)" }}>
-                {["Account", "Help"].map((item) => (
+                {["General", "Help"].map((item) => (
                   <TabTrigger key={item} value={item.toLowerCase()} asChild>
                     <MenuButton>
                       {item}
@@ -111,11 +117,11 @@ const SideBar = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
                   </MenuButton>
                 </TabTrigger> */}
               </TabList>
-              <TabContent value="account" css={{ zIndex: "calc($max - 2)" }}>
-                account
+              <TabContent value="general" css={{ zIndex: "calc($max - 2)" }}>
+                <GeneralTab />
               </TabContent>
               <TabContent value="help" css={{ zIndex: "calc($max - 2)" }}>
-                help
+                <ThemesTab />
               </TabContent>
             </MotionContainer>
           </TabRoot>
