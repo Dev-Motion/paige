@@ -109,3 +109,47 @@ export const More = ({ css = {} }: { css?: CSS }) => {
     </svg>
   );
 };
+
+export const RightLayout = ({ css = {} }: { css?: CSS }) => {
+  return (
+    <svg
+      width="97"
+      height="48"
+      viewBox="0 0 97 48"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={styledCss(css)()}
+    >
+      <rect width="27" height="48" fill="var(---color,white)" />
+      <rect
+        x="27.5"
+        y="0.5"
+        width="69"
+        height="47"
+        stroke="var(---color,white)"
+      />
+    </svg>
+  );
+};
+
+export const LeftLayout = ({ css = {} }: { css?: CSS }) => {
+  return (
+    <svg
+      width="97"
+      height="48"
+      viewBox="0 0 97 48"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={styledCss(css)()}
+    >
+      <rect
+        x="0.5"
+        y="0.5"
+        width="69"
+        height="47"
+        stroke="var(---color,white)"
+      />
+      <rect x="70" width="27" height="48" fill="var(---color,white)" />
+    </svg>
+  );
+};
