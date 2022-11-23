@@ -11,7 +11,7 @@ import {
 import { styled } from "stitches.config";
 import { Hamburger, Todo } from "@components/icons";
 import Portal from "@utils/Portals";
-import { ImageResponse, useImage } from "@utils/ImageContext";
+import { ImageResponse, useImage } from "@context/ImageContext";
 import { formatDate } from "@utils/index";
 
 const Main = () => {

@@ -1,5 +1,5 @@
 import React from "react";
-import { useImage } from "@utils/ImageContext";
+import { useImage } from "@context/ImageContext";
 import { formatDate } from "@utils/index";
 
 const Scaffold = () => {
