@@ -92,10 +92,6 @@ function getNewImages(
       })
       .catch((e) => {
         console.log(ERROR_MESSAGE);
-        setImageState((old) => [
-          old![1],
-          { ...old![1], for: formatDate(today) },
-        ]);
       });
   } else {
     getImage({ count: 1, query })
