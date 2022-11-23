@@ -16,7 +16,9 @@ export const {
   theme: {
     colors: {
       text: "#FFFFFF",
+      textRGB: "255, 255, 255",
       bg: "#000000",
+      bgRGB: "0, 0, 0",
     },
     fonts: {
       inter: "Inter, sans-serif",
@@ -240,15 +242,6 @@ export const {
   },
 });
 
-export const darkTheme = createTheme({
-  colors: {
-    textPrimary: "#F0F0F0",
-    textSecondary: "#C4C4C4",
-    backgroundPrimary: "#111111",
-    backgroundSecondary: "#000000",
-    tab: "#1F1E1E",
-  },
-});
 export type CSS = Stitches.CSS<typeof config>;
 
 export const GlobalStyles = globalCss({
@@ -276,3 +269,43 @@ export const GlobalStyles = globalCss({
 });
 
 GlobalStyles();
+export const WhiteTheme = createTheme("light-theme", {
+  colors: {
+    bg: "#FFFFFF",
+    bgRGB: "255,255,255",
+    text: "#000000",
+    textRGB: "0,0,0",
+  },
+});
+export const PurpleTheme = createTheme("purple-theme", {
+  colors: {
+    bg: "#01AB9D",
+    bgRGB: "1, 171, 157",
+    text: "#FFFFFF",
+    textRGB: "255,255,255",
+  },
+});
+export const GoldTheme = createTheme("gold-theme", {
+  colors: {
+    bg: "#F7A935",
+    bgRGB: "247, 169, 53",
+    text: "#FFFFFF",
+    textRGB: "255,255,255",
+  },
+});
+export const BrownTheme = createTheme("brown-theme", {
+  colors: {
+    bg: "#825e4a",
+    bgRGB: "130, 94, 74",
+    text: "#FFFFFF",
+    textRGB: "255,255,255",
+  },
+});
+export const CaramelTheme = createTheme("caramel-theme", {
+  colors: {
+    bg: "#FFD19B",
+    bgRGB: "255, 209, 155",
+    text: "#FFFFFF",
+    textRGB: "255,255,255",
+  },
+});
