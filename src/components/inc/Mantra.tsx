@@ -20,7 +20,7 @@ const Mantra = () => {
   const [active, setActive] = React.useState(false);
 
   return (
-    <Box css={{ color: "white", fontWeight: "$4" }}>
+    <Box css={{ color: "$text", fontWeight: "$4" }}>
       <Text ta="center" fs="lg" as="h3">
         Today
       </Text>

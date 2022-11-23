@@ -5,7 +5,7 @@ import { styled } from "stitches.config";
 const Card = styled("div", {
   backdropFilter: "blur(40px)",
   br: "$4",
-  bg: "rgba(0, 0, 0, 0.5)",
+  bg: "rgba($bgRGB, 0.2)",
   pd: "$6",
   color: "$text",
   minWidth: 420,
