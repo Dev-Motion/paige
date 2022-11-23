@@ -1,6 +1,8 @@
 import React from "react";
 import { Box, Flex, Switch, Text } from "@components/base";
 import { LeftLayout, RightLayout } from "@components/icons";
+import SideBar from ".";
+import { useLayout } from "@context/LayoutContext";
 
 const showItems = [
   "Daily Motivation",
@@ -37,28 +39,7 @@ const GeneralTab = () => {
           </Flex>
         </Box>
       </Box>
-      <Box>
-        <Box css={{ mt: "$5", mb: "$4" }}>
-          <Text as="h1" fs={{ "@initial": "xl", "@md": "2xl" }} fw="bold">
-            Layout
-          </Text>
-          <Text as="p" fs={{ "@initial": "sm", "@md": "md" }}>
-            Select layout
-          </Text>
-        </Box>
-        <Flex gap="2">
-          <Box>
-            <RightLayout />
-            <Text fs="sm">Right Layout</Text>
-          </Box>
-          <Box>
-            <LeftLayout css={{ $$color: "gray", strokeColor: "Gainsboro" }} />
-            <Text fs="sm" css={{ color: "gray" }}>
-              Left Layout
-            </Text>
-          </Box>
-        </Flex>
-      </Box>
+      <SideBarLayout />
     </>
   );
 };
@@ -68,6 +49,60 @@ const LayoutSwitch = ({ label }: { label: string }) => {
       <Text as="label">{label}</Text>
       <Switch />
     </Flex>
+  );
+};
+
+const SideBarLayout = () => {
+  const [{ sideBar }, setLayout] = useLayout();
+  return (
+    <Box>
+      <Box css={{ mt: "$5", mb: "$4" }}>
+        <Text as="h1" fs={{ "@initial": "xl", "@md": "2xl" }} fw="bold">
+          Layout
+        </Text>
+        <Text as="p" fs={{ "@initial": "sm", "@md": "md" }}>
+          Select layout
+        </Text>
+      </Box>
+      <Flex gap="2">
+        <Box
+          onClick={() => setLayout({ sideBar: "left" })}
+          css={{
+            $$tabColor:
+              sideBar === "left"
+                ? "$colors$text"
+                : "rgba($colors$textRGB, 0.5)",
+          }}
+        >
+          <RightLayout
+            css={{
+              $$color: "$$tabColor",
+            }}
+          />
+          <Text fs="sm" css={{ color: "$$tabColor" }}>
+            Left Layout
+          </Text>
+        </Box>
+        <Box
+          onClick={() => setLayout({ sideBar: "right" })}
+          css={{
+            $$tabColor:
+              sideBar === "right"
+                ? "$colors$text"
+                : "rgba($colors$textRGB, 0.5)",
+          }}
+        >
+          <LeftLayout
+            css={{
+              $$color: "$$tabColor",
+            }}
+          />
+          <Text fs="sm" css={{ color: "$$tabColor" }}>
+            Right Layout
+          </Text>
+        </Box>
+      </Flex>
+    </Box>
   );
 };
 export default GeneralTab;

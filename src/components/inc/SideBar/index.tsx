@@ -4,16 +4,19 @@ import { AnimatePresence, motion } from "framer-motion";
 import { styled } from "stitches.config";
 import GeneralTab from "./GeneralTab";
 import ThemesTab from "./ThemesTab";
+import { useLayout } from "@context/LayoutContext";
 
 const TabRoot = styled(Tabs.Root, {});
 const TabList = styled(Tabs.List, {
   bg: "$bg",
   pt: "$9",
   px: "$4",
+  gridArea: "tablist",
 });
 const TabTrigger = styled(Tabs.Trigger);
 const TabContent = styled(Tabs.Content, {
-  bg: "rgba(0,0,0,0.25)",
+  gridArea: "tabcontent",
+  bg: "rgba($bgRGB,0.25)",
   backdropFilter: "blur(50px)",
   pt: "$9",
   px: "$5",
@@ -26,6 +29,7 @@ const MotionContainer = styled(motion.div, {
   maxWidth: 550,
   minWidth: "200px",
   display: "grid",
+  gridTemplateAreas: "'tablist tabcontent'",
   gridTemplateColumns: "minmax(180px,200px) minmax(260px,1fr)",
   position: "fixed",
   zIndex: "$max",
@@ -42,6 +46,7 @@ const SideBarOverlay = styled(motion.div, {
 const MenuButton = styled("button", {
   appearance: "none",
   bg: "transparent",
+  border: "none",
   color: "$text",
   width: "100%",
   py: "$2",
@@ -53,9 +58,9 @@ const MenuButton = styled("button", {
 });
 const MenuBg = styled(motion.div, {
   $$opacity: 0.2,
-  $$white: "255,255,255",
+
   br: "$2",
-  backgroundColor: "rgb($$white ,$$opacity)",
+  backgroundColor: "rgb($textRGB ,0.2)",
   position: "absolute",
   zIndex: -1,
   // opacity: "0.2",
@@ -78,6 +83,7 @@ const MenuBg = styled(motion.div, {
 });
 const SideBar = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
   const [activeTab, setActiveTab] = useState("general");
+  const [{ sideBar }, setLayout] = useLayout();
   return (
     <AnimatePresence>
       {open && (
@@ -94,13 +100,28 @@ const SideBar = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
             asChild
           >
             <MotionContainer
-              initial={{ x: "-100%" }}
-              exit={{ x: "-100%" }}
               animate={{ x: 0 }}
               transition={{ type: "tween" }}
+              {...(sideBar === "left"
+                ? {
+                  initial: { x: "-100%" },
+                  exit: { x: "-100%" },
+                }
+                : {
+                  initial: { x: "100%" },
+                  exit: { x: "100%" },
+                  css: {
+                    left: "auto",
+                    right: 0,
+                    flexDirection: "row-reverse",
+                    gridTemplateAreas: "'tabcontent tablist'",
+                    gridTemplateColumns:
+                        "minmax(260px,1fr) minmax(180px,200px) ",
+                  },
+                })}
             >
               <TabList css={{ zIndex: "calc($max - 1)" }}>
-                {["General", "Help"].map((item) => (
+                {["General", "Themes"].map((item) => (
                   <TabTrigger key={item} value={item.toLowerCase()} asChild>
                     <MenuButton>
                       {item}
@@ -110,17 +131,11 @@ const SideBar = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
                     </MenuButton>
                   </TabTrigger>
                 ))}
-                {/* <TabTrigger value="help" asChild>
-                  <MenuButton>
-                    Help
-                    <MenuBg />
-                  </MenuButton>
-                </TabTrigger> */}
               </TabList>
               <TabContent value="general" css={{ zIndex: "calc($max - 2)" }}>
                 <GeneralTab />
               </TabContent>
-              <TabContent value="help" css={{ zIndex: "calc($max - 2)" }}>
+              <TabContent value="themes" css={{ zIndex: "calc($max - 2)" }}>
                 <ThemesTab />
               </TabContent>
             </MotionContainer>
