@@ -7,6 +7,12 @@ interface ThemeContextProps {
 }
 const ThemeContext = createContext<ThemeContextProps | null>(null);
 
+function changeTheme(theme: string, className: string) {
+  const HTML = document.getElementsByTagName("html")[0];
+  HTML.setAttribute("data-theme", theme);
+  HTML.setAttribute("class", className);
+}
+
 export default function ThemeProvider({
   children,
   themes,
@@ -16,6 +22,11 @@ export default function ThemeProvider({
   currentTheme: AvailableThemes;
   children: React.ReactNode;
 }) {
+  const [theme] = useLocalStorage<AvailableThemes>("theme", currentTheme);
+  React.useEffect(() => {
+    changeTheme(theme!, themes[theme!]);
+  }, []);
+
   return (
     <ThemeContext.Provider value={{ themes, currentTheme: currentTheme }}>
       {children}
@@ -32,14 +43,6 @@ export const useTheme = () => {
     "theme",
     context.currentTheme as AvailableThemes
   );
-  const changeTheme = (theme: string, className: string) => {
-    const HTML = document.getElementsByTagName("html")[0];
-    HTML.setAttribute("data-theme", theme);
-    HTML.setAttribute("class", className);
-  };
-  React.useEffect(() => {
-    changeTheme(theme!, context.themes[theme!]);
-  }, []);
   const handleTheme = (theme: AvailableThemes) => {
     changeTheme(theme, context.themes[theme]);
     setTheme(theme);
