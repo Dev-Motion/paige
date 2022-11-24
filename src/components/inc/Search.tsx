@@ -21,7 +21,8 @@ const Search = () => {
       <Box
         onClick={() => setActive((a) => !a)}
         css={{
-          bs: "0 0 0 1px gainsboro",
+          $$borderColor: "$colors$bg",
+          bs: "0 0 0 1px $$borderColor",
           br: "$pill",
           px: "$3",
           py: "$3",
@@ -30,6 +31,7 @@ const Search = () => {
           jc: "center",
           width: "fit-content",
           backdropFilter: active ? "blur(40px)" : "none",
+          bg: active ? "rgba($bgRGB,0.25)" : "rgba($bgRGB,0.1)",
           transition: "backdrop-filter 0.3s ease-in-out",
         }}
       >
