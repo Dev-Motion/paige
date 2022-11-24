@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "@components/base";
 import { Main } from "@components/inc";
 import ImageProvider, { useImage } from "@context/ImageContext";
-import ThemeProvider, { useTheme } from "@context/ThemeContext";
+import ThemeProvider from "@context/ThemeContext";
 import {
   WhiteTheme,
   PurpleTheme,
