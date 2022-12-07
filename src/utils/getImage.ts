@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 
-interface returnType {
+export interface ImageReturnType {
   query: string;
   result: {
     blur_hash: string;
@@ -38,7 +38,7 @@ interface unsplashReturnType {
 export default async function getImage(req: {
   query: string;
   count?: number;
-}): Promise<returnType> {
+}): Promise<ImageReturnType> {
   const { query, count = 1 } = req;
   // let returnValue: {query?:string; blur_hash?: string; raw?: string; error?: string } = {};
   return axios
