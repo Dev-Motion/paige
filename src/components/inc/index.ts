@@ -6,3 +6,5 @@ export { default as Mantra } from "./Mantra";
 export { default as Remainder } from "./Remainder";
 export { default as SideBar } from "./SideBar";
 export { default as HoverToReveal } from "./HoverToReveal";
+export { default as ScrollArea } from "./ScrollArea";
+export { default as TagInput } from "./TagInput";
