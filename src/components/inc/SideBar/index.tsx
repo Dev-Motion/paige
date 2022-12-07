@@ -26,11 +26,11 @@ const TabContent = styled(Tabs.Content, {
 const MotionContainer = styled(motion.div, {
   height: "100vh",
   width: "50vw",
-  maxWidth: 550,
+  maxWidth: 600,
   minWidth: "200px",
   display: "grid",
   gridTemplateAreas: "'tablist tabcontent'",
-  gridTemplateColumns: "minmax(180px,200px) minmax(260px,1fr)",
+  gridTemplateColumns: "minmax(180px,200px) minmax(300px,1fr)",
   position: "fixed",
   zIndex: "$max",
   top: 0,
