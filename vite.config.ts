@@ -23,6 +23,10 @@ export default defineConfig({
         find: "@components",
         replacement: path.resolve(__dirname, "src/components"),
       },
+      {
+        find: "@store",
+        replacement: path.resolve(__dirname, "src/store"),
+      },
     ],
   },
 });
