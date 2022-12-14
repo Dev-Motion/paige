@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Flex, Switch, Text } from "@components/base";
 import { LeftLayout, RightLayout } from "@components/icons";
 import SideBar from ".";
-import { useLayout } from "@context/LayoutContext";
+import useStore from "@store";
 
 const showItems = [
   "Daily Motivation",
@@ -53,7 +53,10 @@ const LayoutSwitch = ({ label }: { label: string }) => {
 };
 
 const SideBarLayout = () => {
-  const [{ sideBar }, setLayout] = useLayout();
+  const [sideBar, setSideBar] = useStore((state) => [
+    state.sideBar,
+    state.setSideBar,
+  ]);
   return (
     <Box>
       <Box css={{ mt: "$5", mb: "$4" }}>
@@ -66,7 +69,7 @@ const SideBarLayout = () => {
       </Box>
       <Flex gap="2">
         <Box
-          onClick={() => setLayout({ sideBar: "left" })}
+          onClick={() => setSideBar("left")}
           css={{
             $$tabColor:
               sideBar === "left"
@@ -84,7 +87,7 @@ const SideBarLayout = () => {
           </Text>
         </Box>
         <Box
-          onClick={() => setLayout({ sideBar: "right" })}
+          onClick={() => setSideBar("right")}
           css={{
             $$tabColor:
               sideBar === "right"

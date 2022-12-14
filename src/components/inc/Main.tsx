@@ -11,23 +11,22 @@ import {
 import { styled } from "stitches.config";
 import { Hamburger, Todo } from "@components/icons";
 import Portal from "@utils/Portals";
-import { ImageResponse, useImage } from "@context/ImageContext";
-import { formatDate } from "@utils/index";
+import useStore from "@store";
+import { Photos } from "src/store/imageSlice";
 
 const Main = () => {
   const [open, setOpen] = useState(false);
-  const image = useImage();
-  const today = new Date();
-
-  const todayImage = image?.filter(
-    (image) => image.for === formatDate(today)
-  )[0];
+  const photos = useStore((state) => state.photos);
+  const today = new Date().toDateString();
+  const todayImage =
+    photos.filter((photo) => new Date(photo.for).toDateString() === today)[0] ||
+    photos[1];
   return (
     <Flex
       fd="column"
       css={{
         minHeight: "100vh",
-        background: `url(${todayImage?.raw}&w=2048&q=80&auto=format),${todayImage?.color}`,
+        background: `url(${todayImage.urls.raw}&w=2048&q=80&auto=format),${todayImage?.color}`,
         backgroundPosition: "center",
         backgroundSize: "cover",
       }}
@@ -82,7 +81,7 @@ const TopBar = ({ setOpen }: { setOpen: () => void }) => {
   );
 };
 
-const BottomBar = ({ todayImage }: { todayImage?: ImageResponse }) => {
+const BottomBar = ({ todayImage }: { todayImage: Photos }) => {
   return (
     <Flex
       jc="between"
@@ -101,12 +100,12 @@ const BottomBar = ({ todayImage }: { todayImage?: ImageResponse }) => {
       <HoverToReveal
         link
         heading={{
-          text: todayImage?.description ?? "",
-          link: todayImage?.img_url ?? "",
+          text: todayImage.description ?? "",
+          link: todayImage.links.html ?? "",
         }}
         subscript={{
-          text: todayImage?.user_name ?? "",
-          link: todayImage?.user_link ?? "",
+          text: todayImage.user.username ?? "",
+          link: todayImage.user.links.self ?? "",
         }}
         ai="start"
         className="fixed"

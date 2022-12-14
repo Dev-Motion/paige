@@ -3,11 +3,11 @@ import { motion } from "framer-motion";
 import * as Tabs from "@radix-ui/react-tabs";
 import { styled } from "stitches.config";
 import { Box, Flex, Text, Grid } from "@components/base";
-import { availableThemes, useTheme } from "@context/ThemeContext";
 import ScrollArea from "../ScrollArea";
 import TagInput from "../TagInput";
 import getImage, { ImageReturnType } from "@utils/getImage";
 import { useLocalStorage } from "react-use";
+import useStore from "@store";
 
 const TabRoot = styled(Tabs.Root, {});
 const TabList = styled(Tabs.List, {
@@ -53,7 +53,7 @@ const ActiveTheme = styled(motion.div, {
   left: "calc(-$$padding / 2)",
 });
 const ThemeChanger = () => {
-  const [theme, setTheme] = useTheme();
+  const [theme, setTheme] = useStore((state) => [state.theme, state.setTheme]);
   return (
     <Flex jc="between" css={{ mt: "$2", maxWidth: "250px" }}>
       {availableThemes.map(({ name, color }) => {

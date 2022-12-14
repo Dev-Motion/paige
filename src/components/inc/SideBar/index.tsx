@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { styled } from "stitches.config";
 import GeneralTab from "./GeneralTab";
 import ThemesTab from "./ThemesTab";
-import { useLayout } from "@context/LayoutContext";
+import useStore from "@store";
 
 const TabRoot = styled(Tabs.Root, {});
 const TabList = styled(Tabs.List, {
@@ -83,7 +83,7 @@ const MenuBg = styled(motion.div, {
 });
 const SideBar = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
   const [activeTab, setActiveTab] = useState("general");
-  const [{ sideBar }, setLayout] = useLayout();
+  const sideBar = useStore((state) => state.sideBar);
   return (
     <AnimatePresence>
       {open && (
