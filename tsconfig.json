@@ -19,9 +19,12 @@
     "paths": {
       "stitches.config": ["stitches.config.ts"],
       "@components/*": ["src/components/*"],
+      "@utils": ["./src/utils"],
       "@utils/*": ["./src/utils/*"],
       "@context/*": ["./src/context/*"],
-      "@store": ["./src/store"]
+      "@store": ["./src/store"],
+      "@store/*": ["./src/store/*"],
+      "@constants": ["./src/constants"]
     }
   },
   "include": ["src"],
