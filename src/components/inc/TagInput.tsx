@@ -3,6 +3,7 @@ import * as AccessibleIcon from "@radix-ui/react-accessible-icon";
 import { Flex } from "@components/base";
 import { CancelIcon } from "@components/icons";
 import { styled } from "stitches.config";
+import useStore from "@store";
 
 const Tag = styled("div", {
   br: "$pill",
@@ -44,7 +45,10 @@ const Input = styled("input", {
   },
 });
 const TagInput = () => {
-  const [tags, setTags] = React.useState<string[]>(["nature"]);
+  const [tags, setTags] = useStore((state) => [
+    state.keywords,
+    state.setKeywords,
+  ]);
   const onEnterPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === " " && e.currentTarget.value.trim()) {
       console.log("Enter key pressed");
@@ -53,7 +57,7 @@ const TagInput = () => {
     }
   };
   const deleteTag = (tagName: string) => {
-    setTags((tags) => tags.filter((tag) => tag != tagName));
+    setTags(tags.filter((tag) => tag != tagName));
   };
   return (
     <Flex gap="1" css={{ mb: 20 }} wrap="wrap">

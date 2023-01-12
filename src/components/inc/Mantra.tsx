@@ -45,7 +45,6 @@ const Mantra = () => {
           fs="xl"
           ta="center"
           onDoubleClick={() => {
-            console.log("double click");
             setActive(true);
           }}
         >

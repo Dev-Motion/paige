@@ -21,7 +21,7 @@ const Search = () => {
       <Box
         onClick={() => setActive((a) => !a)}
         css={{
-          $$borderColor: "$colors$bg",
+          $$borderColor: "$colors$text",
           bs: "0 0 0 1px $$borderColor",
           br: "$pill",
           px: "$3",
@@ -30,13 +30,15 @@ const Search = () => {
           ai: "center",
           jc: "center",
           width: "fit-content",
-          backdropFilter: active ? "blur(40px)" : "none",
-          bg: active ? "rgba($bgRGB,0.25)" : "rgba($bgRGB,0.1)",
+          backdropFilter: active ? "blur(40px)" : "blur(10px)",
+          bg: active ? "rgba($bgRGB,0.4)" : "rgba($bgRGB,0.2)",
           transition: "backdrop-filter 0.3s ease-in-out",
         }}
       >
         <Label css={{ size: 25 }}>
-          <SearchIcon css={{ size: 25 }} />
+          <SearchIcon
+            css={{ size: 25, path: { stroke: "$text !important" } }}
+          />
         </Label>
         <AnimatePresence>
           {active && (
