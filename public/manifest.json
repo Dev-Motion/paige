@@ -1,14 +1,16 @@
 {
-  "name": "Chroma",
+  "name": "Paige",
   "description": "Helping you stay motivated and focused",
   "version": "0.1.0",
   "manifest_version": 3,
   "icons": {
-    "16": "./paige.svg",
-    "48": "./paige.svg",
-    "128": "./paige.svg"
+    "16": "logo.png",
+    "48": "logo.png",
+    "64": "logo.png",
+    "128": "logo.png"
   },
   "chrome_url_overrides": {
     "newtab": "./index.html"
-  }
+  },
+  "permissions": ["bookmarks"]
 }
