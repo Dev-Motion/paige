@@ -1,6 +1,6 @@
 import { createApi } from "unsplash-js";
 import { Random } from "unsplash-js/dist/methods/photos/types";
-import type { StateCreator } from ".";
+import type { StateCreator } from "..";
 
 // export type Photo = {
 //   id: number;
@@ -19,11 +19,14 @@ import type { StateCreator } from ".";
 // }
 
 export type Photos = Random & { for: Date };
+
 export interface ImageSlice {
+  keywords: string[];
+  setKeywords: (keywords: string[]) => void;
   photos: Photos[];
   setPhotos: (prompt: string, update?: boolean) => void;
   // update meaning your are adding a new image(refresh is the opposite)
-  getPhotos: (prompt: string, count: number) => Promise<Random[]>;
+  getPhotos: (count: number) => Promise<Random[]>;
 }
 
 const unsplash = createApi({
@@ -31,8 +34,12 @@ const unsplash = createApi({
   //...other fetch options
 });
 
-const createImageSlice: StateCreator<ImageSlice> = (set) => ({
+const createImageSlice: StateCreator<ImageSlice> = (set, get) => ({
+  keywords: ["nature"],
   photos: [],
+  setKeywords: (keywords) => {
+    set({ keywords: keywords });
+  },
   setPhotos: (prompt, update = true) => {
     const count = update ? 1 : 2;
     unsplash.photos.getRandom({ query: prompt, count }).then((result) => {
@@ -65,8 +72,11 @@ const createImageSlice: StateCreator<ImageSlice> = (set) => ({
       }
     });
   },
-  getPhotos: async (prompt: string, count: number) => {
-    const result = await unsplash.photos.getRandom({ query: prompt, count });
+  getPhotos: async (count: number) => {
+    const result = await unsplash.photos.getRandom({
+      query: get().keywords.join(" "),
+      count,
+    });
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const response = await result.response!;
     const isArray = Array.isArray(response);

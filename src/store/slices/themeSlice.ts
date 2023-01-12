@@ -1,4 +1,4 @@
-import type { StateCreator } from ".";
+import type { StateCreator } from "..";
 import {
   WhiteTheme,
   PurpleTheme,
