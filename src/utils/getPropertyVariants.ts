@@ -1,6 +1,6 @@
 import * as Stitches from "@stitches/react";
 
-import { theme } from "stitches.config";
+import { theme, CSS } from "stitches.config";
 
 type availableProperties =
   | "colors"
@@ -44,3 +44,19 @@ export const generatePropertyVariants = <T extends availableProperties>(
     return { ...prev, [propertyToken.token]: JSON.parse(replacedString) };
   }, {}) as Record<keyof typeof theme[T], Stitches.CSS>;
 };
+
+export function getVariants<T extends availableProperties>(
+  property: T,
+  style: CSS
+): Record<keyof typeof theme[T], CSS> {
+  const cssString = JSON.stringify(style);
+
+  return Object.values(theme[property]).reduce((prev, propertyToken) => {
+    return {
+      ...prev,
+      [propertyToken.token]: JSON.parse(
+        cssString.replace("$$", `$${propertyToken.token}`)
+      ),
+    };
+  });
+}
