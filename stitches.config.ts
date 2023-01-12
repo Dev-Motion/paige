@@ -16,6 +16,8 @@ export const {
   theme: {
     colors: {
       text: "#FFFFFF",
+      shadow: "#000000",
+      shadowRGB: "0, 0, 0",
       textRGB: "255, 255, 255",
       bg: "#000000",
       bgRGB: "0, 0, 0",
@@ -274,6 +276,8 @@ GlobalStyles();
 export const WhiteTheme = createTheme("light-theme", {
   colors: {
     bg: "#FFFFFF",
+    shadow: "#FFFFFF",
+    shadowRGB: "255,255,255",
     bgRGB: "255,255,255",
     text: "#000000",
     textRGB: "0,0,0",
