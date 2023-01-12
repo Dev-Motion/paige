@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Flex, Switch, Text } from "@components/base";
 import { LeftLayout, RightLayout } from "@components/icons";
-import SideBar from ".";
 import useStore from "@store";
+import { useSideBar } from "@context/SideBarContext";
 
 const showItems = [
   "Daily Motivation",
@@ -43,20 +43,28 @@ const GeneralTab = () => {
     </>
   );
 };
-const LayoutSwitch = ({ label }: { label: string }) => {
+function LayoutSwitch({ label }: { label: string }) {
   return (
     <Flex jc="between">
       <Text as="label">{label}</Text>
       <Switch />
     </Flex>
   );
-};
+}
 
 const SideBarLayout = () => {
   const [sideBar, setSideBar] = useStore((state) => [
-    state.sideBar,
-    state.setSideBar,
+    state.sideBarPosition,
+    state.setSideBarPosition,
   ]);
+  const { setOpen } = useSideBar();
+  const close = (position: "left" | "right") => {
+    setOpen(false);
+    setSideBar(position);
+    setTimeout(() => {
+      setOpen(true);
+    }, 500);
+  };
   return (
     <Box>
       <Box css={{ mt: "$5", mb: "$4" }}>
@@ -69,7 +77,9 @@ const SideBarLayout = () => {
       </Box>
       <Flex gap="2">
         <Box
-          onClick={() => setSideBar("left")}
+          onClick={() => {
+            close("left");
+          }}
           css={{
             $$tabColor:
               sideBar === "left"
@@ -87,7 +97,9 @@ const SideBarLayout = () => {
           </Text>
         </Box>
         <Box
-          onClick={() => setSideBar("right")}
+          onClick={() => {
+            close("right");
+          }}
           css={{
             $$tabColor:
               sideBar === "right"

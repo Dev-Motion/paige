@@ -5,6 +5,7 @@ import { styled } from "stitches.config";
 import GeneralTab from "./GeneralTab";
 import ThemesTab from "./ThemesTab";
 import useStore from "@store";
+import { useSideBar } from "@context/SideBarContext";
 
 const TabRoot = styled(Tabs.Root, {});
 const TabList = styled(Tabs.List, {
@@ -44,17 +45,27 @@ const SideBarOverlay = styled(motion.div, {
 });
 
 const MenuButton = styled("button", {
+  $$position: "left",
   appearance: "none",
   bg: "transparent",
   border: "none",
   color: "$text",
   width: "100%",
   py: "$2",
-  pl: "$2",
-  pr: "$1",
-  ta: "left",
+  px: "$2",
   br: "$2",
   position: "relative",
+  ta: "var(---position)",
+  variants: {
+    position: {
+      left: {
+        $$position: "left",
+      },
+      right: {
+        $$position: "right",
+      },
+    },
+  },
 });
 const MenuBg = styled(motion.div, {
   $$opacity: 0.2,
@@ -71,7 +82,8 @@ const MenuBg = styled(motion.div, {
   "&::after": {
     content: "''",
     position: "absolute",
-    right: 4,
+    left: "$$left",
+    right: "$$right",
     opacity: 1,
     bg: "$text",
     top: "50%",
@@ -80,16 +92,27 @@ const MenuBg = styled(motion.div, {
     transform: "translateY(-50%)",
     width: 2,
   },
+  variants: {
+    position: {
+      left: {
+        $$right: "4px",
+      },
+      right: {
+        $$left: "4px",
+      },
+    },
+  },
 });
-const SideBar = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
+const SideBar = () => {
+  const { open, setOpen } = useSideBar();
   const [activeTab, setActiveTab] = useState("general");
-  const sideBar = useStore((state) => state.sideBar);
+  const sideBar = useStore((state) => state.sideBarPosition);
   return (
     <AnimatePresence>
       {open && (
         <>
           <SideBarOverlay
-            onClick={onClose}
+            onClick={() => setOpen(false)}
             initial={{ opacity: 0 }}
             exit={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -123,10 +146,10 @@ const SideBar = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
               <TabList css={{ zIndex: "calc($max - 1)" }}>
                 {["General", "Themes"].map((item) => (
                   <TabTrigger key={item} value={item.toLowerCase()} asChild>
-                    <MenuButton>
+                    <MenuButton position={sideBar}>
                       {item}
                       {item.toLowerCase() === activeTab && (
-                        <MenuBg layoutId="btn-bg" />
+                        <MenuBg position={sideBar} layoutId="btn-bg" />
                       )}
                     </MenuButton>
                   </TabTrigger>
