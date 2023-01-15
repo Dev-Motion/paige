@@ -55,7 +55,7 @@ const MenuButton = styled("button", {
   px: "$2",
   br: "$2",
   position: "relative",
-  ta: "var(---position)",
+  textAlign: "$$position",
   variants: {
     position: {
       left: {
