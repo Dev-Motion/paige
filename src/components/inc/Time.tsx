@@ -40,7 +40,9 @@ const Time = () => {
         color: "$text",
         transition: "opacity 0.3s ease-in-out",
       }}
-      className={accessibilityShadow({ css: { $$blur: "40px" } })}
+      className={accessibilityShadow({
+        css: { $$blur: "50px", $$opacity: 0.3 },
+      })}
     >
       <Box
         onMouseOver={() => dispatch({ visible: true })}
