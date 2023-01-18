@@ -28,3 +28,25 @@ export function processTime(time: Date, is24Hour: boolean) {
   )}:${Minutes.toString().padStart(2, "0")}`;
   return { timeString, isAM };
 }
+// Caching and Preloading Images
+export function preloadImage(image: string) {
+  const link = document.createElement("link");
+  link.rel = "preload";
+  link.href = image;
+  link.as = "image";
+  document.head.appendChild(link);
+}
+
+export function cacheImages(images: string[]) {
+  caches.open("paige-assets").then((cache) => {
+    images.forEach((image) => {
+      //check the image is already in the cache
+      cache.match(image).then((response) => {
+        if (!response) {
+          //if not, add it to the cache
+          cache.add(image);
+        }
+      });
+    });
+  });
+}
