@@ -34,11 +34,13 @@ const Scaffold = () => {
           zIndex: -2,
         }}
       >
-        <BlurhashCanvas
-          hash={todayImage.blur_hash!}
-          style={{ height: "100%", width: "100%" }}
-          punch={1}
-        />
+        {todayImage?.blur_hash && (
+          <BlurhashCanvas
+            hash={todayImage.blur_hash}
+            style={{ height: "100%", width: "100%" }}
+            punch={1}
+          />
+        )}
       </Box>
     </>
   );
