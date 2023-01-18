@@ -1,16 +1,16 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import { Flex, Grid } from "@components/base";
 import {
   Time,
   Search,
   Mantra,
   Reminder,
-  SideBar,
   TopBar,
   BottomBar,
 } from "@components/inc";
 import Portal from "@utils/Portals";
 
+const SideBar = lazy(() => import("./SideBar"));
 const MainLayout = () => {
   // chrome.bookmarks.search("github", (results) => {
   //   console.log("trying");
@@ -24,7 +24,9 @@ const MainLayout = () => {
       }}
     >
       <Portal root="side_bar_root">
-        <SideBar />
+        <Suspense fallback={<h1>loading...</h1>}>
+          <SideBar />
+        </Suspense>
       </Portal>
       <TopBar />
       <Grid
