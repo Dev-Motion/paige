@@ -3,7 +3,7 @@ import createLayoutSlice, { LayoutSlice } from "./slices/layoutSlice";
 import { persist } from "zustand/middleware";
 import createThemeSlice, { ThemeSlice } from "./slices/themeSlice";
 import createImageSlice, { ImageSlice } from "./slices/imageSlice";
-import { preloadImage, cacheImages } from "@utils";
+import { preloadImage, cacheImages, getTodayImage } from "@utils";
 import { imageQuality } from "@constants";
 
 export type Slices = LayoutSlice & ThemeSlice & ImageSlice;
@@ -40,9 +40,6 @@ handleImages();
 useStore.getState().setTheme();
 const images = useStore.getState().photos;
 
-const today = new Date().toDateString();
-const todayImage =
-  images.filter((image) => new Date(image.for).toDateString() === today)[0] ||
-  images[1];
+const todayImage = getTodayImage(images);
 preloadImage(todayImage.urls.raw + imageQuality);
 cacheImages(images.map((image) => image.urls.raw + imageQuality));

@@ -5,7 +5,7 @@ function hexToRGB(hex: string) {
   return [r, g, b] as const;
 }
 const MAX_COLOR_RANGE = 256;
-function colorPerception(hex1: string, hex2: string) {
+export function colorPerception(hex1: string, hex2: string) {
   const [R1, G1, B1] = hexToRGB(hex1);
   const [R2, G2, B2] = hexToRGB(hex2);
   const meanR = 0.5 * (R1 + R2);
