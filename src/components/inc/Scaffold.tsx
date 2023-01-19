@@ -4,6 +4,7 @@ import { Box } from "@components/base";
 import { imageQuality } from "@constants";
 import { BlurhashCanvas } from "react-blurhash";
 import { css } from "stitches.config";
+import { getTodayImage } from "@utils";
 
 const scaffoldCSS = css({
   position: "absolute",
@@ -12,11 +13,7 @@ const scaffoldCSS = css({
 });
 const Scaffold = () => {
   const photos = useStore((state) => state.photos);
-  const today = new Date().toDateString();
-
-  const todayImage =
-    photos.filter((photo) => new Date(photo.for).toDateString() === today)[0] ||
-    photos[1];
+  const todayImage = getTodayImage(photos);
   return (
     <>
       <Box

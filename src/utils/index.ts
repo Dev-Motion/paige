@@ -1,3 +1,5 @@
+import { Photos } from "@store/slices/imageSlice";
+
 export function formatDate(date: Date) {
   return new Date(date).toLocaleDateString("en-US", {
     year: "numeric",
@@ -49,4 +51,12 @@ export function cacheImages(images: string[]) {
       });
     });
   });
+}
+
+export function getTodayImage(images: Photos[]) {
+  const today = new Date().toDateString();
+  const todayImage =
+    images.filter((image) => new Date(image.for).toDateString() === today)[0] ||
+    images[1];
+  return todayImage;
 }
