@@ -24,7 +24,7 @@ const MainLayout = () => {
       }}
     >
       <Portal root="side_bar_root">
-        <Suspense fallback={<h1>loading...</h1>}>
+        <Suspense fallback={<div />}>
           <SideBar />
         </Suspense>
       </Portal>
@@ -35,16 +35,28 @@ const MainLayout = () => {
         css={{
           flex: 1,
           gridTemplateRows: "1fr 1fr",
-          "&>*": {
-            height: "100%",
-          },
         }}
       >
-        <Flex ai="center" jc="between" fd="column" css={{ pb: "$5" }}>
+        <Flex
+          ai="center"
+          jc="between"
+          fd="column"
+          css={{ pb: "$5", height: "100%" }}
+        >
           <Time />
           <Search />
         </Flex>
-        <Flex ai="center" fd="column" jc="end" gap={6}>
+        <Flex
+          ai="center"
+          fd="column"
+          css={{
+            mt: "$3",
+            "&>*": {
+              flex: 1,
+            },
+          }}
+          gap={6}
+        >
           <Mantra />
           <Reminder />
         </Flex>
