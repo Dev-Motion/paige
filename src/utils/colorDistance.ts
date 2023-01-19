@@ -1,4 +1,8 @@
 function hexToRGB(hex: string) {
+  if (hex.length === 4) {
+    hex = hex.replace(/([0-9a-f])/gi, "$1$1");
+    console.log("hex", hex);
+  }
   const r = parseInt(hex.slice(1, 3), 16);
   const g = parseInt(hex.slice(3, 5), 16);
   const b = parseInt(hex.slice(5, 7), 16);
@@ -29,3 +33,4 @@ export function euclideanDistance(hex1: string, hex2: string) {
   return Math.sqrt(deltaR ** 2 + deltaG ** 2 + deltaB ** 2);
 }
 export default colorPerception;
+hexToRGB("#123");
