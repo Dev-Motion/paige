@@ -1,6 +1,8 @@
 import { createStitches } from "@stitches/react";
 import type * as Stitches from "@stitches/react";
 export type { VariantProps } from "@stitches/react";
+import { mixins } from "stitches-mixins";
+import { mixins as mixinStyles } from "@constants";
 
 export const {
   styled,
@@ -99,6 +101,7 @@ export const {
     light: "(prefers-color-scheme: light)",
   },
   utils: {
+    include: mixins(mixinStyles),
     pd: (value: Stitches.PropertyValue<"padding">) => ({
       padding: value,
     }),
