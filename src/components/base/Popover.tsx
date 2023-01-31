@@ -17,7 +17,7 @@ export default function Popover({
     <StitchesPopover.Root onOpenChange={openChange}>
       <StitchesPopover.Trigger asChild>{trigger}</StitchesPopover.Trigger>
       <StitchesPopover.Portal>
-        <PopoverContent sideOffset={5}>
+        <PopoverContent collisionPadding={10} sideOffset={5}>
           {content}
           <PopoverClose aria-label="Close">
             <CancelIcon />
@@ -56,7 +56,6 @@ const PopoverContent = styled(StitchesPopover.Content, {
   pt: 20,
   pr: 15,
   pb: 10,
-  width: 180,
   color: "$text",
   backgroundColor: "rgba($bgRGB,0.5)",
   backdropFilter: "blur(50px)",
