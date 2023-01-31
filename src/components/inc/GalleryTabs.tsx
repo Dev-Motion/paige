@@ -45,9 +45,9 @@ const GalleryTabs = () => {
     useState<typeof galleryTabs[number]["value"]>("cloud");
 
   return (
-    <TabRoot defaultValue={activeTab}>
+    <TabRoot defaultValue={activeTab} css={{ maxWidth: "100%" }}>
       <TabList asChild>
-        <ScrollArea>
+        <ScrollArea orientation="horizontal" css={{}}>
           <Flex gap="1" css={{ pb: "$2" }}>
             {galleryTabs.map(({ value, name }) => {
               return (
@@ -66,47 +66,26 @@ const GalleryTabs = () => {
       </TabList>
       <TagInput />
       <Tabs.Content value="cloud">
-        <GalleryContent tags={["tags"]} />
+        <GalleryContent />
       </Tabs.Content>
       <Tabs.Content value="2">hey</Tabs.Content>
     </TabRoot>
   );
 };
 
-const GalleryContent = ({ tags }: { tags: string[] }) => {
+const GalleryContent = () => {
   const [loading, setLoading] = useState(true);
   const getPhotos = useStore((state) => state.getPhotos);
   const [images, setImages] = useLocalStorage<Random[]>(
     "gallery content",
     undefined
   );
-
-  React.useEffect(() => {
-    getPhotos(10)
-      .then((data) => {
-        setLoading(false);
-        setImages(data);
-      })
-      .catch(() => {
-        console.log("you need mobile data to get new images");
-      });
-  }, [tags]);
   return (
     <ScrollArea>
       <Grid columns={{ "@initial": 1, "@lg": 2 }} gap="2">
-        {loading
-          ? Array.from({ length: 10 }).map((_, i) => {
-            return <Skeleton key={i} />;
-          })
-          : images!.map((image, i) => {
-            return (
-              <Skeleton
-                as={"img"}
-                src={`${image.urls.raw}&w=240&q=70&auto=format`}
-                key={i}
-              />
-            );
-          })}
+        {Array.from({ length: 10 }).map((_, i) => {
+          return <Skeleton key={i} />;
+        })}
       </Grid>
     </ScrollArea>
   );
