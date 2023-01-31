@@ -2,7 +2,6 @@ import React from "react";
 import { Box, Flex, Switch, Text } from "@components/base";
 import { LeftLayout, RightLayout } from "@components/icons";
 import useStore from "@store";
-import { useSideBar } from "@context/SideBarContext";
 
 const showItems = [
   "Daily Motivation",
@@ -53,11 +52,11 @@ function LayoutSwitch({ label }: { label: string }) {
 }
 
 const SideBarLayout = () => {
-  const [sideBar, setSideBar] = useStore((state) => [
+  const [sideBar, setSideBar, setOpen] = useStore((state) => [
     state.sideBarPosition,
     state.setSideBarPosition,
+    state.setSideBarOpen,
   ]);
-  const { setOpen } = useSideBar();
   const close = (position: "left" | "right") => {
     setOpen(false);
     setSideBar(position);

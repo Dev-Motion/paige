@@ -5,7 +5,6 @@ import { styled } from "stitches.config";
 import GeneralTab from "./GeneralTab";
 import ThemesTab from "./ThemesTab";
 import useStore from "@store";
-import { useSideBar } from "@context/SideBarContext";
 import { ScrollArea } from "@components/inc";
 
 const TabRoot = styled(Tabs.Root, {});
@@ -104,15 +103,38 @@ const MenuBg = styled(motion.div, {
   },
 });
 const SideBar = () => {
-  const { open, setOpen } = useSideBar();
   const [activeTab, setActiveTab] = useState("general");
-  const sideBar = useStore((state) => state.sideBarPosition);
+  const [sideBarOpen, setSideBarOpen, sideBarPosition] = useStore((state) => [
+    state.sideBarOpen,
+    state.setSideBarOpen,
+    state.sideBarPosition,
+  ]);
+
+  let motionProps;
+  if (sideBarPosition === "left") {
+    motionProps = {
+      initial: { x: "-100%" },
+      exit: { x: "-100%" },
+    };
+  } else if (sideBarPosition === "right") {
+    motionProps = {
+      initial: { x: "100%" },
+      exit: { x: "100%" },
+      css: {
+        left: "auto",
+        right: 0,
+        flexDirection: "row-reverse",
+        gridTemplateAreas: "'tabcontent tablist'",
+        gridTemplateColumns: "minmax(260px,1fr) minmax(180px,200px) ",
+      },
+    };
+  }
   return (
     <AnimatePresence>
-      {open && (
+      {sideBarOpen && (
         <>
           <SideBarOverlay
-            onClick={() => setOpen(false)}
+            onClick={() => setSideBarOpen(false)}
             initial={{ opacity: 0 }}
             exit={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -125,31 +147,15 @@ const SideBar = () => {
             <MotionContainer
               animate={{ x: 0 }}
               transition={{ type: "tween" }}
-              {...(sideBar === "left"
-                ? {
-                  initial: { x: "-100%" },
-                  exit: { x: "-100%" },
-                }
-                : {
-                  initial: { x: "100%" },
-                  exit: { x: "100%" },
-                  css: {
-                    left: "auto",
-                    right: 0,
-                    flexDirection: "row-reverse",
-                    gridTemplateAreas: "'tabcontent tablist'",
-                    gridTemplateColumns:
-                        "minmax(260px,1fr) minmax(180px,200px) ",
-                  },
-                })}
+              {...motionProps}
             >
               <TabList css={{ zIndex: "calc($max - 1)" }}>
                 {["General", "Themes"].map((item) => (
                   <TabTrigger key={item} value={item.toLowerCase()} asChild>
-                    <MenuButton position={sideBar}>
+                    <MenuButton position={sideBarPosition}>
                       {item}
                       {item.toLowerCase() === activeTab && (
-                        <MenuBg position={sideBar} layoutId="btn-bg" />
+                        <MenuBg position={sideBarPosition} layoutId="btn-bg" />
                       )}
                     </MenuButton>
                   </TabTrigger>

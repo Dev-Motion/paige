@@ -2,19 +2,19 @@ import React from "react";
 import { Flex, IconButton, Text } from "@components/base";
 import { Hamburger } from "@components/icons";
 import useStore from "@store";
-import { accessibilityShadow } from "@components/base/utilityClass";
-import { useSideBar } from "@context/SideBarContext";
 
 const TopBar = () => {
-  const { setOpen } = useSideBar();
-  const sideBar = useStore((state) => state.sideBarPosition);
+  const [sideBar, setOpen] = useStore((state) => [
+    state.sideBarPosition,
+    state.setSideBarOpen,
+  ]);
   const left = sideBar === "left";
   return (
     <Flex
       jc="between"
       ai="center"
       css={{
-        height: "8vh",
+        height: 60,
         px: "$6",
         flexDirection: left ? "row" : "row-reverse",
       }}
@@ -22,9 +22,12 @@ const TopBar = () => {
       <IconButton
         size="md"
         bg="bgLight"
-        css={{ backdropFilter: "blur(10px)", border: "1px solid $bg" }}
+        css={{
+          backdropFilter: "blur(10px)",
+          border: "1px solid $bg",
+          include: "accessibleShadow",
+        }}
         onClick={() => setOpen(true)}
-        className={accessibilityShadow()}
       >
         <Hamburger
           css={
@@ -36,6 +39,7 @@ const TopBar = () => {
               : { path: { stroke: "$text !important" } }
           }
         />
+        <Text css={{ include: "screenReaderOnly" }}>Open side bar</Text>
       </IconButton>
       <Text fs="2xl">Today</Text>
     </Flex>

@@ -18,6 +18,12 @@ const useStore = create<Slices>()(
     }),
     {
       name: "store",
+      partialize: (state) =>
+        Object.fromEntries(
+          Object.entries(state).filter(
+            ([key]) => !["searchOpen", "sideBarOpen"].includes(key)
+          )
+        ),
     }
   )
 );

@@ -74,7 +74,9 @@ const createImageSlice: StateCreator<ImageSlice> = (set, get) => ({
   },
   getPhotos: async (count: number) => {
     const result = await unsplash.photos.getRandom({
-      query: "landscape " + get().keywords.join(" "),
+      query: get().keywords.join(" "),
+      orientation: "landscape",
+
       count,
     });
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
