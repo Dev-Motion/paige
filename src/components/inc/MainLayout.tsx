@@ -2,25 +2,24 @@ import React, { Suspense, lazy } from "react";
 import { Flex, Grid } from "@components/base";
 import {
   Time,
-  Search,
   Mantra,
   Reminder,
   TopBar,
   BottomBar,
+  CommandMenu,
+  Search,
 } from "@components/inc";
 import Portal from "@utils/Portals";
 
 const SideBar = lazy(() => import("./SideBar"));
+
 const MainLayout = () => {
-  // chrome.bookmarks.search("github", (results) => {
-  //   console.log("trying");
-  //   console.log(results);
-  // });
   return (
     <Flex
       fd="column"
       css={{
-        minHeight: "100vh",
+        height: "100vh",
+        overflow: "hidden",
       }}
     >
       <Portal root="side_bar_root">
@@ -34,18 +33,13 @@ const MainLayout = () => {
         as="main"
         css={{
           flex: 1,
-          gridTemplateRows: "1fr 1fr",
+          gridTemplateRows: "1fr auto 1fr",
         }}
       >
-        <Flex
-          ai="center"
-          jc="between"
-          fd="column"
-          css={{ pb: "$5", height: "100%" }}
-        >
+        <Flex ai="center" jc="center">
           <Time />
-          <Search />
         </Flex>
+        <Search />
         <Flex
           ai="center"
           fd="column"
@@ -62,6 +56,7 @@ const MainLayout = () => {
         </Flex>
       </Grid>
       <BottomBar />
+      <CommandMenu />
     </Flex>
   );
 };
