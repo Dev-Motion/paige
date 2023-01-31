@@ -9,7 +9,11 @@ const IconButton = styled("button", {
   jc: "center",
   size: 50,
   br: "$round",
-
+  transition: "transform 0.2s ease-in-out",
+  "&:active": {
+    scale: 0.95,
+    transformOrigin: "center center",
+  },
   variants: {
     size: {
       sm: {
