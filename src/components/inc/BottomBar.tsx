@@ -8,7 +8,6 @@ import {
   TwitterOutlineIcon,
 } from "@components/icons";
 import useStore from "@store";
-import { accessibilityShadow } from "@components/base/utilityClass";
 
 const BottomBar = () => {
   const photos = useStore((state) => state.photos);
@@ -45,23 +44,29 @@ const BottomBar = () => {
           </HoverReveal.FooterText>
         </HoverReveal>
       </Box>
-      <HoverReveal>
-        <HoverReveal.Header fs="md" fw="bold">
-          “Think lightly of yourself and deeply of the world.”
-        </HoverReveal.Header>
-        <HoverReveal.Footer
-          as={Flex}
-          ai="center"
-          gap="1"
-          jc="center"
-          css={{ width: "100%", color: "$text" }}
-        >
-          <Text>Miyamoto Musashi</Text>
-          <HeartIcon />
-          <SkipIcon />
-          <TwitterOutlineIcon />
-        </HoverReveal.Footer>
-      </HoverReveal>
+      <Box
+        css={{
+          include: "accessibleShadow",
+        }}
+      >
+        <HoverReveal>
+          <HoverReveal.Header fs="md" fw="bold">
+            “Think lightly of yourself and deeply of the world.”
+          </HoverReveal.Header>
+          <HoverReveal.Footer
+            as={Flex}
+            ai="center"
+            gap="1"
+            jc="center"
+            css={{ width: "100%", color: "$text" }}
+          >
+            <Text>Miyamoto Musashi</Text>
+            <HeartIcon />
+            <SkipIcon />
+            <TwitterOutlineIcon />
+          </HoverReveal.Footer>
+        </HoverReveal>
+      </Box>
       <Flex ai="center" jc="end" gap={2} className="fixed">
         <Todo />
         <Text>Todo</Text>

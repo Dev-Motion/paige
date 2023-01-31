@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Flex, IconButton, Popover, Switch, Text } from "@components/base";
 import { More } from "@components/icons";
-import { accessibilityShadow } from "@components/base/utilityClass";
 import { getDaySegment, processTime } from "@utils";
 import { styled } from "stitches.config";
 
@@ -36,13 +35,13 @@ const Time = () => {
   return (
     <Box
       css={{
+        include: "accessibleShadow",
         justifySelf: "flex-start",
         color: "$text",
         transition: "opacity 0.3s ease-in-out",
+        $$blur: "50px",
+        $$opacity: 0.3,
       }}
-      className={accessibilityShadow({
-        css: { $$blur: "50px", $$opacity: 0.3 },
-      })}
     >
       <Box
         onMouseOver={() => dispatch({ visible: true })}
