@@ -73,7 +73,8 @@ export const {
       1: "4px",
       2: "6px",
       3: "8px",
-      4: "12px",
+      4: "10px",
+      5: "12px",
       round: "50%",
       pill: "9999px",
     },
@@ -252,12 +253,6 @@ export const {
 export type CSS = Stitches.CSS<typeof config>;
 
 export const GlobalStyles = globalCss({
-  "@font-face": [
-    {
-      fontFamily: "Inter",
-      src: "local('./public/fonts/Inter-VariableFont.ttf')",
-    },
-  ],
   "*,*::before,*::after": {
     boxSizing: "border-box",
     margin: 0,
