@@ -1,9 +1,10 @@
 import React from "react";
 import { Box, Text, Flex, Card } from "@components/base";
+import { RepeatIcon } from "@components/icons";
 
 const Reminder = () => {
   return (
-    <Card px="6" py="4">
+    <Card css={{ pd: "$5" }}>
       <Text as={"h3"} fs="md" fw="bold">
         Reminder
       </Text>
@@ -12,23 +13,25 @@ const Reminder = () => {
           return (
             <Flex key={index} gap="1" ai="start">
               <Box as="input" type="checkbox" />
-              <Box css={{}}>
-                <Text fs="sm" fw="bold">
+              <Box css={{ spacey: "$1" }}>
+                <Text fs="sm" fw="medium">
                   {reminder.title}
                 </Text>
-                <Box
+                <Flex
                   css={{
                     border: "1px solid $text",
                     px: "$2",
                     py: "$1",
                     br: "$pill",
+                    gap: "$1",
                     fontSize: "$xs",
                     width: "fit-content",
-                    mt: "$1",
+                    color: "$text",
                   }}
                 >
                   {reminder.date}
-                </Box>
+                  <RepeatIcon />
+                </Flex>
               </Box>
             </Flex>
           );
@@ -41,15 +44,15 @@ const Reminder = () => {
 const reminders = [
   {
     id: 1,
-    title: "Set my laptop up and running",
+    title: "Get help to setup my laptop",
     description: "I need to set up my laptop and get it running",
     date: "Today, 10:00 AM",
   },
   {
     id: 2,
-    title: "Set my laptop up and running",
-    description: "I need to set up my laptop and get it running",
-    date: "Today, 10:00 AM",
+    title: "Schedule a meeting with my team",
+    description: "Meet with my team to discuss the next step in the project",
+    date: "Today, 4:30 PM",
   },
 ];
 export default Reminder;
