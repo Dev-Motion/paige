@@ -19,7 +19,7 @@ const showItems = [
 const GeneralTab = () => {
   return (
     <>
-      <Box>
+      <Box css={{ pt: "$4" }}>
         <Box css={{ mb: "$4" }}>
           <Text as="h1" fs={{ "@initial": "xl", "@md": "2xl" }} fw="bold">
             General

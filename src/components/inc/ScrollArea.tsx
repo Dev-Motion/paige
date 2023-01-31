@@ -43,6 +43,7 @@ const ScrollAreaViewport = styled(RadixScrollArea.Viewport, {
   width: "100%",
   height: "100%",
   borderRadius: "inherit",
+  pr: SCROLLBAR_SIZE,
 });
 const ScrollAreaCorner = styled(RadixScrollArea.Corner, {
   background: "black",
@@ -51,19 +52,29 @@ const ScrollAreaRoot = styled(RadixScrollArea.Root, {});
 const ScrollArea = ({
   children,
   css,
+  orientation = "vertical",
+  asChild,
 }: {
   children: React.ReactNode;
   css?: CSS;
+  orientation?: "vertical" | "horizontal" | "both";
+  asChild?: boolean;
 }) => {
+  const vertical = ["vertical", "both"].includes(orientation);
+  const horizontal = ["horizontal", "both"].includes(orientation);
   return (
     <ScrollAreaRoot css={css}>
-      <ScrollAreaViewport>{children}</ScrollAreaViewport>
-      <ScrollAreaScrollbar orientation="vertical">
-        <ScrollAreaThumb />
-      </ScrollAreaScrollbar>
-      <ScrollAreaScrollbar orientation="horizontal">
-        <ScrollAreaThumb />
-      </ScrollAreaScrollbar>
+      <ScrollAreaViewport asChild={asChild}>{children}</ScrollAreaViewport>
+      {vertical ? (
+        <ScrollAreaScrollbar orientation="vertical">
+          <ScrollAreaThumb />
+        </ScrollAreaScrollbar>
+      ) : null}
+      {horizontal ? (
+        <ScrollAreaScrollbar orientation="horizontal">
+          <ScrollAreaThumb />
+        </ScrollAreaScrollbar>
+      ) : null}
       <ScrollAreaCorner />
     </ScrollAreaRoot>
   );

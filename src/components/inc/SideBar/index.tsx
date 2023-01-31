@@ -6,6 +6,7 @@ import GeneralTab from "./GeneralTab";
 import ThemesTab from "./ThemesTab";
 import useStore from "@store";
 import { useSideBar } from "@context/SideBarContext";
+import { ScrollArea } from "@components/inc";
 
 const TabRoot = styled(Tabs.Root, {});
 const TabList = styled(Tabs.List, {
@@ -19,7 +20,6 @@ const TabContent = styled(Tabs.Content, {
   gridArea: "tabcontent",
   bg: "rgba($bgRGB,0.25)",
   backdropFilter: "blur(50px)",
-  pt: "$9",
   px: "$5",
   color: "$text",
 });
@@ -31,7 +31,7 @@ const MotionContainer = styled(motion.div, {
   minWidth: "200px",
   display: "grid",
   gridTemplateAreas: "'tablist tabcontent'",
-  gridTemplateColumns: "minmax(180px,200px) minmax(300px,1fr)",
+  gridTemplateColumns: "minmax(150px,180px) minmax(300px,1fr)",
   position: "fixed",
   zIndex: "$max",
   top: 0,
@@ -155,11 +155,39 @@ const SideBar = () => {
                   </TabTrigger>
                 ))}
               </TabList>
-              <TabContent value="general" css={{ zIndex: "calc($max - 2)" }}>
+              <TabContent
+                value="general"
+                css={{
+                  zIndex: "calc($max - 2)",
+                  height: "100%",
+                  overflow: "hidden",
+                }}
+              >
                 <GeneralTab />
               </TabContent>
-              <TabContent value="themes" css={{ zIndex: "calc($max - 2)" }}>
-                <ThemesTab />
+              <TabContent
+                value="themes"
+                css={{
+                  zIndex: "calc($max - 2)",
+                  height: "100%",
+                  overflow: "hidden",
+                  "& >*": {
+                    maxWidth: "100%",
+                  },
+                  "& > div > [data-radix-scroll-area-viewport]:first-of-type > div  ":
+                    {
+                      display: "unset !important",
+                      // border: "1px solid black",
+                    },
+                }}
+              >
+                <ScrollArea
+                  css={{
+                    height: "100%",
+                  }}
+                >
+                  <ThemesTab />
+                </ScrollArea>
               </TabContent>
             </MotionContainer>
           </TabRoot>
