@@ -7,6 +7,8 @@ export interface LayoutSlice {
   setSearchOpen: (open: boolean) => void;
   setSideBarOpen: (open: boolean) => void;
   sideBarOpen: boolean;
+  is24Hour: boolean;
+  setIs24Hour: (is24Hour: boolean) => void;
 }
 const createLayoutSlice: StateCreator<LayoutSlice> = (set) => ({
   sideBarPosition: "left",
@@ -20,6 +22,10 @@ const createLayoutSlice: StateCreator<LayoutSlice> = (set) => ({
   sideBarOpen: false,
   setSideBarOpen(open) {
     set({ sideBarOpen: open });
+  },
+  is24Hour: false,
+  setIs24Hour(is24Hour) {
+    set({ is24Hour });
   },
 });
 export default createLayoutSlice;

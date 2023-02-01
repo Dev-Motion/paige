@@ -3,6 +3,7 @@ import { Box, Flex, IconButton, Popover, Switch, Text } from "@components/base";
 import { More } from "@components/icons";
 import { getDaySegment, processTime } from "@utils";
 import { styled } from "stitches.config";
+import useStore from "@store";
 
 interface State {
   time: Date;
@@ -19,7 +20,10 @@ const initialState = {
 
 const Time = () => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
-  const [is24Hour, setIs24Hour] = React.useState(false);
+  const [is24Hour, setIs24Hour] = useStore((state) => [
+    state.is24Hour,
+    state.setIs24Hour,
+  ]);
   const { timeString, isAM } = processTime(state.time, is24Hour);
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -105,7 +109,7 @@ const Menu = ({
   onChecked: (check: boolean) => void;
 }) => {
   return (
-    <Flex jc="between">
+    <Flex jc="between" gap="2">
       <Text as="label">24-hour clock</Text>
       <Switch checked={checked} onCheckedChange={onChecked} />
     </Flex>
