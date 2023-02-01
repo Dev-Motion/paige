@@ -5,21 +5,30 @@ import { CancelIcon } from "@components/icons";
 
 export default function Popover({
   children: trigger,
+  side = "bottom",
   content,
   openChange,
+  showClose = true,
+  open,
 }: {
   children: React.ReactNode;
+  side?: "top" | "right" | "bottom" | "left";
+  showClose?: boolean;
   content: React.ReactNode;
+  open?: boolean;
   openChange?: (open: boolean) => void;
 }) {
   // const  = props;
   return (
-    <StitchesPopover.Root onOpenChange={openChange}>
+    <StitchesPopover.Root open={open} onOpenChange={openChange}>
       <StitchesPopover.Trigger asChild>{trigger}</StitchesPopover.Trigger>
       <StitchesPopover.Portal>
-        <PopoverContent collisionPadding={10} sideOffset={5}>
+        <PopoverContent side={side} collisionPadding={10} sideOffset={5}>
           {content}
-          <PopoverClose aria-label="Close">
+          <PopoverClose
+            css={{ display: showClose ? "inline-flex" : "none" }}
+            aria-label="Close"
+          >
             <CancelIcon />
           </PopoverClose>
           <PopoverArrow />
@@ -60,7 +69,7 @@ const PopoverContent = styled(StitchesPopover.Content, {
   backgroundColor: "rgba($bgRGB,0.5)",
   backdropFilter: "blur(50px)",
   boxShadow:
-    "rgba($$shadow,0.6) 0px 10px 38px -10px, rgba($$shadow,0.5) 0px 10px 20px -15px",
+    "rgba($$shadow,0.2) 0px 10px 38px -10px, rgba($$shadow,0.5) 0px 10px 20px -15px",
   animationDuration: "400ms",
   animationTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
   willChange: "transform, opacity",
@@ -78,7 +87,7 @@ const PopoverContent = styled(StitchesPopover.Content, {
 
 const PopoverArrow = styled(StitchesPopover.Arrow, {
   fill: "rgba($bgRGB,0.5)",
-  backdropFilter: "blur(50px)",
+  // backdropFilter: "blur(50px)",
 });
 
 const PopoverClose = styled(StitchesPopover.Close, {

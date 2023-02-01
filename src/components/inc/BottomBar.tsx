@@ -1,20 +1,24 @@
-import React from "react";
-import { Box, Flex, Text } from "@components/base";
-import { HoverReveal } from "@components/inc";
+import React, { useState } from "react";
+import { Box, Flex, Text, Popover, Badge } from "@components/base";
+import { HoverReveal, TodoPane } from "@components/inc";
 import {
   HeartIcon,
   SkipIcon,
-  Todo,
+  TodoIcon,
   TwitterOutlineIcon,
 } from "@components/icons";
 import useStore from "@store";
 
 const BottomBar = () => {
-  const photos = useStore((state) => state.photos);
+  const [photos, todos] = useStore((state) => [state.photos, state.todos]);
+  const [visible, setVisible] = useState(false);
   const today = new Date().toDateString();
   const todayImage =
     photos.filter((photo) => new Date(photo.for).toDateString() === today)[0] ||
     photos[1];
+  const openChange = (visible: boolean) => {
+    setVisible(visible);
+  };
   return (
     <Flex
       jc="between"
@@ -68,8 +72,33 @@ const BottomBar = () => {
         </HoverReveal>
       </Box>
       <Flex ai="center" jc="end" gap={2} className="fixed">
-        <Todo />
-        <Text>Todo</Text>
+        <Popover openChange={openChange} content={<TodoPane />}>
+          <Flex
+            ai="center"
+            gap="1"
+            as="button"
+            css={{
+              color: "$text",
+              include: ["buttonReset", "accessibleShadow"],
+              position: "relative",
+            }}
+          >
+            <TodoIcon />
+            <Text>Todo</Text>
+            <Badge
+              ping
+              hidden={!todos.length}
+              css={{
+                position: "absolute",
+                top: 0,
+                right: 0,
+                transform: "translate(50%, -50%)",
+              }}
+            >
+              {todos.filter((todo) => !todo.completed).length}
+            </Badge>
+          </Flex>
+        </Popover>
       </Flex>
     </Flex>
   );

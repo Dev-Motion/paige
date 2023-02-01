@@ -3,10 +3,11 @@ import createLayoutSlice, { LayoutSlice } from "./slices/layoutSlice";
 import { persist } from "zustand/middleware";
 import createThemeSlice, { ThemeSlice } from "./slices/themeSlice";
 import createImageSlice, { ImageSlice } from "./slices/imageSlice";
+import createTodoSlice, { TodoSlice } from "./slices/todoSlice";
 import { preloadImage, cacheImages, getTodayImage } from "@utils";
 import { imageQuality } from "@constants";
 
-export type Slices = LayoutSlice & ThemeSlice & ImageSlice;
+export type Slices = LayoutSlice & ThemeSlice & ImageSlice & TodoSlice;
 export type StateCreator<T> = ZStateCreator<Slices, [], [], T>;
 
 const useStore = create<Slices>()(
@@ -15,6 +16,7 @@ const useStore = create<Slices>()(
       ...createLayoutSlice(...a),
       ...createThemeSlice(...a),
       ...createImageSlice(...a),
+      ...createTodoSlice(...a),
     }),
     {
       name: "store",

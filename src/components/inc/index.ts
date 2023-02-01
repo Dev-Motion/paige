@@ -12,3 +12,4 @@ export { default as GalleryTabs } from "./GalleryTabs";
 export { default as TopBar } from "./TopBar";
 export { default as BottomBar } from "./BottomBar";
 export { default as CommandMenu } from "./CommandMenu";
+export { default as TodoPane } from "./TodoPane";

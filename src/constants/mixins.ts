@@ -1,4 +1,10 @@
-const mixins = {
+import { CSS } from "@stitches/react";
+
+function createMixins<T extends string>(obj: Record<T, CSS>) {
+  return obj;
+}
+
+const mixins = createMixins({
   accessibleShadow: {
     $$br: "50%",
     position: "relative",
@@ -19,6 +25,15 @@ const mixins = {
       ml: "$$ml",
     },
   },
-} as const;
+  buttonReset: {
+    appearance: "none",
+    border: "none",
+    bg: "transparent",
+    outline: "none",
+    cursor: "pointer",
+    p: 0,
+    m: 0,
+  },
+});
 
 export default mixins;

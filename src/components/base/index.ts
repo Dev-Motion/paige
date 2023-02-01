@@ -6,3 +6,5 @@ export { default as Switch } from "./Switch";
 export { default as Popover } from "./Popover";
 export { default as IconButton } from "./IconButton";
 export { default as Card } from "./Card";
+export { default as CheckBox } from "./CheckBox";
+export { default as Badge } from "./Badge";
