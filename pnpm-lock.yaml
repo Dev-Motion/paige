@@ -27,7 +27,7 @@ specifiers:
   lint-staged: ^13.0.3
   node-fetch: ^3.3.0
   npm-watch: ^0.11.0
-  prettier: 2.7.1
+  prettier: 2.8.4
   react: ^18.2.0
   react-blurhash: ^0.3.0
   react-dom: ^18.2.0
@@ -74,7 +74,7 @@ devDependencies:
   husky: 8.0.2
   lint-staged: 13.0.3
   npm-watch: 0.11.0
-  prettier: 2.7.1
+  prettier: 2.8.4
   typescript: 4.8.4
   vite: 3.2.3_@types+node@18.11.9
 
@@ -3747,8 +3747,8 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: true
 
-  /prettier/2.7.1:
-    resolution: {integrity: sha512-ujppO+MkdPqoVINuDFDRLClm7D78qbDt0/NR+wp5FqEZOoTNAjPHWj17QRhu7geIHJfcNhRk1XVQmF8Bp3ye+g==}
+  /prettier/2.8.4:
+    resolution: {integrity: sha512-vIS4Rlc2FNh0BySk3Wkd6xmwxB0FpOndW5fisM5H8hsZSxU2VWVB5CWIkIjWvrHjIhxk2g3bfMKM87zNTrZddw==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: true
