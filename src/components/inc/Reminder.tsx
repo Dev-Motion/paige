@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Text, Flex, Card } from "@components/base";
+import { Box, Text, Flex, Card, CheckBox } from "@components/base";
 import { RepeatIcon } from "@components/icons";
 
 const Reminder = () => {
@@ -12,7 +12,7 @@ const Reminder = () => {
         {reminders.map((reminder, index) => {
           return (
             <Flex key={index} gap="1" ai="start">
-              <Box as="input" type="checkbox" />
+              <CheckBox />
               <Box css={{ spacey: "$1" }}>
                 <Text fs="sm" fw="medium">
                   {reminder.title}
