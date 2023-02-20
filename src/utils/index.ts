@@ -1,4 +1,5 @@
 import { Photos } from "@store/slices/imageSlice";
+import useStore from "@store";
 
 export function formatDate(date: Date) {
   return new Date(date).toLocaleDateString("en-US", {
@@ -21,7 +22,7 @@ export function getDaySegment(time: Date | null) {
 }
 export function processTime(time: Date, is24Hour: boolean) {
   const tHour = time.getHours();
-  const Hours = is24Hour ? tHour : tHour % 12;
+  const Hours = is24Hour ? tHour % 12 : tHour;
   const Minutes = time.getMinutes();
   const isAM = tHour < 12;
   const timeString = `${Hours.toString().padStart(
@@ -59,4 +60,25 @@ export function getTodayImage(images: Photos[]) {
     images.filter((image) => new Date(image.for).toDateString() === today)[0] ||
     images[1];
   return todayImage;
+}
+
+export function handleImages() {
+  const photos = useStore.getState().photos;
+  const today = new Date().toDateString();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const todayImage = photos.find(
+    (photo) => new Date(photo.for).toDateString() === today
+  );
+  const tomorrowImage = photos.find(
+    (photo) => new Date(photo.for).toDateString() === tomorrow.toDateString()
+  );
+  const isOnline = navigator.onLine;
+  if (isOnline) {
+    if (photos.length === 0 || !todayImage) {
+      useStore.getState().getPhotos(false);
+    } else if (!tomorrowImage && todayImage) {
+      useStore.getState().getPhotos(true);
+    }
+  }
 }

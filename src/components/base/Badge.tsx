@@ -11,7 +11,7 @@ const ping = keyframes({
     opacity: 0,
   },
   "100%": {
-    transform: "scale(2)",
+    transform: "scale(2.5)",
     opacity: 0,
   },
 });
@@ -19,8 +19,8 @@ const ping = keyframes({
 const Badge = styled("div", {
   // Reset
   boxSizing: "border-box",
-  bg: "$bg",
-  color: "$text",
+  color: "$bg",
+  bg: "$text",
   position: "relative",
   "&::before": {
     content: "''",
@@ -31,7 +31,7 @@ const Badge = styled("div", {
     height: "100%",
     animation: "$$animation",
     zIndex: -1,
-    bg: "$bg",
+    bg: "$text",
     br: "$pill",
   },
   variants: {

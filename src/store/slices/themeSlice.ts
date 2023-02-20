@@ -29,7 +29,7 @@ const createThemeSlice: StateCreator<ThemeSlice> = (set) => ({
       const todayImage = getTodayImage(state.photos);
       set_theme = theme || state.theme;
       if (state.autoTheme) {
-        set_theme = theme || autoTheme(todayImage.color ?? "#000000");
+        set_theme = theme || autoTheme(todayImage?.color ?? "#000000");
       }
       changeTheme(set_theme, themes[set_theme]);
 
