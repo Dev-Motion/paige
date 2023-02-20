@@ -10,12 +10,17 @@ import {
 import useStore from "@store";
 
 const BottomBar = () => {
-  const [photos, todos] = useStore((state) => [state.photos, state.todos]);
+  const [photoAttributions, todos] = useStore((state) => [
+    state.photoAttributions,
+    state.todos,
+  ]);
+  const unCompletedTodos = todos.filter((todo) => !todo.completed);
   const [visible, setVisible] = useState(false);
   const today = new Date().toDateString();
   const todayImage =
-    photos.filter((photo) => new Date(photo.for).toDateString() === today)[0] ||
-    photos[1];
+    photoAttributions.filter(
+      (photo) => new Date(photo.for).toDateString() === today
+    )[0] || photoAttributions[1];
   const openChange = (visible: boolean) => {
     setVisible(visible);
   };
@@ -87,7 +92,7 @@ const BottomBar = () => {
             <Text>Todo</Text>
             <Badge
               ping
-              hidden={!todos.length}
+              hidden={unCompletedTodos.length === 0}
               css={{
                 position: "absolute",
                 top: 0,
@@ -95,7 +100,7 @@ const BottomBar = () => {
                 transform: "translate(50%, -50%)",
               }}
             >
-              {todos.filter((todo) => !todo.completed).length}
+              {unCompletedTodos.length}
             </Badge>
           </Flex>
         </Popover>

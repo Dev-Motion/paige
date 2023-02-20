@@ -1,32 +1,68 @@
 import { createApi } from "unsplash-js";
-import { Random } from "unsplash-js/dist/methods/photos/types";
+import { Random as RandomImage } from "unsplash-js/dist/methods/photos/types";
 import type { StateCreator } from "..";
 
-// export type Photo = {
-//   id: number;
-//   width: number;
-//   height: number;
-//   urls: { large: string; regular: string; raw: string; small: string };
-//   color: string | null;
-//   user: {
-//     username: string;
-//     name: string;
-//   };
-// };
-// interface setPhotos {
-//   (prompt: string, setImage: true, count?: number): null;
-//   (prompt: string, setImage: false, count: number): Random[];
-// }
+type Random = RandomImage & { views: number; downloads: number };
 
-export type Photos = Random & { for: Date };
+export type Photos = Pick<
+  Random,
+  "blur_hash" | "urls" | "color" | "alt_description"
+> & { for: Date };
 
+export type PhotoAttribution = Omit<
+  Random & { for: Date },
+  | "blur_hash"
+  | "urls"
+  | "color"
+  | "promoted_at"
+  | "updated_at"
+  | "exif"
+  | "liked_by_user"
+  | "current_user_collections"
+  | "sponsorship"
+>;
+
+function getPhotoInfo(photo: Random): Omit<Photos, "for"> {
+  const { blur_hash, urls, color, alt_description } = photo;
+  return { blur_hash, urls, color, alt_description };
+}
+function getPhotoAttribution(photo: Random): Omit<PhotoAttribution, "for"> {
+  const {
+    id,
+    created_at,
+    width,
+    height,
+    description,
+    alt_description,
+    links,
+    likes,
+    user,
+    location,
+    views,
+    downloads,
+  } = photo;
+  return {
+    id,
+    created_at,
+    width,
+    height,
+    description,
+    alt_description,
+    links,
+    likes,
+    user,
+    location,
+    views,
+    downloads,
+  };
+}
 export interface ImageSlice {
   keywords: string[];
   setKeywords: (keywords: string[]) => void;
   photos: Photos[];
-  setPhotos: (prompt: string, update?: boolean) => void;
+  photoAttributions: PhotoAttribution[];
   // update meaning your are adding a new image(refresh is the opposite)
-  getPhotos: (count: number) => Promise<Random[]>;
+  getPhotos: (update: boolean) => Promise<void>;
 }
 
 const unsplash = createApi({
@@ -35,57 +71,52 @@ const unsplash = createApi({
 });
 
 const createImageSlice: StateCreator<ImageSlice> = (set, get) => ({
-  keywords: ["nature"],
+  keywords: ["wallpapers"],
   photos: [],
+  photoAttributions: [],
   setKeywords: (keywords) => {
     set({ keywords: keywords });
   },
-  setPhotos: (prompt, update = true) => {
-    const count = update ? 1 : 2;
-    unsplash.photos.getRandom({ query: prompt, count }).then((result) => {
+  getPhotos: async (update: boolean) => {
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    try {
+      const result = await unsplash.photos.getRandom({
+        topicIds: get().keywords,
+        orientation: "landscape",
+        count: 2,
+        featured: true,
+      });
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const response = result.response!;
-      const today = new Date();
-      const tomorrow = new Date(today);
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      const isArray = Array.isArray(response);
-      let photos: Photos[];
-      if (isArray) {
-        photos = response.map((photo, i) => ({
-          ...photo,
-          for: new Date(tomorrow.setDate(today.getDate() + i)),
-        }));
-      } else {
-        photos = [
-          {
-            ...response,
-            for: new Date(),
-          },
-        ];
-      }
+
+      const response = (await result.response!) as Random[];
+      const photos = response.map((photo) => getPhotoInfo(photo));
+      const photoAttributions = response.map((photo) =>
+        getPhotoAttribution(photo)
+      );
       if (update) {
         set((state) => ({
-          photos: [state.photos[1], ...photos],
+          photos: [state.photos[0], { ...photos[0], for: tomorrow }],
+          photoAttributions: [
+            state.photoAttributions[0],
+            { ...photoAttributions[0], for: tomorrow },
+          ],
         }));
       } else {
-        set({ photos });
+        set(() => ({
+          photos: [
+            { ...photos[0], for: today },
+            { ...photos[1], for: tomorrow },
+          ],
+          photoAttributions: [
+            { ...photoAttributions[0], for: today },
+            { ...photoAttributions[1], for: tomorrow },
+          ],
+        }));
       }
-    });
-  },
-  getPhotos: async (count: number) => {
-    const result = await unsplash.photos.getRandom({
-      query: get().keywords.join(" "),
-      orientation: "landscape",
-
-      count,
-    });
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const response = await result.response!;
-    const isArray = Array.isArray(response);
-    if (isArray) {
-      return response;
-    } else {
-      return [response];
+    } catch (e) {
+      console.log(e);
     }
   },
 });

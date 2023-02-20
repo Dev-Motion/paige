@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Box, Flex, IconButton, Popover, Switch, Text } from "@components/base";
 import { More } from "@components/icons";
-import { getDaySegment, processTime } from "@utils";
+import { getDaySegment, handleImages, processTime } from "@utils";
 import { styled } from "stitches.config";
 import useStore from "@store";
 
@@ -24,10 +24,16 @@ const Time = () => {
     state.is24Hour,
     state.setIs24Hour,
   ]);
+  const dayofWeek = useRef(state.time.getDay());
+
   const { timeString, isAM } = processTime(state.time, is24Hour);
   React.useEffect(() => {
     const interval = setInterval(() => {
       dispatch({ time: new Date() });
+      if (dayofWeek.current !== state.time.getDay()) {
+        handleImages();
+        dayofWeek.current = state.time.getDay();
+      }
     }, 1000);
     return () => clearInterval(interval);
   }, []);

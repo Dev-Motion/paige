@@ -22,6 +22,7 @@ const Scaffold = () => {
           zIndex: -1,
           backgroundPosition: "center",
           backgroundSize: "cover",
+          transition: "background 0.5s ease-in-out",
         }}
         className={"scaffold " + scaffoldCSS()}
       ></Box>
