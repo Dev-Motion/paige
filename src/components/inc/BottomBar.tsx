@@ -1,8 +1,17 @@
 import React, { useState } from "react";
-import { Box, Flex, Text, Popover, Badge } from "@components/base";
-import { HoverReveal, TodoPane } from "@components/inc";
+import {
+  Box,
+  Flex,
+  Text,
+  Popover,
+  Badge,
+  IconButton,
+  HoverCard,
+} from "@components/base";
+import { HoverReveal, TodoPane, ImageInfo } from "@components/inc";
 import {
   HeartIcon,
+  Info,
   SkipIcon,
   TodoIcon,
   TwitterOutlineIcon,
@@ -10,17 +19,9 @@ import {
 import useStore from "@store";
 
 const BottomBar = () => {
-  const [photoAttributions, todos] = useStore((state) => [
-    state.photoAttributions,
-    state.todos,
-  ]);
+  const todos = useStore((state) => state.todos);
   const unCompletedTodos = todos.filter((todo) => !todo.completed);
   const [visible, setVisible] = useState(false);
-  const today = new Date().toDateString();
-  const todayImage =
-    photoAttributions.filter(
-      (photo) => new Date(photo.for).toDateString() === today
-    )[0] || photoAttributions[1];
   const openChange = (visible: boolean) => {
     setVisible(visible);
   };
@@ -40,18 +41,24 @@ const BottomBar = () => {
       }}
     >
       <Box className="fixed">
-        <HoverReveal>
-          <HoverReveal.Header as="a" fs="md" href={todayImage?.links?.html}>
-            {todayImage?.description || todayImage?.alt_description}
-          </HoverReveal.Header>
-          <HoverReveal.FooterText
-            as="a"
-            fs="sm"
-            href={todayImage?.user?.links?.self}
-          >
-            {todayImage?.user?.username}
-          </HoverReveal.FooterText>
-        </HoverReveal>
+        <HoverCard
+          trigger={
+            <IconButton bg="transparent">
+              <Info
+                css={{
+                  size: 30,
+                  color: "$text",
+                  "&:hover": {
+                    fill: "$text",
+                    stroke: "$bg",
+                  },
+                }}
+              />
+            </IconButton>
+          }
+        >
+          <ImageInfo />
+        </HoverCard>
       </Box>
       <Box
         css={{
