@@ -5,6 +5,7 @@ specifiers:
   '@commitlint/config-conventional': ^17.2.0
   '@radix-ui/react-accessible-icon': ^1.0.1
   '@radix-ui/react-checkbox': ^1.0.1
+  '@radix-ui/react-hover-card': ^1.0.3
   '@radix-ui/react-popover': ^1.0.2
   '@radix-ui/react-scroll-area': ^1.0.2
   '@radix-ui/react-switch': ^1.0.1
@@ -41,6 +42,7 @@ specifiers:
 dependencies:
   '@radix-ui/react-accessible-icon': 1.0.1_biqbaboplfbrettd7655fr4n2y
   '@radix-ui/react-checkbox': 1.0.1_biqbaboplfbrettd7655fr4n2y
+  '@radix-ui/react-hover-card': 1.0.3_2zx2umvpluuhvlq44va5bta2da
   '@radix-ui/react-popover': 1.0.2_2zx2umvpluuhvlq44va5bta2da
   '@radix-ui/react-scroll-area': 1.0.2_biqbaboplfbrettd7655fr4n2y
   '@radix-ui/react-switch': 1.0.1_biqbaboplfbrettd7655fr4n2y
@@ -1061,6 +1063,28 @@ packages:
       react-dom: 18.2.0_react@18.2.0
     dev: false
 
+  /@radix-ui/react-hover-card/1.0.3_2zx2umvpluuhvlq44va5bta2da:
+    resolution: {integrity: sha512-rr2+DxPlMhR57IPcNvZ85X8chytdfj7kyVToyR5Ge0r4IJEFiyPs0Cs8/K8oe5zt+yo0F8f29vtC8tNNK+ZIkA==}
+    peerDependencies:
+      react: ^16.8 || ^17.0 || ^18.0
+      react-dom: ^16.8 || ^17.0 || ^18.0
+    dependencies:
+      '@babel/runtime': 7.20.1
+      '@radix-ui/primitive': 1.0.0
+      '@radix-ui/react-compose-refs': 1.0.0_react@18.2.0
+      '@radix-ui/react-context': 1.0.0_react@18.2.0
+      '@radix-ui/react-dismissable-layer': 1.0.2_biqbaboplfbrettd7655fr4n2y
+      '@radix-ui/react-popper': 1.1.0_2zx2umvpluuhvlq44va5bta2da
+      '@radix-ui/react-portal': 1.0.1_biqbaboplfbrettd7655fr4n2y
+      '@radix-ui/react-presence': 1.0.0_biqbaboplfbrettd7655fr4n2y
+      '@radix-ui/react-primitive': 1.0.1_biqbaboplfbrettd7655fr4n2y
+      '@radix-ui/react-use-controllable-state': 1.0.0_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    transitivePeerDependencies:
+      - '@types/react'
+    dev: false
+
   /@radix-ui/react-id/1.0.0_react@18.2.0:
     resolution: {integrity: sha512-Q6iAB/U7Tq3NTolBBQbHTgclPmGWE3OlktGGqrClPozSw4vkQ1DfQAOtzgRPecKsMdJINE05iaoDUG8tRzCBjw==}
     peerDependencies:
@@ -1111,6 +1135,29 @@ packages:
       '@radix-ui/react-compose-refs': 1.0.0_react@18.2.0
       '@radix-ui/react-context': 1.0.0_react@18.2.0
       '@radix-ui/react-primitive': 1.0.1_biqbaboplfbrettd7655fr4n2y
+      '@radix-ui/react-use-layout-effect': 1.0.0_react@18.2.0
+      '@radix-ui/react-use-rect': 1.0.0_react@18.2.0
+      '@radix-ui/react-use-size': 1.0.0_react@18.2.0
+      '@radix-ui/rect': 1.0.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    transitivePeerDependencies:
+      - '@types/react'
+    dev: false
+
+  /@radix-ui/react-popper/1.1.0_2zx2umvpluuhvlq44va5bta2da:
+    resolution: {integrity: sha512-07U7jpI0dZcLRAxT7L9qs6HecSoPhDSJybF7mEGHJDBDv+ZoGCvIlva0s+WxMXwJEav+ckX3hAlXBtnHmuvlCQ==}
+    peerDependencies:
+      react: ^16.8 || ^17.0 || ^18.0
+      react-dom: ^16.8 || ^17.0 || ^18.0
+    dependencies:
+      '@babel/runtime': 7.20.1
+      '@floating-ui/react-dom': 0.7.2_2zx2umvpluuhvlq44va5bta2da
+      '@radix-ui/react-arrow': 1.0.1_biqbaboplfbrettd7655fr4n2y
+      '@radix-ui/react-compose-refs': 1.0.0_react@18.2.0
+      '@radix-ui/react-context': 1.0.0_react@18.2.0
+      '@radix-ui/react-primitive': 1.0.1_biqbaboplfbrettd7655fr4n2y
+      '@radix-ui/react-use-callback-ref': 1.0.0_react@18.2.0
       '@radix-ui/react-use-layout-effect': 1.0.0_react@18.2.0
       '@radix-ui/react-use-rect': 1.0.0_react@18.2.0
       '@radix-ui/react-use-size': 1.0.0_react@18.2.0

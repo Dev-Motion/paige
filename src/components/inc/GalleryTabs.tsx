@@ -42,7 +42,7 @@ const Skeleton = styled("div", {
 
 const GalleryTabs = () => {
   const [activeTab, setActiveTab] =
-    useState<typeof galleryTabs[number]["value"]>("cloud");
+    useState<(typeof galleryTabs)[number]["value"]>("cloud");
 
   return (
     <TabRoot defaultValue={activeTab} css={{ maxWidth: "100%" }}>
@@ -64,7 +64,7 @@ const GalleryTabs = () => {
           </Flex>
         </ScrollArea>
       </TabList>
-      <TagInput />
+      {/* <TagInput /> */}
       <Tabs.Content value="cloud">
         <GalleryContent />
       </Tabs.Content>

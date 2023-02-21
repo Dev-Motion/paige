@@ -12,7 +12,7 @@ const ScrollAreaScrollbar = styled(RadixScrollArea.Scrollbar, {
   // disable browser handling of all panning and zooming gestures on touch devices
   touchAction: "none",
   padding: 2,
-  background: "rgba($bgRGB,0.25)",
+  // background: "rgba($bgRGB,0.25)",
   transition: "background 160ms ease-out",
   "&:hover": { background: "rgba($bgRGB,0.4)" },
   "&[data-orientation='vertical']": { width: SCROLLBAR_SIZE },

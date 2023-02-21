@@ -15,10 +15,11 @@ const SideBar = lazy(() => import("./SideBar"));
 
 const MainLayout = () => {
   return (
-    <Flex
-      fd="column"
+    <Grid
+      // fd="column"
       css={{
         height: "100vh",
+        gridTemplateRows: "auto 1fr auto",
         overflow: "hidden",
       }}
     >
@@ -33,7 +34,10 @@ const MainLayout = () => {
         as="main"
         css={{
           flex: 1,
-          gridTemplateRows: "1fr auto 1fr",
+          // gridTemplateRows: "1fr auto auto",
+          "@lg": {
+            gridTemplateRows: "1fr auto 1fr",
+          },
         }}
       >
         <Flex ai="center" jc="center">
@@ -56,8 +60,8 @@ const MainLayout = () => {
         </Flex>
       </Grid>
       <BottomBar />
-      <CommandMenu />
-    </Flex>
+      {/* <CommandMenu /> */}
+    </Grid>
   );
 };
 

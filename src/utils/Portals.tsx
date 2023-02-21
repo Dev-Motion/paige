@@ -1,5 +1,5 @@
 import { createPortal } from "react-dom";
-import React,{ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { Box } from "@components/base";
 type AvailableRoots = "side_bar_root" | "modal_root";
 
@@ -19,9 +19,7 @@ const Portal = ({
   }, []);
   if (mounted) {
     return (
-      <Box>
-        {createPortal(children, document.getElementById(root) as Element)}
-      </Box>
+      <>{createPortal(children, document.getElementById(root) as Element)}</>
     );
   }
   return null;

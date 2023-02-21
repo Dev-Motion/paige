@@ -7,10 +7,11 @@ import {
   CaramelTheme,
 } from "stitches.config";
 import { getTodayImage } from "@utils";
-import autoTheme from "@utils/autoTheme";
+import autoGetTheme from "@utils/autoTheme";
 
 export interface ThemeSlice {
   autoTheme: boolean;
+  setAutoTheme: (autoTheme: boolean) => void;
   theme: AvailableThemes;
   setTheme: (theme?: AvailableThemes) => void;
 }
@@ -21,7 +22,19 @@ export function changeTheme(theme: string, className: string) {
 }
 
 const createThemeSlice: StateCreator<ThemeSlice> = (set) => ({
-  autoTheme: true,
+  autoTheme: false,
+  setAutoTheme: (autoTheme) => {
+    set((state) => {
+      if (autoTheme) {
+        const todayImage = getTodayImage(state.photos);
+        const set_theme = autoGetTheme(todayImage?.color ?? "#000000");
+        changeTheme(set_theme, themes[set_theme]);
+        return { autoTheme, theme: set_theme };
+      } else {
+        return { autoTheme };
+      }
+    });
+  },
   theme: "default",
   setTheme: (theme) => {
     set((state) => {
@@ -29,7 +42,7 @@ const createThemeSlice: StateCreator<ThemeSlice> = (set) => ({
       const todayImage = getTodayImage(state.photos);
       set_theme = theme || state.theme;
       if (state.autoTheme) {
-        set_theme = theme || autoTheme(todayImage?.color ?? "#000000");
+        set_theme = theme || autoGetTheme(todayImage?.color ?? "#000000");
       }
       changeTheme(set_theme, themes[set_theme]);
 
@@ -46,7 +59,7 @@ const themes = {
   brown: BrownTheme.className,
   caramel: CaramelTheme.className,
 };
-export type AvailableThemes = typeof availableThemes[number]["name"];
+export type AvailableThemes = (typeof availableThemes)[number]["name"];
 export const availableThemes = [
   {
     name: "default",
