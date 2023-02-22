@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
-import { useLocalStorage } from "react-use";
-import useStore from "@store";
 import { motion } from "framer-motion";
-import { Grid, Flex } from "@components/base";
+import { Grid, Flex, Skeleton } from "@components/base";
 import { styled } from "stitches.config";
-import { Random } from "unsplash-js/dist/methods/photos/types";
-import { ScrollArea, TagInput } from ".";
+import { ScrollArea } from ".";
 import { galleryTabs } from "@constants";
 
 const TabRoot = styled(Tabs.Root, {});
@@ -32,12 +29,6 @@ const GalleryBtnUnderline = styled(motion.div, {
   bg: "$text",
   br: "$pill",
   width: "100%",
-});
-const Skeleton = styled("div", {
-  width: "100%",
-  height: 150,
-  br: "$4",
-  bg: "Gray",
 });
 
 const GalleryTabs = () => {
@@ -74,20 +65,12 @@ const GalleryTabs = () => {
 };
 
 const GalleryContent = () => {
-  const [loading, setLoading] = useState(true);
-  const getPhotos = useStore((state) => state.getPhotos);
-  const [images, setImages] = useLocalStorage<Random[]>(
-    "gallery content",
-    undefined
-  );
   return (
-    <ScrollArea>
-      <Grid columns={{ "@initial": 1, "@lg": 2 }} gap="2">
-        {Array.from({ length: 10 }).map((_, i) => {
-          return <Skeleton key={i} />;
-        })}
-      </Grid>
-    </ScrollArea>
+    <Grid columns={{ "@initial": 1, "@lg": 2 }} gap="2">
+      {Array.from({ length: 10 }).map((_, i) => {
+        return <Skeleton width="100%" height={150} br="$3" key={i} />;
+      })}
+    </Grid>
   );
 };
 
