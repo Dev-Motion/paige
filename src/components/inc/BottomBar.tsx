@@ -17,14 +17,26 @@ import {
   TwitterOutlineIcon,
 } from "@components/icons";
 import useStore from "@store";
+import { tweetHandler } from "@utils";
 
 const BottomBar = () => {
-  const todos = useStore((state) => state.todos);
+  const [todos, quote, getQuotes, favouriteQuotes, setFavouriteQuotes] =
+    useStore((state) => [
+      state.todos,
+      state.quote,
+      state.getQuotes,
+      state.favouriteQuotes,
+      state.setFavouriteQuotes,
+    ]);
   const unCompletedTodos = todos.filter((todo) => !todo.completed);
   const [visible, setVisible] = useState(false);
   const openChange = (visible: boolean) => {
     setVisible(visible);
   };
+  const tweetText = `I love this quote by ${quote.author}!
+“${quote.text}”`;
+  const favourite = favouriteQuotes.includes(quote);
+
   return (
     <Flex
       jc="between"
@@ -67,7 +79,7 @@ const BottomBar = () => {
       >
         <HoverReveal>
           <HoverReveal.Header fs="md" fw="bold">
-            “Think lightly of yourself and deeply of the world.”
+            “{quote.text}”
           </HoverReveal.Header>
           <HoverReveal.Footer
             as={Flex}
@@ -76,10 +88,71 @@ const BottomBar = () => {
             jc="center"
             css={{ width: "100%", color: "$text" }}
           >
-            <Text>Miyamoto Musashi</Text>
-            <HeartIcon />
-            <SkipIcon />
-            <TwitterOutlineIcon />
+            <Text>{quote.author}</Text>
+            <Box
+              as="button"
+              css={{
+                appearance: "none",
+                border: "none",
+                bg: "transparent",
+                color: "$text",
+                "&>svg": {
+                  size: 15,
+                  fill: favourite ? "white" : "transparent",
+                },
+              }}
+              onClick={() => {
+                if (!favourite) {
+                  setFavouriteQuotes((quotes) => [...quotes, quote]);
+                } else {
+                  setFavouriteQuotes((quotes) =>
+                    quotes.filter((q) => q.id !== quote.id)
+                  );
+                }
+              }}
+            >
+              <Text css={{ include: "screenReaderOnly" }}>
+                Add to favourite quotes
+              </Text>
+              <HeartIcon />
+            </Box>
+            <Box
+              as="button"
+              css={{
+                appearance: "none",
+                border: "none",
+                bg: "transparent",
+                color: "$text",
+                "&>svg": {
+                  size: 15,
+                },
+              }}
+              onClick={() => getQuotes()}
+            >
+              <Text css={{ include: "screenReaderOnly" }}>Skip quote</Text>
+              <SkipIcon />
+            </Box>
+            <Box
+              as="a"
+              css={{
+                appearance: "none",
+                border: "none",
+                bg: "transparent",
+                color: "$text",
+                "&>svg": {
+                  size: 15,
+                },
+              }}
+              href={tweetHandler(
+                tweetText,
+                ["chroma", "inspring", "inspirational"],
+                "chroma"
+              )}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <TwitterOutlineIcon />
+            </Box>
           </HoverReveal.Footer>
         </HoverReveal>
       </Box>

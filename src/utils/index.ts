@@ -54,12 +54,17 @@ export function cacheImages(images: string[]) {
   });
 }
 
-export function getTodayImage(images: Photos[]) {
-  const today = new Date().toDateString();
-  const todayImage =
-    images.filter((image) => new Date(image.for).toDateString() === today)[0] ||
-    images[1];
-  return todayImage;
+export function getTimeItem<T extends { for: Date }[]>(
+  item: T,
+  day?: "tomorrow" | "today"
+): T[number] | undefined {
+  day = day || "today";
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const date = day === "tomorrow" ? tomorrow : today;
+  const time = date.toDateString();
+  return item.find((item) => new Date(item.for).toDateString() === time);
 }
 
 export function handleImages() {
@@ -74,6 +79,11 @@ export function handleImages() {
     (photo) => new Date(photo.for).toDateString() === tomorrow.toDateString()
   );
   const isOnline = navigator.onLine;
+  // if online and no images or today's image is available
+  // get new images
+  // if online and tomorrow's image is not available
+  // get tomorrow's image
+  // write the code
   if (isOnline) {
     if (photos.length === 0 || !todayImage) {
       useStore.getState().getPhotos(false);
@@ -81,4 +91,12 @@ export function handleImages() {
       useStore.getState().getPhotos(true);
     }
   }
+}
+
+export function tweetHandler(text: string, hashtags: string[], via: string) {
+  const baseUrl = "https://twitter.com/intent/tweet";
+  const url = `${baseUrl}?text=${encodeURI(
+    text
+  )}&via=${via}&hashtags=${hashtags.join(",")}`;
+  return url;
 }

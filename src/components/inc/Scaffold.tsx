@@ -4,7 +4,7 @@ import { Box } from "@components/base";
 import { imageQuality } from "@constants";
 import { BlurhashCanvas } from "react-blurhash";
 import { css } from "stitches.config";
-import { getTodayImage } from "@utils";
+import { getTimeItem } from "@utils";
 
 const scaffoldCSS = css({
   position: "absolute",
@@ -13,7 +13,7 @@ const scaffoldCSS = css({
 });
 const Scaffold = () => {
   const photos = useStore((state) => state.photos);
-  const todayImage = getTodayImage(photos);
+  const todayImage = getTimeItem(photos);
   return (
     <>
       <Box
