@@ -4,10 +4,15 @@ import { persist, subscribeWithSelector } from "zustand/middleware";
 import createThemeSlice, { ThemeSlice } from "./slices/themeSlice";
 import createImageSlice, { ImageSlice } from "./slices/imageSlice";
 import createTodoSlice, { TodoSlice } from "./slices/todoSlice";
-import { preloadImage, cacheImages, getTodayImage, handleImages } from "@utils";
+import { preloadImage, cacheImages, getTimeItem, handleImages } from "@utils";
 import { imageQuality } from "@constants";
+import createQuotesSlice, { QuotesSlice } from "./slices/QuotesSlice";
 
-export type Slices = LayoutSlice & ThemeSlice & ImageSlice & TodoSlice;
+export type Slices = LayoutSlice &
+  ThemeSlice &
+  ImageSlice &
+  TodoSlice &
+  QuotesSlice;
 export type StateCreator<T> = ZStateCreator<Slices, [], [], T>;
 
 const useStore = create<Slices>()(
@@ -18,6 +23,7 @@ const useStore = create<Slices>()(
         ...createThemeSlice(...a),
         ...createImageSlice(...a),
         ...createTodoSlice(...a),
+        ...createQuotesSlice(...a),
       }),
       {
         name: "store",
@@ -38,8 +44,8 @@ export default useStore;
 useStore.subscribe(
   (state) => state.photos,
   (photos) => {
-    const todayImage = getTodayImage(photos);
-    preloadImage(todayImage.urls.raw + imageQuality);
+    const todayImage = getTimeItem(photos);
+    preloadImage(todayImage?.urls.raw + imageQuality);
     cacheImages(photos.map((image) => image.urls.raw + imageQuality));
   }
 );

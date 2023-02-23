@@ -6,7 +6,7 @@ import {
   BrownTheme,
   CaramelTheme,
 } from "stitches.config";
-import { getTodayImage } from "@utils";
+import { getTimeItem } from "@utils";
 import autoGetTheme from "@utils/autoTheme";
 
 export interface ThemeSlice {
@@ -26,7 +26,7 @@ const createThemeSlice: StateCreator<ThemeSlice> = (set) => ({
   setAutoTheme: (autoTheme) => {
     set((state) => {
       if (autoTheme) {
-        const todayImage = getTodayImage(state.photos);
+        const todayImage = getTimeItem(state.photos);
         const set_theme = autoGetTheme(todayImage?.color ?? "#000000");
         changeTheme(set_theme, themes[set_theme]);
         return { autoTheme, theme: set_theme };
@@ -39,7 +39,7 @@ const createThemeSlice: StateCreator<ThemeSlice> = (set) => ({
   setTheme: (theme) => {
     set((state) => {
       let set_theme: AvailableThemes;
-      const todayImage = getTodayImage(state.photos);
+      const todayImage = getTimeItem(state.photos);
       set_theme = theme || state.theme;
       if (state.autoTheme) {
         set_theme = theme || autoGetTheme(todayImage?.color ?? "#000000");

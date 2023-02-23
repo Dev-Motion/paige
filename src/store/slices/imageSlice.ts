@@ -1,3 +1,4 @@
+import { getTimeItem } from "@utils";
 import { createApi } from "unsplash-js";
 import { Random as RandomImage } from "unsplash-js/dist/methods/photos/types";
 import type { StateCreator } from "..";
@@ -71,7 +72,7 @@ const unsplash = createApi({
 });
 
 const createImageSlice: StateCreator<ImageSlice> = (set, get) => ({
-  keywords: ["wallpapers"],
+  keywords: ["Wallpapers"],
   photos: [],
   photoAttributions: [],
   setKeywords: (keywords) => {
@@ -88,21 +89,29 @@ const createImageSlice: StateCreator<ImageSlice> = (set, get) => ({
         count: 2,
         featured: true,
       });
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const response = (await result.response!) as Random[];
       const photos = response.map((photo) => getPhotoInfo(photo));
+      const today = new Date();
       const photoAttributions = response.map((photo) =>
         getPhotoAttribution(photo)
       );
       if (update) {
-        set((state) => ({
-          photos: [state.photos[0], { ...photos[0], for: tomorrow }],
-          photoAttributions: [
-            state.photoAttributions[0],
-            { ...photoAttributions[0], for: tomorrow },
-          ],
-        }));
+        set((state) => {
+          const todayPhoto = getTimeItem(state.photos);
+          const todayPhotoAttributions = getTimeItem(
+            state.photoAttributions,
+            "tomorrow"
+          );
+          return {
+            photos: [todayPhoto!, { ...photos[0], for: tomorrow }],
+            photoAttributions: [
+              todayPhotoAttributions!,
+              { ...photoAttributions[0], for: tomorrow },
+            ],
+          };
+        });
       } else {
         set(() => ({
           photos: [

@@ -67,15 +67,15 @@ const Badge = styled("button", {
 });
 
 const categories = [
-  "wallpaper",
-  "accent",
-  "texture",
-  "nature",
-  "abstract",
-  "people",
-  "technology",
-  "objects",
-  "food",
+  "Wallpapers",
+  "3D Renders",
+  "Travel",
+  "Arts & Culture",
+  "Business & Work",
+  "Textures & Patterns",
+  "Nature",
+  "People",
+  "Architecture & Interiors",
 ];
 
 export default ThemeCategories;
