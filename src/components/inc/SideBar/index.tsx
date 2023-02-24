@@ -6,6 +6,8 @@ import GeneralTab from "./GeneralTab";
 import ThemesTab from "./ThemesTab";
 import useStore from "@store";
 import { ScrollArea } from "@components/inc";
+import { IconButton, Box, Flex } from "@components/base";
+import { Hamburger } from "@components/icons";
 
 const TabRoot = styled(Tabs.Root, {});
 const TabList = styled(Tabs.List, {
@@ -149,7 +151,14 @@ const SideBar = () => {
               transition={{ type: "tween" }}
               {...motionProps}
             >
-              <TabList css={{ zIndex: "calc($max - 1)" }}>
+              <TabList
+                css={{
+                  zIndex: "calc($max - 1)",
+                  display: "flex",
+                  flexDirection: "column",
+                  height: "100%",
+                }}
+              >
                 {["General", "Themes"].map((item) => (
                   <TabTrigger key={item} value={item.toLowerCase()} asChild>
                     <MenuButton position={sideBarPosition}>
@@ -160,6 +169,31 @@ const SideBar = () => {
                     </MenuButton>
                   </TabTrigger>
                 ))}
+                <Flex
+                  jc="center"
+                  ai="end"
+                  css={{
+                    flexGrow: 1,
+                    pb: "$4",
+                  }}
+                  id="nav-links"
+                >
+                  <IconButton
+                    onClick={() => setSideBarOpen(false)}
+                    size="md"
+                    bg="bgLight"
+                    css={{
+                      boxShadow: "0 0 0 1px $colors$text",
+                    }}
+                  >
+                    <Hamburger
+                      css={{
+                        transform: "rotate(-180deg)",
+                        color: "$text",
+                      }}
+                    />
+                  </IconButton>
+                </Flex>
               </TabList>
               <TabContent
                 value="general"
@@ -169,7 +203,13 @@ const SideBar = () => {
                   overflow: "hidden",
                 }}
               >
-                <GeneralTab />
+                <ScrollArea
+                  css={{
+                    height: "100%",
+                  }}
+                >
+                  <GeneralTab />
+                </ScrollArea>
               </TabContent>
               <TabContent
                 value="themes"
