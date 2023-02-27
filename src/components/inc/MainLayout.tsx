@@ -60,7 +60,15 @@ const MainLayout = () => {
         </Flex>
       </Grid>
       <BottomBar />
-      {/* <CommandMenu /> */}
+      <CommandMenu />
+      {/* To prevent the default chrome behaviour of focusing on the the chrome search bar */}
+      <Flex
+        as="input"
+        autoFocus
+        css={{
+          include: "screenReaderOnly",
+        }}
+      />
     </Grid>
   );
 };
