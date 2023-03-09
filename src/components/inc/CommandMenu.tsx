@@ -13,6 +13,12 @@ import {
   TwitterOutlineIcon,
 } from "@components/icons";
 
+interface Hist {
+  id: string;
+  url: string;
+  title: string;
+}
+
 const CommandMenu = () => {
   const [open, setOpen] = useStore((state) => [
     state.searchOpen,
@@ -24,9 +30,8 @@ const CommandMenu = () => {
   const [bookmarks, setBookmarks] = React.useState<
     chrome.bookmarks.BookmarkTreeNode[]
   >([]);
-  const [history, setHistory] = React.useState<chrome.history.HistoryItem[]>(
-    []
-  );
+
+  const [hist, setHist] = React.useState<Hist[]>([]);
   // Toggle the menu when ⌘K is pressed
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -48,7 +53,23 @@ const CommandMenu = () => {
       setBookmarks(results.slice(0, 3));
     });
     chrome.history.search({ text: deferedInputValue }, (results) => {
-      setHistory(results.slice(0, 5));
+      const histRes = results
+        .filter((res) => res.title && res.url)
+        .map((result) => {
+          return {
+            id: result.id,
+            url: result.url!,
+            title: result.title!,
+          };
+        });
+      const titleSet = new Set<string>();
+      histRes.forEach((hist) => {
+        titleSet.add(hist.title);
+      });
+      const uniqueHist = Array.from(titleSet).map((title) => {
+        return histRes.find((hist) => hist.title === title)!;
+      });
+      setHist(uniqueHist.slice(0, 5));
     });
   }, [deferedInputValue]);
 
@@ -101,16 +122,16 @@ const CommandMenu = () => {
                 <Box cmdk-chroma-items="">
                   {/* set empty to true if */}
                   <Command.Empty>{inputValue}</Command.Empty>
-                  {history.length !== 0 && (
+                  {hist.length !== 0 && (
                     <Command.Group>
-                      {history.map((hist) => {
-                        const baseUrl = hist.url?.split("//")[1].split("/")[0];
+                      {hist.map((h) => {
+                        const baseUrl = h.url.split("//")[1].split("/")[0];
 
                         return (
                           <Command.Item
-                            key={hist.id}
-                            value={hist.title}
-                            onSelect={() => window.open(hist.url)}
+                            key={h.id}
+                            value={h.title}
+                            onSelect={() => window.open(h.url)}
                           >
                             <Flex
                               ai="center"
@@ -127,22 +148,22 @@ const CommandMenu = () => {
                                 }}
                                 src={`https://www.google.com/s2/favicons?domain=${baseUrl}&sz=128`}
                               />
-                              <Text>{hist.title}</Text>
+                              <Text>{h.title}</Text>
                             </Flex>
                           </Command.Item>
                         );
                       })}
                     </Command.Group>
                   )}
-                  {/* <Command.Group
-                    heading={
-                      <Flex>
-                        <SuggestionIcon />
-                        <Text>Suggestions</Text>
-                      </Flex>
-                    }
-                  >
-                    <Command.Item value="hello">
+                  <Command.Group>
+                    <Command.Item
+                      value={`"${inputValue}"`}
+                      onSelect={() =>
+                        chrome.search.query({
+                          text: inputValue,
+                        })
+                      }
+                    >
                       <Flex
                         ai="center"
                         gap="2"
@@ -150,11 +171,11 @@ const CommandMenu = () => {
                           pl: "$5",
                         }}
                       >
-                        <TwitterOutlineIcon css={{ size: 15 }} />
-                        <Text>hello </Text>
+                        <SuggestionIcon />
+                        <Text>{inputValue}</Text>
                       </Flex>
                     </Command.Item>
-                  </Command.Group> */}
+                  </Command.Group>
                   {bookmarks.length !== 0 && (
                     <Command.Group
                       heading={
@@ -231,28 +252,33 @@ const Overlay = styled(motion.div, {
 export default CommandMenu;
 
 const StyledCommand = styled(Command, {
-  bg: "rgba(0,0,0,0.5)",
-  backdropFilter: "blur(10px)",
   width: "40vw",
-  color: "$text",
-  br: "$4",
-  pb: "$3",
+  color: "white",
+  br: 25,
+  overflow: "hidden",
   boxShadow: "0 0 0 1px gainsboro",
   "& [cmdk-chroma-header]": {
     px: "$4",
     py: "$2",
     ai: "center",
     gap: "$2",
+    bg: "rgba(30, 30, 30, 0.3)",
+    backdropFilter: "blur(50px)",
     "& input": {
       appearance: "none",
       outline: "none",
-      color: "$text",
+      color: "white",
       fontSize: "$md",
       border: "none",
       bg: "transparent",
       flex: 1,
       height: 40,
     },
+  },
+  "& [cmdk-list]": {
+    pb: "$3",
+    background: "rgba(30, 30, 30, 0.1)",
+    backdropFilter: "blur(50px)",
   },
   "& [cmdk-chroma-items]": {
     px: "$4",
