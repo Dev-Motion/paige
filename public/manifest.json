@@ -12,5 +12,8 @@
   "chrome_url_overrides": {
     "newtab": "./index.html"
   },
+  "background": {
+    "service_worker": "service-worker.js"
+  },
   "permissions": ["history", "bookmarks", "search"]
 }
