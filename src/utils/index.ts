@@ -1,6 +1,6 @@
 import { Photos } from "@store/slices/imageSlice";
 import useStore from "@store";
-
+import { cacheName } from "@constants";
 export function formatDate(date: Date) {
   return new Date(date).toLocaleDateString("en-US", {
     year: "numeric",
@@ -41,7 +41,7 @@ export function preloadImage(image: string) {
 }
 
 export function cacheImages(images: string[]) {
-  caches.open("paige-assets").then((cache) => {
+  caches.open(cacheName).then((cache) => {
     images.forEach((image) => {
       //check the image is already in the cache
       cache.match(image).then((response) => {
