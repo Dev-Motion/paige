@@ -62,7 +62,7 @@ const PopoverContent = styled(StitchesPopover.Content, {
   $$shadow: "$colors$textRGB",
   borderRadius: 4,
   px: 10,
-  pt: 20,
+  pt: 10,
   pr: 15,
   pb: 10,
   color: "$text",

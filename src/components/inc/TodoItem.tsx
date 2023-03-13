@@ -132,7 +132,9 @@ export const MenuButton = styled("button", {
   br: "$2",
   py: 2,
   px: 5,
+  width: "100%",
+  textAlign: "left",
   "&:hover": {
-    bg: "rgba($bgRGB, 0.5)",
+    bg: "rgba($textRGB, 0.1)",
   },
 });
