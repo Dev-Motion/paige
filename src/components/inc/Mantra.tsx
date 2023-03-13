@@ -11,18 +11,18 @@ const Input = styled("input", {
   border: "none",
   color: "$text",
   outline: "none",
-  "&:focus": {
-    borderBottom: "2px solid $text",
-  },
+  borderBottom: "2px solid $text",
 });
 const Mantra = () => {
-  const [value, setValue] = React.useState("Learning how to teach");
-  const [active, setActive] = React.useState(false);
+  const [value, setValue] = React.useState("");
+  const [active, setActive] = React.useState(true);
 
+  const empty = value.trim() === "";
+  console.log("empty: ", empty);
   return (
     <Box css={{ color: "$text", fontWeight: "$4" }}>
       <Text ta="center" fs="lg" as="h3">
-        Today
+        {empty || active ? "What is your Goal for today?" : "Today"}
       </Text>
       {active ? (
         <Box
@@ -37,7 +37,7 @@ const Mantra = () => {
             ref={(el) => el?.focus()}
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            onBlur={() => setActive(false)}
+            onBlur={() => setActive(empty)}
           />
         </Box>
       ) : (
