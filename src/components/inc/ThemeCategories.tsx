@@ -46,6 +46,7 @@ const ThemeCategories = () => {
 const Badge = styled("button", {
   appearance: "none",
   pd: "$1",
+  fontSize: "$xs",
   border: "none",
   outlineColor: "transparent",
   color: "$text",

@@ -15,17 +15,24 @@ const TopBar = () => {
       ai="center"
       css={{
         height: 60,
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
         px: "$6",
         flexDirection: left ? "row" : "row-reverse",
       }}
     >
       <IconButton
-        size="md"
+        size="sm"
         bg="bgLight"
         css={{
           backdropFilter: "blur(10px)",
-          border: "1px solid $bg",
+          border: "1px solid $text",
           include: "accessibleShadow",
+          "& svg": {
+            size: "60%",
+          },
         }}
         onClick={() => setOpen(true)}
       >

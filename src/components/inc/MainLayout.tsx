@@ -19,7 +19,7 @@ const MainLayout = () => {
       // fd="column"
       css={{
         height: "100vh",
-        gridTemplateRows: "auto 1fr auto",
+        gridTemplateRows: "1fr auto",
         overflow: "hidden",
       }}
     >
@@ -34,10 +34,12 @@ const MainLayout = () => {
         as="main"
         css={{
           flex: 1,
-          // gridTemplateRows: "1fr auto auto",
-          "@lg": {
-            gridTemplateRows: "1fr auto 1fr",
-          },
+          overflow: "hidden",
+          gridTemplateRows: "2fr 1fr 2fr",
+          // gridTemplateRows: "auto auto 1fr",
+          // "@lg": {
+          //   gridTemplateRows: "1fr auto 1fr",
+          // },
         }}
       >
         <Flex ai="center" jc="center">
@@ -48,7 +50,8 @@ const MainLayout = () => {
           ai="center"
           fd="column"
           css={{
-            mt: "$3",
+            pt: "$4",
+            height: "100%",
             "&>*": {
               flex: 1,
             },
@@ -56,11 +59,11 @@ const MainLayout = () => {
           gap={6}
         >
           <Mantra />
-          <Reminder />
+          {/* <Reminder /> */}
         </Flex>
       </Grid>
       <BottomBar />
-      <CommandMenu />
+      {/* <CommandMenu /> */}
       {/* To prevent the default chrome behaviour of focusing on the the chrome search bar */}
       <Flex
         as="input"

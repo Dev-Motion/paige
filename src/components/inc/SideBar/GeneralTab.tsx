@@ -65,7 +65,7 @@ const SideBarLayout = () => {
     }, 500);
   };
   return (
-    <Box>
+    <Box css={{ pb: "$5" }}>
       <Box css={{ mt: "$5", mb: "$4" }}>
         <Text as="h1" fs={{ "@initial": "xl", "@md": "2xl" }} fw="bold">
           Layout

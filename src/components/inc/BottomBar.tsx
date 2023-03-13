@@ -78,7 +78,7 @@ const BottomBar = () => {
         }}
       >
         <HoverReveal>
-          <HoverReveal.Header fs="md" fw="bold">
+          <HoverReveal.Header fs="sm" fw="semibold">
             “{quote.text}”
           </HoverReveal.Header>
           <HoverReveal.Footer
@@ -88,71 +88,89 @@ const BottomBar = () => {
             jc="center"
             css={{ width: "100%", color: "$text" }}
           >
-            <Text>{quote.author}</Text>
-            <Box
-              as="button"
-              css={{
-                appearance: "none",
-                border: "none",
-                bg: "transparent",
-                color: "$text",
-                "&>svg": {
-                  size: 15,
-                  fill: favourite ? "white" : "transparent",
-                },
-              }}
-              onClick={() => {
-                if (!favourite) {
-                  setFavouriteQuotes((quotes) => [...quotes, quote]);
-                } else {
-                  setFavouriteQuotes((quotes) =>
-                    quotes.filter((q) => q.id !== quote.id)
-                  );
-                }
-              }}
-            >
-              <Text css={{ include: "screenReaderOnly" }}>
-                Add to favourite quotes
-              </Text>
-              <HeartIcon />
-            </Box>
-            <Box
-              as="button"
-              css={{
-                appearance: "none",
-                border: "none",
-                bg: "transparent",
-                color: "$text",
-                "&>svg": {
-                  size: 15,
-                },
-              }}
-              onClick={() => getQuotes()}
-            >
-              <Text css={{ include: "screenReaderOnly" }}>Skip quote</Text>
-              <SkipIcon />
-            </Box>
-            <Box
-              as="a"
-              css={{
-                appearance: "none",
-                border: "none",
-                bg: "transparent",
-                color: "$text",
-                "&>svg": {
-                  size: 15,
-                },
-              }}
-              href={tweetHandler(
-                tweetText,
-                ["chroma", "inspring", "inspirational"],
-                "chroma"
-              )}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <TwitterOutlineIcon />
-            </Box>
+            <Text fs="2xs">{quote.author}</Text>
+            <Flex>
+              <Box
+                as="button"
+                css={{
+                  appearance: "none",
+                  border: "none",
+                  bg: "transparent",
+                  color: "$text",
+                  size: 20,
+                  br: "$round",
+                  "&:hover": {
+                    bg: "rgba($bgRGB,0.5)",
+                  },
+                  "&>svg": {
+                    size: 10,
+                    fill: favourite ? "white" : "transparent",
+                  },
+                }}
+                onClick={() => {
+                  if (!favourite) {
+                    setFavouriteQuotes((quotes) => [...quotes, quote]);
+                  } else {
+                    setFavouriteQuotes((quotes) =>
+                      quotes.filter((q) => q.id !== quote.id)
+                    );
+                  }
+                }}
+              >
+                <Text css={{ include: "screenReaderOnly" }}>
+                  Add to favourite quotes
+                </Text>
+                <HeartIcon />
+              </Box>
+              <Box
+                as="button"
+                css={{
+                  appearance: "none",
+                  border: "none",
+                  color: "$text",
+                  bg: "transparent",
+                  size: 20,
+                  br: "$round",
+                  "&:hover": {
+                    bg: "rgba($bgRGB,0.5)",
+                  },
+                  "&>svg": {
+                    size: 10,
+                  },
+                }}
+                onClick={() => getQuotes()}
+              >
+                <Text css={{ include: "screenReaderOnly" }}>Skip quote</Text>
+                <SkipIcon />
+              </Box>
+              <Box
+                as="a"
+                css={{
+                  appearance: "none",
+                  border: "none",
+                  bg: "transparent",
+                  color: "$text",
+                  size: 20,
+                  textAlign: "center",
+                  br: "$round",
+                  "&:hover": {
+                    bg: "rgba($bgRGB,0.5)",
+                  },
+                  "&>svg": {
+                    size: 10,
+                  },
+                }}
+                href={tweetHandler(
+                  tweetText,
+                  ["chroma", "inspring", "inspirational"],
+                  "chroma"
+                )}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <TwitterOutlineIcon />
+              </Box>
+            </Flex>
           </HoverReveal.Footer>
         </HoverReveal>
       </Box>

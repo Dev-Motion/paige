@@ -28,11 +28,11 @@ const TabContent = styled(Tabs.Content, {
 const MotionContainer = styled(motion.div, {
   height: "100vh",
   width: "50vw",
-  maxWidth: 600,
+  maxWidth: 550,
   minWidth: "200px",
   display: "grid",
   gridTemplateAreas: "'tablist tabcontent'",
-  gridTemplateColumns: "minmax(150px,180px) minmax(300px,1fr)",
+  gridTemplateColumns: "minmax(150px,170px) minmax(300px,1fr)",
   position: "fixed",
   zIndex: "$max",
   top: 0,
@@ -127,7 +127,7 @@ const SideBar = () => {
         right: 0,
         flexDirection: "row-reverse",
         gridTemplateAreas: "'tabcontent tablist'",
-        gridTemplateColumns: "minmax(260px,1fr) minmax(180px,200px) ",
+        gridTemplateColumns: "minmax(300px,1fr) minmax(150px,170px)",
       },
     };
   }
@@ -180,15 +180,21 @@ const SideBar = () => {
                 >
                   <IconButton
                     onClick={() => setSideBarOpen(false)}
-                    size="md"
+                    size="sm"
                     bg="bgLight"
                     css={{
                       boxShadow: "0 0 0 1px $colors$text",
+                      "& svg": {
+                        size: "60%",
+                      },
                     }}
                   >
                     <Hamburger
                       css={{
-                        transform: "rotate(-180deg)",
+                        transform:
+                          sideBarPosition === "left"
+                            ? "rotate(-180deg)"
+                            : "none",
                         color: "$text",
                       }}
                     />

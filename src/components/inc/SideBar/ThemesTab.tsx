@@ -13,25 +13,31 @@ const ThemesTab = () => {
     state.setAutoTheme,
   ]);
   return (
-    <Box css={{ pt: "$8", spacey: "$2" }}>
-      <Text as="h1" fs={{ "@initial": "xl", "@md": "2xl" }} fw="bold">
-        Themes
-      </Text>
-      <Text as="p" fs={{ "@initial": "sm", "@md": "md" }}>
-        Personalize your themes here
-      </Text>
-      <Flex jc="between">
-        <Text as="span" fs={{ "@initial": "xs", "@md": "sm" }}>
-          Auto theme
+    <Box css={{ pt: "$8", pb: "$5", spacey: "$5" }}>
+      <Box>
+        <Text as="h1" fs={{ "@initial": "xl", "@md": "2xl" }} fw="bold">
+          Themes
         </Text>
-        <Switch
-          checked={autoTheme}
-          onCheckedChange={(checked) => setAutoTheme(checked)}
-        />
-      </Flex>
-      <ThemeChanger />
-      <ThemeCategories />
-      <GalleryTabs />
+        <Text as="p" fs={{ "@initial": "sm", "@md": "md" }} css={{ mt: 8 }}>
+          Personalize your themes here
+        </Text>
+      </Box>
+      <Box>
+        <Flex jc="between" css={{ mb: 8 }}>
+          <Text as="span" fs={{ "@initial": "xs", "@md": "sm" }}>
+            Auto theme
+          </Text>
+          <Switch
+            checked={autoTheme}
+            onCheckedChange={(checked) => setAutoTheme(checked)}
+          />
+        </Flex>
+        <ThemeChanger />
+      </Box>
+      <Box>
+        <ThemeCategories />
+        <GalleryTabs />
+      </Box>
     </Box>
   );
 };
@@ -65,7 +71,7 @@ const ThemeChanger = () => {
       }}
     >
       <Text as="span" fs={{ "@initial": "xs", "@md": "sm" }}>
-        choose theme colors here
+        Choose theme colors
       </Text>
       <Flex jc="between" css={{ mt: "$2", maxWidth: "250px" }}>
         {availableThemes.map(({ name, color }) => {

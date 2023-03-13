@@ -59,7 +59,13 @@ const Time = () => {
           position: "relative",
         }}
       >
-        <Text as="h1" fs="6xl" fw={"bold"}>
+        <Text
+          as="h1"
+          fs="6xl"
+          css={{
+            fontWeight: 700,
+          }}
+        >
           {timeString}
         </Text>
         <Popover
@@ -79,7 +85,7 @@ const Time = () => {
           {isAM ? "am" : "pm"}
         </Text>
       )}
-      <Text fs="2xl" fw="bold" ta="center" css={{ mt: "$2" }}>
+      <Text fs="2xl" ta="center" css={{ mt: "$2", fontWeight: 700 }}>
         Good {getDaySegment(state.time)} Victor
       </Text>
     </Box>
