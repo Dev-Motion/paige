@@ -94,8 +94,8 @@ const PopoverClose = styled(StitchesPopover.Close, {
   all: "unset",
   fontFamily: "inherit",
   borderRadius: "100%",
-  height: 20,
-  width: 20,
+  height: 18,
+  width: 18,
   display: "inline-flex",
   alignItems: "center",
   justifyContent: "center",
@@ -103,7 +103,9 @@ const PopoverClose = styled(StitchesPopover.Close, {
   position: "absolute",
   top: 0,
   right: 0,
-
+  "& svg": {
+    size: "70%",
+  },
   "&:hover": { backgroundColor: "rgba($textRGB,0.2)" },
   "&:focus": { boxShadow: "0 0 0 2px rgba($textRGB,0.4)" },
 });

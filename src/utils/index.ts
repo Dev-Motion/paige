@@ -12,17 +12,15 @@ export function getDaySegment(time: Date | null) {
   const hours = time?.getHours() || 0;
   if (hours < 12 && hours >= 5) {
     return "morning";
-  } else if (hours >= 12 && hours < 17) {
+  } else if (hours >= 12 && hours < 18) {
     return "afternoon";
-  } else if (hours >= 17 && hours < 21) {
-    return "evening";
   } else {
-    return "night";
+    return "evening";
   }
 }
 export function processTime(time: Date, is24Hour: boolean) {
   const tHour = time.getHours();
-  const Hours = is24Hour ? tHour % 12 : tHour;
+  const Hours = is24Hour ? tHour : tHour > 12 ? tHour - 12 : tHour + 12;
   const Minutes = time.getMinutes();
   const isAM = tHour < 12;
   const timeString = `${Hours.toString().padStart(

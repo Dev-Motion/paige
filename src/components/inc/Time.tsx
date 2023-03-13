@@ -85,8 +85,8 @@ const Time = () => {
           {isAM ? "am" : "pm"}
         </Text>
       )}
-      <Text fs="2xl" ta="center" css={{ mt: "$2", fontWeight: 700 }}>
-        Good {getDaySegment(state.time)} Victor
+      <Text fs="2xl" ta="center" css={{ mt: "$2", fontWeight: 600 }}>
+        Good {getDaySegment(state.time)}, Victor
       </Text>
     </Box>
   );
