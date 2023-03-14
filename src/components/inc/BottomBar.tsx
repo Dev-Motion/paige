@@ -151,7 +151,8 @@ const BottomBar = () => {
                   bg: "transparent",
                   color: "$text",
                   size: 20,
-                  textAlign: "center",
+                  display: "grid",
+                  placeItems: "center",
                   br: "$round",
                   "&:hover": {
                     bg: "rgba($bgRGB,0.5)",
