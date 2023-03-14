@@ -281,10 +281,10 @@ export const WhiteTheme = createTheme("light-theme", {
     textRGB: "0,0,0",
   },
 });
-export const PurpleTheme = createTheme("purple-theme", {
+export const OrangeTheme = createTheme("orange-theme", {
   colors: {
-    bg: "#01AB9D",
-    bgRGB: "1, 171, 157",
+    bg: "#E2654C",
+    bgRGB: "226, 101, 76",
     text: "#FFFFFF",
     textRGB: "255,255,255",
   },
@@ -297,18 +297,34 @@ export const GoldTheme = createTheme("gold-theme", {
     textRGB: "255,255,255",
   },
 });
-export const BrownTheme = createTheme("brown-theme", {
+export const PersianGreenTheme = createTheme("persian-green-theme", {
   colors: {
-    bg: "#825e4a",
-    bgRGB: "130, 94, 74",
+    bg: "#01AB9D",
+    bgRGB: "1, 171, 157",
     text: "#FFFFFF",
     textRGB: "255,255,255",
   },
 });
-export const CaramelTheme = createTheme("caramel-theme", {
+export const PacificBlueTheme = createTheme("pacific-blue-theme", {
   colors: {
-    bg: "#FFD19B",
-    bgRGB: "255, 209, 155",
+    bg: "#1B9ECE",
+    bgRGB: "27, 158, 206",
+    text: "#FFFFFF",
+    textRGB: "255,255,255",
+  },
+});
+export const CeruleanBlueTheme = createTheme("cerulean-blue-theme", {
+  colors: {
+    bg: "#3053B9",
+    bgRGB: "48, 83, 185",
+    text: "#FFFFFF",
+    textRGB: "255,255,255",
+  },
+});
+export const IrisTheme = createTheme("iris-theme", {
+  colors: {
+    bg: "#6D33CC",
+    bgRGB: "109, 51, 204",
     text: "#FFFFFF",
     textRGB: "255,255,255",
   },

@@ -1,10 +1,12 @@
 import type { StateCreator } from "..";
 import {
   WhiteTheme,
-  PurpleTheme,
+  OrangeTheme,
   GoldTheme,
-  BrownTheme,
-  CaramelTheme,
+  PersianGreenTheme,
+  PacificBlueTheme,
+  CeruleanBlueTheme,
+  IrisTheme,
 } from "stitches.config";
 import { getTimeItem } from "@utils";
 import autoGetTheme from "@utils/autoTheme";
@@ -51,38 +53,51 @@ const createThemeSlice: StateCreator<ThemeSlice> = (set) => ({
   },
 });
 export default createThemeSlice;
-const themes = {
-  default: "darks",
-  light: WhiteTheme.className,
-  purple: PurpleTheme.className,
-  gold: GoldTheme.className,
-  brown: BrownTheme.className,
-  caramel: CaramelTheme.className,
-};
+
 export type AvailableThemes = (typeof availableThemes)[number]["name"];
+// #56E49B
+
+const themes = {
+  default: "dark-theme",
+  orange: OrangeTheme.className,
+  gold: GoldTheme.className,
+  persianGreen: PersianGreenTheme.className,
+  pacificBlue: PacificBlueTheme.className,
+  ceruleanBlue: CeruleanBlueTheme.className,
+  iris: IrisTheme.className,
+  light: WhiteTheme.className,
+};
 export const availableThemes = [
   {
     name: "default",
     color: "#000000",
   },
   {
-    name: "light",
-    color: "#ffffff",
-  },
-  {
-    name: "purple",
-    color: "#01AB9D",
+    name: "orange",
+    color: "#E2654C",
   },
   {
     name: "gold",
     color: "#F7A935",
   },
   {
-    name: "brown",
-    color: "#825e4a",
+    name: "persianGreen",
+    color: "#01AB9D",
   },
   {
-    name: "caramel",
-    color: "#FFD19B",
+    name: "pacificBlue",
+    color: "#1B9ECE",
+  },
+  {
+    name: "ceruleanBlue",
+    color: "#3053B9",
+  },
+  {
+    name: "iris",
+    color: "#6D33CC",
+  },
+  {
+    name: "light",
+    color: "#ffffff",
   },
 ] as const;
