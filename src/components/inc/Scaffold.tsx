@@ -13,7 +13,7 @@ const scaffoldCSS = css({
 });
 const Scaffold = () => {
   const photos = useStore((state) => state.photos);
-  const todayImage = getTimeItem(photos);
+  const todayImage = getTimeItem(photos) || photos.slice(-1)[0]; //TODO: add a default Value
   return (
     <>
       <Box

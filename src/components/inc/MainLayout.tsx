@@ -11,9 +11,8 @@ import {
 } from "@components/inc";
 import Portal from "@utils/Portals";
 
-const SideBar = lazy(() => import("./SideBar"));
-
 const MainLayout = () => {
+  const SideBar = lazy(() => import("./SideBar"));
   return (
     <Grid
       // fd="column"

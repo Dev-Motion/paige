@@ -12,7 +12,8 @@ import React from "react";
 
 const ImageInfo = () => {
   const photoAttributions = useStore((state) => state.photoAttributions);
-  const todayAttribution = getTimeItem(photoAttributions)!;
+  const todayAttribution =
+    getTimeItem(photoAttributions) || photoAttributions.slice(-1)[0]; //TODO: add a default Value
   const formatter = Intl.NumberFormat("en", { notation: "compact" });
   return (
     <Flex
