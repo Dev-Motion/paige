@@ -44,9 +44,9 @@ export default useStore;
 useStore.subscribe(
   (state) => state.photos,
   (photos) => {
+    console.log("running");
     const todayImage = getTimeItem(photos);
     preloadImage(todayImage?.urls.raw + imageQuality);
-    cacheImages(photos.map((image) => image.urls.raw + imageQuality));
   }
 );
 

@@ -1,4 +1,3 @@
-import { Photos } from "@store/slices/imageSlice";
 import useStore from "@store";
 import { cacheName } from "@constants";
 export function formatDate(date: Date) {
@@ -70,12 +69,8 @@ export function handleImages() {
   const today = new Date().toDateString();
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
-  const todayImage = photos.find(
-    (photo) => new Date(photo.for).toDateString() === today
-  );
-  const tomorrowImage = photos.find(
-    (photo) => new Date(photo.for).toDateString() === tomorrow.toDateString()
-  );
+  const todayImage = getTimeItem(photos);
+  const tomorrowImage = getTimeItem(photos, "tomorrow");
   const isOnline = navigator.onLine;
   // if online and no images or today's image is available
   // get new images

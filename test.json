@@ -1,40 +1,179 @@
-[
-  "theory",
-  [
-    "theory meaning",
-    "theory of music",
-    "theory of leadership",
-    "theory of consumer behaviour",
-    "theory x and y",
-    "theory of evolution",
-    "theory of production",
-    "theory of relativity"
-  ],
-  ["", "", "", "", "", "", "", ""],
-  [],
-  {
-    "google:clientdata": { "bpc": false, "tlw": false },
-    "google:suggestrelevance": [601, 600, 555, 554, 553, 552, 551, 550],
-    "google:suggestsubtypes": [
-      [512, 433],
-      [512],
-      [512],
-      [512],
-      [512],
-      [512, 433],
-      [512],
-      [512]
+{
+  "state": {
+    "sideBarPosition": "left",
+    "is24Hour": false,
+    "autoTheme": false,
+    "theme": "default",
+    "keywords": ["Wallpapers"],
+    "photos": [
+      {
+        "blur_hash": "LvJbNvRkaefk_Noeofj[R%ofbGjs",
+        "urls": {
+          "raw": "https://images.unsplash.com/photo-1677480517571-a74848a690cb?ixid=MnwzNTYwNjd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2Nzg4MjQwOTE&ixlib=rb-4.0.3",
+          "full": "https://images.unsplash.com/photo-1677480517571-a74848a690cb?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzNTYwNjd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2Nzg4MjQwOTE&ixlib=rb-4.0.3&q=80",
+          "regular": "https://images.unsplash.com/photo-1677480517571-a74848a690cb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNTYwNjd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2Nzg4MjQwOTE&ixlib=rb-4.0.3&q=80&w=1080",
+          "small": "https://images.unsplash.com/photo-1677480517571-a74848a690cb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNTYwNjd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2Nzg4MjQwOTE&ixlib=rb-4.0.3&q=80&w=400",
+          "thumb": "https://images.unsplash.com/photo-1677480517571-a74848a690cb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNTYwNjd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2Nzg4MjQwOTE&ixlib=rb-4.0.3&q=80&w=200",
+          "small_s3": "https://s3.us-west-2.amazonaws.com/images.unsplash.com/small/photo-1677480517571-a74848a690cb"
+        },
+        "color": "#d9d9d9",
+        "alt_description": "a river running through a lush green countryside",
+        "for": "2023-03-13T20:01:32.154Z"
+      },
+      {
+        "blur_hash": "LSA]~h$gOYtl{I$fS2rX=|xuWBof",
+        "urls": {
+          "raw": "https://images.unsplash.com/photo-1677775846092-03bd6b5ad320?ixid=MnwzNTYwNjd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2Nzg4MjQwOTE&ixlib=rb-4.0.3",
+          "full": "https://images.unsplash.com/photo-1677775846092-03bd6b5ad320?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzNTYwNjd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2Nzg4MjQwOTE&ixlib=rb-4.0.3&q=80",
+          "regular": "https://images.unsplash.com/photo-1677775846092-03bd6b5ad320?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNTYwNjd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2Nzg4MjQwOTE&ixlib=rb-4.0.3&q=80&w=1080",
+          "small": "https://images.unsplash.com/photo-1677775846092-03bd6b5ad320?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNTYwNjd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2Nzg4MjQwOTE&ixlib=rb-4.0.3&q=80&w=400",
+          "thumb": "https://images.unsplash.com/photo-1677775846092-03bd6b5ad320?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNTYwNjd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2Nzg4MjQwOTE&ixlib=rb-4.0.3&q=80&w=200",
+          "small_s3": "https://s3.us-west-2.amazonaws.com/images.unsplash.com/small/photo-1677775846092-03bd6b5ad320"
+        },
+        "color": "#260c0c",
+        "alt_description": "a close up of a window with water on it",
+        "for": "2023-03-14T20:01:24.667Z"
+      }
     ],
-    "google:suggesttype": [
-      "QUERY",
-      "QUERY",
-      "QUERY",
-      "QUERY",
-      "QUERY",
-      "QUERY",
-      "QUERY",
-      "QUERY"
+    "photoAttributions": [
+      {
+        "id": "pF31gP6A0ZA",
+        "created_at": "2023-02-27T06:49:25Z",
+        "width": 4195,
+        "height": 2797,
+        "description": null,
+        "alt_description": "a river running through a lush green countryside",
+        "links": {
+          "self": "https://api.unsplash.com/photos/pF31gP6A0ZA",
+          "html": "https://unsplash.com/photos/pF31gP6A0ZA",
+          "download": "https://unsplash.com/photos/pF31gP6A0ZA/download?ixid=MnwzNTYwNjd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2Nzg4MjQwOTE",
+          "download_location": "https://api.unsplash.com/photos/pF31gP6A0ZA/download?ixid=MnwzNTYwNjd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2Nzg4MjQwOTE"
+        },
+        "likes": 57,
+        "user": {
+          "id": "c3tuoD4AnDU",
+          "updated_at": "2023-03-14T09:40:34Z",
+          "username": "roma_kaiuk",
+          "name": "Roma Kaiuk🇺🇦",
+          "first_name": "Roma",
+          "last_name": "Kaiuk🇺🇦",
+          "twitter_username": null,
+          "portfolio_url": "https://www.buymeacoffee.com/RomkaKaiuk",
+          "bio": "Street,Nature, Abstract. Glory Ukraine! Thanks for every donation and cup of coffee. I am appreciated it. ",
+          "location": "Ukraine, Dnipro",
+          "links": {
+            "self": "https://api.unsplash.com/users/roma_kaiuk",
+            "html": "https://unsplash.com/fr/@roma_kaiuk",
+            "photos": "https://api.unsplash.com/users/roma_kaiuk/photos",
+            "likes": "https://api.unsplash.com/users/roma_kaiuk/likes",
+            "portfolio": "https://api.unsplash.com/users/roma_kaiuk/portfolio",
+            "following": "https://api.unsplash.com/users/roma_kaiuk/following",
+            "followers": "https://api.unsplash.com/users/roma_kaiuk/followers"
+          },
+          "profile_image": {
+            "small": "https://images.unsplash.com/profile-1584701170353-6172adde65afimage?ixlib=rb-4.0.3&crop=faces&fit=crop&w=32&h=32",
+            "medium": "https://images.unsplash.com/profile-1584701170353-6172adde65afimage?ixlib=rb-4.0.3&crop=faces&fit=crop&w=64&h=64",
+            "large": "https://images.unsplash.com/profile-1584701170353-6172adde65afimage?ixlib=rb-4.0.3&crop=faces&fit=crop&w=128&h=128"
+          },
+          "instagram_username": "roma_kaiuk",
+          "total_collections": 2,
+          "total_likes": 1009,
+          "total_photos": 371,
+          "accepted_tos": true,
+          "for_hire": true,
+          "social": {
+            "instagram_username": "roma_kaiuk",
+            "portfolio_url": "https://www.buymeacoffee.com/RomkaKaiuk",
+            "twitter_username": null,
+            "paypal_email": null
+          }
+        },
+        "location": {
+          "name": null,
+          "city": null,
+          "country": null,
+          "position": { "latitude": 0, "longitude": 0 }
+        },
+        "views": 1836328,
+        "downloads": 10781,
+        "for": "2023-03-13T20:01:32.154Z"
+      },
+      {
+        "id": "4nEMjSEZyeo",
+        "created_at": "2023-03-02T16:51:00Z",
+        "width": 7008,
+        "height": 4672,
+        "description": "Water through the window light. Neon light through a window. Car window light.",
+        "alt_description": "a close up of a window with water on it",
+        "links": {
+          "self": "https://api.unsplash.com/photos/4nEMjSEZyeo",
+          "html": "https://unsplash.com/photos/4nEMjSEZyeo",
+          "download": "https://unsplash.com/photos/4nEMjSEZyeo/download?ixid=MnwzNTYwNjd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2Nzg4MjQwOTE",
+          "download_location": "https://api.unsplash.com/photos/4nEMjSEZyeo/download?ixid=MnwzNTYwNjd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2Nzg4MjQwOTE"
+        },
+        "likes": 48,
+        "user": {
+          "id": "YWD6utjW3gE",
+          "updated_at": "2023-03-13T19:41:16Z",
+          "username": "nate072107",
+          "name": "NATHAN MULLET",
+          "first_name": "NATHAN",
+          "last_name": "MULLET",
+          "twitter_username": "nate072107",
+          "portfolio_url": null,
+          "bio": null,
+          "location": null,
+          "links": {
+            "self": "https://api.unsplash.com/users/nate072107",
+            "html": "https://unsplash.com/@nate072107",
+            "photos": "https://api.unsplash.com/users/nate072107/photos",
+            "likes": "https://api.unsplash.com/users/nate072107/likes",
+            "portfolio": "https://api.unsplash.com/users/nate072107/portfolio",
+            "following": "https://api.unsplash.com/users/nate072107/following",
+            "followers": "https://api.unsplash.com/users/nate072107/followers"
+          },
+          "profile_image": {
+            "small": "https://images.unsplash.com/profile-1625928792403-ef159432d80bimage?ixlib=rb-4.0.3&crop=faces&fit=crop&w=32&h=32",
+            "medium": "https://images.unsplash.com/profile-1625928792403-ef159432d80bimage?ixlib=rb-4.0.3&crop=faces&fit=crop&w=64&h=64",
+            "large": "https://images.unsplash.com/profile-1625928792403-ef159432d80bimage?ixlib=rb-4.0.3&crop=faces&fit=crop&w=128&h=128"
+          },
+          "instagram_username": "nate072107",
+          "total_collections": 0,
+          "total_likes": 3,
+          "total_photos": 257,
+          "accepted_tos": true,
+          "for_hire": true,
+          "social": {
+            "instagram_username": "nate072107",
+            "portfolio_url": null,
+            "twitter_username": "nate072107",
+            "paypal_email": null
+          }
+        },
+        "location": {
+          "name": null,
+          "city": null,
+          "country": null,
+          "position": { "latitude": null, "longitude": null }
+        },
+        "views": 157568,
+        "downloads": 1636,
+        "for": "2023-03-14T20:01:24.667Z"
+      }
     ],
-    "google:verbatimrelevance": 1300
-  }
-]
+    "todos": [
+      { "id": 1, "text": "Learn React", "completed": false },
+      { "id": 2, "text": "Learn TypeScript", "completed": false },
+      { "id": 3, "text": "Learn Tailwind", "completed": false }
+    ],
+    "quote": {
+      "id": "default",
+      "text": "Think lightly of yourself and deeply of the world.",
+      "author": "Miyamoto Musashi"
+    },
+    "quoteKeywords": [],
+    "quoteAuthor": "",
+    "favouriteQuotes": []
+  },
+  "version": 0
+}

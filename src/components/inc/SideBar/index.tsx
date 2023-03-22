@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { styled } from "stitches.config";
 import GeneralTab from "./GeneralTab";
 import ThemesTab from "./ThemesTab";
+import DailyMotivationTab from "./DailyMotivationTab";
 import useStore from "@store";
 import { ScrollArea } from "@components/inc";
 import { IconButton, Box, Flex } from "@components/base";
@@ -159,7 +160,7 @@ const SideBar = () => {
                   height: "100%",
                 }}
               >
-                {["General", "Themes"].map((item) => (
+                {["General", "Themes", "Daily Motivation"].map((item) => (
                   <TabTrigger key={item} value={item.toLowerCase()} asChild>
                     <MenuButton position={sideBarPosition}>
                       {item}
@@ -239,6 +240,30 @@ const SideBar = () => {
                   }}
                 >
                   <ThemesTab />
+                </ScrollArea>
+              </TabContent>
+              <TabContent
+                value="daily motivation"
+                css={{
+                  zIndex: "calc($max - 2)",
+                  height: "100%",
+                  overflow: "hidden",
+                  "& >*": {
+                    maxWidth: "100%",
+                  },
+                  "& > div > [data-radix-scroll-area-viewport]:first-of-type > div  ":
+                    {
+                      display: "unset !important",
+                      // border: "1px solid black",
+                    },
+                }}
+              >
+                <ScrollArea
+                  css={{
+                    height: "100%",
+                  }}
+                >
+                  <DailyMotivationTab />
                 </ScrollArea>
               </TabContent>
             </MotionContainer>
