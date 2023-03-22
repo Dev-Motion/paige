@@ -1,67 +1,15 @@
-import { getTimeItem } from "@utils";
+import { getTimeItem, getPicture } from "@utils";
 import { createApi } from "unsplash-js";
-import { Random as RandomImage } from "unsplash-js/dist/methods/photos/types";
 import type { StateCreator } from "..";
+import { Picture, PictureWithDate, Random, RandomPicture } from "src/types";
+import { defaultNextPhoto, defaultTodayPhoto } from "@constants";
 
-type Random = RandomImage & { views: number; downloads: number };
-
-export type Photos = Pick<
-  Random,
-  "blur_hash" | "urls" | "color" | "alt_description"
-> & { for: Date };
-
-export type PhotoAttribution = Omit<
-  Random & { for: Date },
-  | "blur_hash"
-  | "urls"
-  | "color"
-  | "promoted_at"
-  | "updated_at"
-  | "exif"
-  | "liked_by_user"
-  | "current_user_collections"
-  | "sponsorship"
->;
-
-function getPhotoInfo(photo: Random): Omit<Photos, "for"> {
-  const { blur_hash, urls, color, alt_description } = photo;
-  return { blur_hash, urls, color, alt_description };
-}
-function getPhotoAttribution(photo: Random): Omit<PhotoAttribution, "for"> {
-  const {
-    id,
-    created_at,
-    width,
-    height,
-    description,
-    alt_description,
-    links,
-    likes,
-    user,
-    location,
-    views,
-    downloads,
-  } = photo;
-  return {
-    id,
-    created_at,
-    width,
-    height,
-    description,
-    alt_description,
-    links,
-    likes,
-    user,
-    location,
-    views,
-    downloads,
-  };
-}
 export interface ImageSlice {
   keywords: string[];
   setKeywords: (keywords: string[]) => void;
-  photos: Photos[];
-  photoAttributions: PhotoAttribution[];
+  todayPhoto: PictureWithDate;
+  nextPhoto: Picture;
+
   // update meaning your are adding a new image(refresh is the opposite)
   getPhotos: (update: boolean) => Promise<void>;
 }
@@ -73,8 +21,8 @@ const unsplash = createApi({
 
 const createImageSlice: StateCreator<ImageSlice> = (set, get) => ({
   keywords: ["Wallpapers"],
-  photos: [],
-  photoAttributions: [],
+  todayPhoto: { ...defaultTodayPhoto, for: new Date() },
+  nextPhoto: defaultNextPhoto,
   setKeywords: (keywords) => {
     set({ keywords: keywords });
   },
@@ -91,37 +39,17 @@ const createImageSlice: StateCreator<ImageSlice> = (set, get) => ({
       });
 
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const response = (await result.response!) as Random[];
-      const photos = response.map((photo) => getPhotoInfo(photo));
+      const response = (await result.response!) as RandomPicture[];
       const today = new Date();
-      const photoAttributions = response.map((photo) =>
-        getPhotoAttribution(photo)
-      );
       if (update) {
-        set((state) => {
-          const todayPhoto = getTimeItem(state.photos);
-          const todayPhotoAttributions = getTimeItem(
-            state.photoAttributions,
-            "tomorrow"
-          );
-          return {
-            photos: [todayPhoto!, { ...photos[0], for: tomorrow }],
-            photoAttributions: [
-              todayPhotoAttributions!,
-              { ...photoAttributions[0], for: tomorrow },
-            ],
-          };
-        });
+        set((state) => ({
+          todayPhoto: { ...state.nextPhoto, for: today },
+          nextPhoto: getPicture(response[0]),
+        }));
       } else {
         set(() => ({
-          photos: [
-            { ...photos[0], for: today },
-            { ...photos[1], for: tomorrow },
-          ],
-          photoAttributions: [
-            { ...photoAttributions[0], for: today },
-            { ...photoAttributions[1], for: tomorrow },
-          ],
+          todayPhoto: { ...getPicture(response[0]), for: today },
+          nextPhoto: getPicture(response[1]),
         }));
       }
     } catch (e) {

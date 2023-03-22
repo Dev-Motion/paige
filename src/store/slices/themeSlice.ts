@@ -28,7 +28,7 @@ const createThemeSlice: StateCreator<ThemeSlice> = (set) => ({
   setAutoTheme: (autoTheme) => {
     set((state) => {
       if (autoTheme) {
-        const todayImage = getTimeItem(state.photos);
+        const todayImage = state.todayPhoto;
         const set_theme = autoGetTheme(todayImage?.color ?? "#000000");
         changeTheme(set_theme, themes[set_theme]);
         return { autoTheme, theme: set_theme };
@@ -41,7 +41,7 @@ const createThemeSlice: StateCreator<ThemeSlice> = (set) => ({
   setTheme: (theme) => {
     set((state) => {
       let set_theme: AvailableThemes;
-      const todayImage = getTimeItem(state.photos);
+      const todayImage = state.todayPhoto;
       set_theme = theme || state.theme;
       if (state.autoTheme) {
         set_theme = theme || autoGetTheme(todayImage?.color ?? "#000000");
