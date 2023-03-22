@@ -4,7 +4,7 @@ import { Box } from "@components/base";
 import { imageQuality } from "@constants";
 import { BlurhashCanvas } from "react-blurhash";
 import { css } from "stitches.config";
-import { getTimeItem } from "@utils";
+import { getPictureInfo } from "@utils";
 
 const scaffoldCSS = css({
   position: "absolute",
@@ -12,20 +12,28 @@ const scaffoldCSS = css({
   overflow: "hidden",
 });
 const Scaffold = () => {
-  const photos = useStore((state) => state.photos);
-  const todayImage = getTimeItem(photos) || photos.slice(-1)[0]; //TODO: add a default Value
+  const photos = useStore((state) => state.todayPhoto);
+  const nextImage = useStore((state) => state.nextPhoto);
+  const todayImage = getPictureInfo(photos);
   return (
     <>
       <Box
         css={{
-          background: `url(${todayImage?.urls?.raw + imageQuality})`,
+          background: `url(${todayImage.urls?.raw + imageQuality})`,
           zIndex: -1,
           backgroundPosition: "center",
           backgroundSize: "cover",
           transition: "background 0.5s ease-in-out",
         }}
         className={"scaffold " + scaffoldCSS()}
-      ></Box>
+      >
+        <Box
+          css={{
+            background: `url(${nextImage.urls?.raw + imageQuality})`,
+            include: "screenReaderOnly",
+          }}
+        />
+      </Box>
       <Box
         className={scaffoldCSS()}
         css={{

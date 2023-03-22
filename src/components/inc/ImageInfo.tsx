@@ -7,13 +7,12 @@ import {
   WatchIcon,
 } from "@components/icons";
 import useStore from "@store";
-import { getTimeItem } from "@utils";
+import { getPictureAttribution } from "@utils";
 import React from "react";
 
 const ImageInfo = () => {
-  const photoAttributions = useStore((state) => state.photoAttributions);
-  const todayAttribution =
-    getTimeItem(photoAttributions) || photoAttributions.slice(-1)[0]; //TODO: add a default Value
+  const todayPhoto = useStore((state) => state.todayPhoto);
+  const todayAttribution = getPictureAttribution(todayPhoto);
   const formatter = Intl.NumberFormat("en", { notation: "compact" });
   return (
     <Flex
