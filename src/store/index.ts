@@ -42,14 +42,14 @@ export default useStore;
 // Actions
 
 useStore.subscribe(
-  (state) => state.photos,
-  (photos) => {
-    console.log("running");
-    const todayImage = getTimeItem(photos);
-    preloadImage(todayImage?.urls.raw + imageQuality);
+  (state) => state.todayPhoto,
+  (photo) => {
+    preloadImage(photo.urls.raw + imageQuality);
   }
 );
-
+// add image to link tag in head
+preloadImage(useStore.getState().todayPhoto.urls.raw + imageQuality, true);
+preloadImage(useStore.getState().nextPhoto.urls.raw + imageQuality);
 handleImages();
 
 useStore.getState().setTheme();

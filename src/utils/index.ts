@@ -1,5 +1,13 @@
 import useStore from "@store";
 import { cacheName } from "@constants";
+import {
+  Random,
+  Picture,
+  RandomPicture,
+  PictureInfo,
+  PictureAttribution,
+  PictureWithDate,
+} from "@types";
 export function formatDate(date: Date) {
   return new Date(date).toLocaleDateString("en-US", {
     year: "numeric",
@@ -29,11 +37,17 @@ export function processTime(time: Date, is24Hour: boolean) {
   return { timeString, isAM };
 }
 // Caching and Preloading Images
-export function preloadImage(image: string) {
+export function preloadImage(image: string, priority?: boolean) {
   const link = document.createElement("link");
   link.rel = "preload";
   link.href = image;
   link.as = "image";
+  // set fetpriority
+  if (priority) {
+    link.setAttribute("fetchpriority", "high");
+  } else {
+    link.setAttribute("fetchpriority", "low");
+  }
   document.head.appendChild(link);
 }
 
@@ -65,12 +79,11 @@ export function getTimeItem<T extends { for: Date }[]>(
 }
 
 export function handleImages() {
-  const photos = useStore.getState().photos;
+  const todayPhoto = useStore.getState().todayPhoto;
+  const nextPhoto = useStore.getState().nextPhoto;
   const today = new Date().toDateString();
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
-  const todayImage = getTimeItem(photos);
-  const tomorrowImage = getTimeItem(photos, "tomorrow");
   const isOnline = navigator.onLine;
   // if online and no images or today's image is available
   // get new images
@@ -78,9 +91,12 @@ export function handleImages() {
   // get tomorrow's image
   // write the code
   if (isOnline) {
-    if (photos.length === 0 || !todayImage) {
+    if (!todayPhoto && !nextPhoto) {
       useStore.getState().getPhotos(false);
-    } else if (!tomorrowImage && todayImage) {
+    } else if (
+      new Date(todayPhoto.for).toDateString() !== today ||
+      !nextPhoto
+    ) {
       useStore.getState().getPhotos(true);
     }
   }
@@ -92,4 +108,76 @@ export function tweetHandler(text: string, hashtags: string[], via: string) {
     text
   )}&via=${via}&hashtags=${hashtags.join(",")}`;
   return url;
+}
+export function getPicture(photo: RandomPicture): Picture {
+  const {
+    id,
+    created_at,
+    width,
+    height,
+    description,
+    alt_description,
+    links,
+    likes,
+    user,
+    location,
+    views,
+    downloads,
+    blur_hash,
+    urls,
+    color,
+  } = photo;
+  return {
+    id,
+    created_at,
+    width,
+    height,
+    description,
+    alt_description,
+    links,
+    likes,
+    user,
+    location,
+    views,
+    downloads,
+    blur_hash,
+    urls,
+    color,
+  };
+}
+export function getPictureInfo(photo: PictureWithDate): PictureInfo {
+  const { blur_hash, urls, color, alt_description } = photo;
+  return { blur_hash, urls, color, alt_description };
+}
+export function getPictureAttribution(
+  photo: PictureWithDate
+): PictureAttribution {
+  const {
+    id,
+    created_at,
+    width,
+    height,
+    description,
+    alt_description,
+    links,
+    likes,
+    user,
+    location,
+    views,
+    downloads,
+  } = photo;
+  return {
+    id,
+    created_at,
+    width,
+    height,
+    description,
+    alt_description,
+    links,
+    likes,
+    user,
+    location,
+    views,
+    downloads,
+  };
 }
