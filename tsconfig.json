@@ -24,7 +24,8 @@
       "@context/*": ["./src/context/*"],
       "@store": ["./src/store"],
       "@store/*": ["./src/store/*"],
-      "@constants": ["./src/constants"]
+      "@constants": ["./src/constants"],
+      "@types": ["./src/types"]
     }
   },
   "include": ["src"],

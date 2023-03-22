@@ -37,6 +37,10 @@ export default defineConfig({
         find: "@constants",
         replacement: pathResolve("src/constants"),
       },
+      {
+        find: "@types",
+        replacement: pathResolve("src/types"),
+      },
     ],
   },
   build: {
