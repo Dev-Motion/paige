@@ -45,6 +45,7 @@ useStore.subscribe(
   (state) => state.todayPhoto,
   (photo) => {
     preloadImage(photo.urls.raw + imageQuality);
+    useStore.getState().setTheme();
   }
 );
 // add image to link tag in head
