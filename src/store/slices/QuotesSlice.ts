@@ -12,7 +12,7 @@ export interface QuotesSlice {
   ) => void;
 }
 
-interface Quote {
+export interface Quote {
   id: string;
   text: string;
   author: string;
@@ -30,7 +30,7 @@ interface QuotableReturn {
   dateModified: string;
 }
 
-const createQuotesSlice: StateCreator<QuotesSlice> = (set) => ({
+const createQuotesSlice: StateCreator<QuotesSlice> = (set, get) => ({
   quote: {
     id: "default",
     text: "Think lightly of yourself and deeply of the world.",
@@ -38,7 +38,10 @@ const createQuotesSlice: StateCreator<QuotesSlice> = (set) => ({
     for: new Date(),
   },
   getQuotes: () => {
-    fetch("https://api.quotable.io/random?minLength=100&maxLength=100")
+    fetch(
+      "https://api.quotable.io/random?minLength=40&maxLength=100&tags=" +
+        get().quoteKeywords.join("|")
+    )
       .then((response) => response.json())
       .then((data: QuotableReturn) => {
         set((state) => ({
@@ -51,7 +54,7 @@ const createQuotesSlice: StateCreator<QuotesSlice> = (set) => ({
         }));
       });
   },
-  quoteKeywords: [],
+  quoteKeywords: ["inspirational", "motivational"],
   quoteAuthor: "",
   setQuoteKeywords: (keywords) => {
     set((state) => ({ quoteKeywords: keywords }));

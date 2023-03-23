@@ -44,11 +44,13 @@ const Input = styled("input", {
     borderBottom: "2px solid rgba($textRGB,1)",
   },
 });
-const TagInput = () => {
-  const [tags, setTags] = useStore((state) => [
-    state.keywords,
-    state.setKeywords,
-  ]);
+const TagInput = ({
+  tags,
+  setTags,
+}: {
+  tags: string[];
+  setTags: (tags: string[]) => void;
+}) => {
   const onEnterPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === " " && e.currentTarget.value.trim()) {
       console.log("Enter key pressed");
