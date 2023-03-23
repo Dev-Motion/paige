@@ -104,7 +104,7 @@ const BottomBar = () => {
                   },
                   "&>svg": {
                     size: 10,
-                    fill: favourite ? "white" : "transparent",
+                    fill: favourite ? "$text" : "transparent",
                   },
                 }}
                 onClick={() => {

@@ -11,8 +11,22 @@ import { getPictureAttribution } from "@utils";
 import React from "react";
 
 const ImageInfo = () => {
-  const todayPhoto = useStore((state) => state.todayPhoto);
+  const [todayPhoto, favoritePhotos, setFavoritePhotos] = useStore(
+    (state) =>
+      [state.todayPhoto, state.favoritePhotos, state.setFavoritePhotos] as const
+  );
   const todayAttribution = getPictureAttribution(todayPhoto);
+  const isFavorite = favoritePhotos.some((photo) => photo.id === todayPhoto.id);
+  function ToggleFavorite() {
+    const { for: notNeeded, ...photo } = todayPhoto;
+    if (isFavorite) {
+      setFavoritePhotos(
+        favoritePhotos.filter((photo) => photo.id !== todayPhoto.id)
+      );
+    } else {
+      setFavoritePhotos([...favoritePhotos, photo]);
+    }
+  }
   const formatter = Intl.NumberFormat("en", { notation: "compact" });
   return (
     <Flex
@@ -31,8 +45,15 @@ const ImageInfo = () => {
           top: -10,
           right: -10,
         }}
+        onClick={ToggleFavorite}
       >
-        <StarIcon css={{ size: "$4" }} />
+        <StarIcon
+          css={{
+            size: "$4",
+            fill: isFavorite ? "$text" : "transparent",
+            transition: "all 300ms ease-in-out",
+          }}
+        />
       </IconButton>
       <Text>
         {todayAttribution?.description || todayAttribution?.alt_description}

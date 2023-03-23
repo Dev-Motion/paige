@@ -9,6 +9,8 @@ export interface ImageSlice {
   setKeywords: (keywords: string[]) => void;
   todayPhoto: PictureWithDate;
   nextPhoto: Picture;
+  favoritePhotos: Picture[];
+  setFavoritePhotos: (photos: Picture[]) => void;
 
   // update meaning your are adding a new image(refresh is the opposite)
   getPhotos: (update: boolean) => Promise<void>;
@@ -22,6 +24,10 @@ const unsplash = createApi({
 const createImageSlice: StateCreator<ImageSlice> = (set, get) => ({
   keywords: ["Wallpapers"],
   todayPhoto: { ...defaultTodayPhoto, for: new Date() },
+  favoritePhotos: [],
+  setFavoritePhotos: (photos) => {
+    set({ favoritePhotos: photos });
+  },
   nextPhoto: defaultNextPhoto,
   setKeywords: (keywords) => {
     set({ keywords: keywords });

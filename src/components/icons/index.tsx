@@ -403,16 +403,17 @@ export function WatchIcon({ css = {} }: { css?: CSS }) {
 export function StarIcon({ css = {} }: { css?: CSS }) {
   return (
     <svg
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="currentColor"
       className={styledCss(css)()}
     >
       <path
-        d="M16 5.792L10.248 5.296L8 0L5.752 5.304L0 5.792L4.368 9.576L3.056 15.2L8 12.216L12.944 15.2L11.64 9.576L16 5.792ZM8 10.72L4.992 12.536L5.792 9.112L3.136 6.808L6.64 6.504L8 3.28L9.368 6.512L12.872 6.816L10.216 9.12L11.016 12.544L8 10.72Z"
-        fill="white"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"
       />
     </svg>
   );
