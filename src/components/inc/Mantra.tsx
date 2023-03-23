@@ -3,17 +3,6 @@ import useStore from "@store";
 import { Box, Text } from "@components/base";
 import { styled } from "stitches.config";
 
-const Input = styled("input", {
-  fontSize: "$xl",
-  ta: "center",
-  bg: "transparent",
-  appearance: "none",
-  py: "$1",
-  border: "none",
-  color: "$text",
-  outline: "none",
-  borderBottom: "2px solid $text",
-});
 const Mantra = () => {
   const [value, setValue] = useStore((state) => [state.goal, state.setGoal]);
   const empty = value.text.trim() === "";
@@ -25,7 +14,7 @@ const Mantra = () => {
       <Text ta="center" fs="lg" as="h3">
         {empty || active ? "What is your Goal for today?" : "Today"}
       </Text>
-      {active ? (
+      {empty || active ? (
         <Box
           as="form"
           onKeyDown={(e) => {
@@ -35,7 +24,7 @@ const Mantra = () => {
           }}
         >
           <Input
-            ref={(el) => el?.focus()}
+            autoFocus
             value={value.text}
             onChange={(e) => setValue({ text: e.target.value, for: value.for })}
             onBlur={() => setActive(empty)}
@@ -57,3 +46,14 @@ const Mantra = () => {
 };
 
 export default Mantra;
+const Input = styled("input", {
+  fontSize: "$xl",
+  ta: "center",
+  bg: "transparent",
+  appearance: "none",
+  py: "$1",
+  border: "none",
+  color: "$text",
+  outline: "none",
+  borderBottom: "2px solid $text",
+});
