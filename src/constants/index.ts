@@ -1,7 +1,8 @@
 export { default as galleryTabs } from "./galleryTabs";
 export { default as mixins } from "./mixins";
 const imageQuality = "&w=2048&q=80&auto=format&dpr=2";
-export { imageQuality };
+const tempImageQuality = "&w=1080&q=80&auto=format";
+export { imageQuality, tempImageQuality };
 export const cacheName = "paige-assets";
 
 export const defaultTodayPhoto = {

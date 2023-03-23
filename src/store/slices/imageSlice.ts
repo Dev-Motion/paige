@@ -7,11 +7,16 @@ import { defaultNextPhoto, defaultTodayPhoto } from "@constants";
 export interface ImageSlice {
   keywords: string[];
   setKeywords: (keywords: string[]) => void;
+  temporaryBackground: { bg: string; blur_hash: string };
+  setTemporaryBackground: (tempBg: ImageSlice["temporaryBackground"]) => void;
   todayPhoto: PictureWithDate;
+  setTodayPhoto: (photo: PictureWithDate) => void;
   nextPhoto: Picture;
+  cloudPhotos: Picture[];
+  // create react query like api for getCloudPhotos
+  getCloudPhotos: (fetchmore?: boolean) => void;
   favoritePhotos: Picture[];
   setFavoritePhotos: (photos: Picture[]) => void;
-
   // update meaning your are adding a new image(refresh is the opposite)
   getPhotos: (update: boolean) => Promise<void>;
 }
@@ -24,11 +29,38 @@ const unsplash = createApi({
 const createImageSlice: StateCreator<ImageSlice> = (set, get) => ({
   keywords: ["Wallpapers"],
   todayPhoto: { ...defaultTodayPhoto, for: new Date() },
+  setTodayPhoto: (photo) => {
+    set({ todayPhoto: photo });
+  },
+  temporaryBackground: {
+    bg: "",
+    blur_hash: "",
+  },
+  setTemporaryBackground: (tempBg) => {
+    set({ temporaryBackground: tempBg });
+  },
+  nextPhoto: defaultNextPhoto,
+  cloudPhotos: [],
+  getCloudPhotos: async (fetchmore) => {
+    try {
+      const count = fetchmore ? 4 : 6;
+      const result = await unsplash.photos.getRandom({
+        topicIds: get().keywords,
+        orientation: "landscape",
+        count,
+        featured: true,
+      });
+      const response = (await result.response!) as RandomPicture[];
+      const pictures = response.map((resp) => getPicture(resp));
+      set({ cloudPhotos: pictures });
+    } catch (err) {
+      const mute = err;
+    }
+  },
   favoritePhotos: [],
   setFavoritePhotos: (photos) => {
     set({ favoritePhotos: photos });
   },
-  nextPhoto: defaultNextPhoto,
   setKeywords: (keywords) => {
     set({ keywords: keywords });
   },
@@ -58,8 +90,8 @@ const createImageSlice: StateCreator<ImageSlice> = (set, get) => ({
           nextPhoto: getPicture(response[1]),
         }));
       }
-    } catch (e) {
-      console.log(e);
+    } catch (err) {
+      const mute = err;
     }
   },
 });

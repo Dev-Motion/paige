@@ -56,5 +56,6 @@ handleImages();
 handleQuotes();
 // fetches goals when stale
 handleGoals();
+useStore.getState().getCloudPhotos();
 
 useStore.getState().setTheme();

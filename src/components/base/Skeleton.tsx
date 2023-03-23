@@ -14,10 +14,12 @@ const shimmer = keyframes({
 const Skeleton = ({
   width,
   height,
+  aspectRatio,
   br,
 }: {
-  width: CSS["width"];
-  height: CSS["height"];
+  width?: CSS["width"];
+  height?: CSS["height"];
+  aspectRatio?: CSS["aspectRatio"];
   br?: CSS["borderRadius"];
 }) => {
   return (
@@ -25,6 +27,7 @@ const Skeleton = ({
       css={{
         width,
         height,
+        aspectRatio,
         borderRadius: br,
       }}
     />
@@ -32,7 +35,8 @@ const Skeleton = ({
 };
 
 const BareSkeleton = styled("div", {
-  backgroundImage: "linear-gradient(270deg,#111,#333,#333,#111)",
+  backgroundImage:
+    "linear-gradient(270deg,rgba($textRGB,0.5),rgba($bgRGB,0.5),rgba($bgRGB,0.5),rgba($textRGB,0.5))",
   backgroundSize: "400% 100%",
   animation: `${shimmer} 8s ease-in-out infinite`,
 });

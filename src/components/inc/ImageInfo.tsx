@@ -50,6 +50,7 @@ const ImageInfo = () => {
         <StarIcon
           css={{
             size: "$4",
+            color: "$text",
             fill: isFavorite ? "$text" : "transparent",
             transition: "all 300ms ease-in-out",
           }}

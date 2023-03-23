@@ -12,14 +12,19 @@ const scaffoldCSS = css({
   overflow: "hidden",
 });
 const Scaffold = () => {
-  const photos = useStore((state) => state.todayPhoto);
-  const nextImage = useStore((state) => state.nextPhoto);
+  const [photos, nextImage, temporaryBackground] = useStore((state) => [
+    state.todayPhoto,
+    state.nextPhoto,
+    state.temporaryBackground,
+  ]);
   const todayImage = getPictureInfo(photos);
   return (
     <>
       <Box
         css={{
-          background: `url(${todayImage.urls?.raw + imageQuality})`,
+          background: `url(${
+            temporaryBackground.bg || todayImage.urls?.raw + imageQuality
+          })`,
           zIndex: -1,
           backgroundPosition: "center",
           backgroundSize: "cover",
@@ -42,7 +47,7 @@ const Scaffold = () => {
       >
         {todayImage?.blur_hash && (
           <BlurhashCanvas
-            hash={todayImage.blur_hash}
+            hash={temporaryBackground.blur_hash || todayImage.blur_hash}
             style={{ height: "100%", width: "100%" }}
             punch={1}
           />
