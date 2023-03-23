@@ -2,6 +2,8 @@ import type { StateCreator } from "..";
 
 export interface TodoSlice {
   todos: Todo[];
+  goal: Goal;
+  setGoal: (goal: Goal) => void;
   addTodo: (todo: Todo) => void;
   removeTodo: (id: number) => void;
   toggleTodo: (id: number) => void;
@@ -14,7 +16,18 @@ interface Todo {
   text: string;
   completed: boolean;
 }
+interface Goal {
+  text: string;
+  for: Date;
+}
 const createTodoSlice: StateCreator<TodoSlice> = (set) => ({
+  goal: {
+    text: "",
+    for: new Date(),
+  },
+  setGoal: (goal) => {
+    set((state) => ({ goal }));
+  },
   todos: [
     { id: 1, text: "Learn React", completed: false },
     { id: 2, text: "Learn TypeScript", completed: false },

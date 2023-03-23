@@ -27,7 +27,7 @@ export function getDaySegment(time: Date | null) {
 }
 export function processTime(time: Date, is24Hour: boolean) {
   const tHour = time.getHours();
-  const Hours = is24Hour ? tHour : tHour > 12 ? tHour - 12 : tHour + 12;
+  const Hours = is24Hour ? tHour : tHour > 12 ? tHour - 12 : tHour;
   const Minutes = time.getMinutes();
   const isAM = tHour < 12;
   const timeString = `${Hours.toString().padStart(
@@ -101,7 +101,30 @@ export function handleImages() {
     }
   }
 }
+export function handleQuotes() {
+  const todayQuote = useStore.getState().quote;
+  const isOnline = navigator.onLine;
+  const today = new Date().toDateString();
+  const isStale = new Date(todayQuote.for).toDateString() !== today;
+  if (isOnline) {
+    if (!todayQuote || isStale) {
+      useStore.getState().getQuotes();
+    }
+  }
+}
 
+export function handleGoals() {
+  const todayGoal = useStore.getState().goal;
+  const isOnline = navigator.onLine;
+  const today = new Date().toDateString();
+  const isStale = new Date(todayGoal.for).toDateString() !== today;
+  if (isOnline) {
+    if (!todayGoal || isStale) {
+      useStore.getState().setGoal({ text: "", for: new Date() });
+      console.log("checkeddddd");
+    }
+  }
+}
 export function tweetHandler(text: string, hashtags: string[], via: string) {
   const baseUrl = "https://twitter.com/intent/tweet";
   const url = `${baseUrl}?text=${encodeURI(

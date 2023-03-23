@@ -16,6 +16,7 @@ interface Quote {
   id: string;
   text: string;
   author: string;
+  for: Date;
 }
 
 interface QuotableReturn {
@@ -34,6 +35,7 @@ const createQuotesSlice: StateCreator<QuotesSlice> = (set) => ({
     id: "default",
     text: "Think lightly of yourself and deeply of the world.",
     author: "Miyamoto Musashi",
+    for: new Date(),
   },
   getQuotes: () => {
     fetch("https://api.quotable.io/random?minLength=100&maxLength=100")
@@ -44,6 +46,7 @@ const createQuotesSlice: StateCreator<QuotesSlice> = (set) => ({
             id: data._id,
             text: data.content,
             author: data.author,
+            for: new Date(),
           },
         }));
       });

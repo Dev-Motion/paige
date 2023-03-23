@@ -4,7 +4,7 @@ import { persist, subscribeWithSelector } from "zustand/middleware";
 import createThemeSlice, { ThemeSlice } from "./slices/themeSlice";
 import createImageSlice, { ImageSlice } from "./slices/imageSlice";
 import createTodoSlice, { TodoSlice } from "./slices/todoSlice";
-import { preloadImage, cacheImages, getTimeItem, handleImages } from "@utils";
+import { preloadImage, handleImages, handleQuotes, handleGoals } from "@utils";
 import { imageQuality } from "@constants";
 import createQuotesSlice, { QuotesSlice } from "./slices/QuotesSlice";
 
@@ -50,6 +50,11 @@ useStore.subscribe(
 // add image to link tag in head
 preloadImage(useStore.getState().todayPhoto.urls.raw + imageQuality, true);
 preloadImage(useStore.getState().nextPhoto.urls.raw + imageQuality);
+// fetches images when stale
 handleImages();
+// fetches quotes when stale
+handleQuotes();
+// fetches goals when stale
+handleGoals();
 
 useStore.getState().setTheme();

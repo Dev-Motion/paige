@@ -1,4 +1,5 @@
 import React from "react";
+import useStore from "@store";
 import { Box, Text } from "@components/base";
 import { styled } from "stitches.config";
 
@@ -14,10 +15,10 @@ const Input = styled("input", {
   borderBottom: "2px solid $text",
 });
 const Mantra = () => {
-  const [value, setValue] = React.useState("");
-  const [active, setActive] = React.useState(true);
+  const [value, setValue] = useStore((state) => [state.goal, state.setGoal]);
+  const empty = value.text.trim() === "";
+  const [active, setActive] = React.useState(empty);
 
-  const empty = value.trim() === "";
   console.log("empty: ", empty);
   return (
     <Box css={{ color: "$text", fontWeight: "$4" }}>
@@ -35,8 +36,8 @@ const Mantra = () => {
         >
           <Input
             ref={(el) => el?.focus()}
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
+            value={value.text}
+            onChange={(e) => setValue({ text: e.target.value, for: value.for })}
             onBlur={() => setActive(empty)}
           />
         </Box>
@@ -48,7 +49,7 @@ const Mantra = () => {
             setActive(true);
           }}
         >
-          {value}
+          {value.text}
         </Text>
       )}
     </Box>
