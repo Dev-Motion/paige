@@ -22,7 +22,7 @@
     "@radix-ui/react-tabs": "^1.0.1",
     "@stitches/react": "^1.2.8",
     "blurhash": "^2.0.4",
-    "cmdk": "^0.1.21",
+    "cmdk": "^0.2.0",
     "framer-motion": "^9.0.0",
     "react": "^18.2.0",
     "react-blurhash": "^0.3.0",
