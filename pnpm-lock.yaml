@@ -11,7 +11,7 @@ specifiers:
   '@radix-ui/react-switch': ^1.0.1
   '@radix-ui/react-tabs': ^1.0.1
   '@stitches/react': ^1.2.8
-  '@types/chrome': ^0.0.217
+  '@types/chrome': ^0.0.225
   '@types/node': ^18.11.9
   '@types/react': ^18.0.24
   '@types/react-dom': ^18.0.8
@@ -61,7 +61,7 @@ dependencies:
 devDependencies:
   '@commitlint/cli': 17.2.0
   '@commitlint/config-conventional': 17.2.0
-  '@types/chrome': 0.0.217
+  '@types/chrome': 0.0.225
   '@types/node': 18.11.9
   '@types/react': 18.0.25
   '@types/react-dom': 18.0.8
@@ -1441,8 +1441,8 @@ packages:
     resolution: {integrity: sha512-yOlFc+7UtL/89t2ZhjPvvB/DeAr3r+Dq58IgzsFkOAvVC6NMJXmCGjbptdXdR9qsX7pKcTL+s87FtYREi2dEEQ==}
     dev: true
 
-  /@types/chrome/0.0.217:
-    resolution: {integrity: sha512-q8fLzCCoHiR9gYRoqvrx12+HaJjRTqUom5Ks/wLSR8Ac83qAqWaA4NgUBUcDjM1O1ACczygxIHCEENXs1zmbqQ==}
+  /@types/chrome/0.0.225:
+    resolution: {integrity: sha512-acSFQN7X0/fjF6PSP0Ki9TlwWsEeJeh5WclMYilJSHHp+ayLDMD/YeSIUzsodwLKPZQ9h8SyiL13/pPab8M4RA==}
     dependencies:
       '@types/filesystem': 0.0.32
       '@types/har-format': 1.2.9
