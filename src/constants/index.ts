@@ -201,3 +201,26 @@ export const defaultNextPhoto = {
   views: 1284376,
   downloads: 11733,
 };
+export const searchProviders = [
+  {
+    name: "Google",
+    url: "https://www.google.com/search?q=",
+    image: "/images/google.png",
+  },
+  {
+    name: "DuckDuckGo",
+    url: "https://duckduckgo.com/?q=",
+    image: "/images/duckduckgo.png",
+  },
+  {
+    name: "Yahoo",
+    url: "https://search.yahoo.com/search?p=",
+    image: "/images/yahoo.png",
+  },
+  {
+    name: "Bing",
+    url: "https://www.bing.com/search?q=",
+    image: "/images/bing.png",
+  },
+] as const;
+export type SearchProviders = (typeof searchProviders)[number]["name"];
