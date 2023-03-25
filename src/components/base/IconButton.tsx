@@ -37,7 +37,7 @@ const IconButton = styled("button", {
         bg: "$bg",
       },
       textLight: {
-        bg: "$rgba($textRGB,0.5)",
+        bg: "rgba($textRGB,0.5)",
       },
       bgLight: {
         bg: "rgba($bgRGB,0.4)",
