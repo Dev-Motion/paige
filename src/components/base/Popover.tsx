@@ -61,10 +61,7 @@ const slideLeftAndFade = keyframes({
 const PopoverContent = styled(StitchesPopover.Content, {
   $$shadow: "$colors$textRGB",
   borderRadius: 4,
-  px: 10,
-  pt: 10,
-  pr: 15,
-  pb: 10,
+  pd: 10,
   color: "$text",
   backgroundColor: "rgba($bgRGB,0.5)",
   backdropFilter: "blur(50px)",
@@ -91,11 +88,11 @@ const PopoverArrow = styled(StitchesPopover.Arrow, {
 });
 
 const PopoverClose = styled(StitchesPopover.Close, {
+  $$size: 18,
   all: "unset",
   fontFamily: "inherit",
   borderRadius: "100%",
-  height: 18,
-  width: 18,
+  size: 18,
   display: "inline-flex",
   alignItems: "center",
   justifyContent: "center",
@@ -103,9 +100,12 @@ const PopoverClose = styled(StitchesPopover.Close, {
   position: "absolute",
   top: 0,
   right: 0,
+  transform: "translate(50%, -50%)",
+  bg: "rgba($bgRGB,0.5)",
+  backdropFilter: "blur(50px)",
   "& svg": {
     size: "70%",
   },
-  "&:hover": { backgroundColor: "rgba($textRGB,0.2)" },
+  "&:hover": { backgroundColor: "rgba($bgRGB,0.3)" },
   "&:focus": { boxShadow: "0 0 0 2px rgba($textRGB,0.4)" },
 });
