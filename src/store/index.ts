@@ -7,12 +7,14 @@ import createTodoSlice, { TodoSlice } from "./slices/todoSlice";
 import { preloadImage, handleImages, handleQuotes, handleGoals } from "@utils";
 import { imageQuality } from "@constants";
 import createQuotesSlice, { QuotesSlice } from "./slices/QuotesSlice";
+import createSearchSlice, { SearchSlice } from "./slices/searchSlice";
 
 export type Slices = LayoutSlice &
   ThemeSlice &
   ImageSlice &
   TodoSlice &
-  QuotesSlice;
+  QuotesSlice &
+  SearchSlice;
 export type StateCreator<T> = ZStateCreator<Slices, [], [], T>;
 
 const useStore = create<Slices>()(
@@ -24,6 +26,7 @@ const useStore = create<Slices>()(
         ...createImageSlice(...a),
         ...createTodoSlice(...a),
         ...createQuotesSlice(...a),
+        ...createSearchSlice(...a),
       }),
       {
         name: "store",
