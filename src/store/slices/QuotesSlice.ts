@@ -43,7 +43,8 @@ const createQuotesSlice: StateCreator<QuotesSlice> = (set, get) => ({
         get().quoteKeywords.join("|")
     )
       .then((response) => response.json())
-      .then((data: QuotableReturn) => {
+      .then((json) => {
+        const data = json as QuotableReturn;
         set((state) => ({
           quote: {
             id: data._id,
