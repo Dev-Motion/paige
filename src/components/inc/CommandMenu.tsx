@@ -8,7 +8,6 @@ import { searchProviders, SearchProviders } from "@constants";
 import search from "@utils/Search";
 import {
   BookmarkIcon,
-  GoogleIcon,
   More,
   SearchIcon,
   SuggestionIcon,
@@ -280,7 +279,7 @@ function ProviderItem({ provider }: { provider: SearchProviders }) {
         px: "$2",
         py: "$1",
         "&:hover": {
-          bg: "rgba(255,255,255,0.5)",
+          bg: "rgba(255,255,255,0.3)",
         },
       }}
       ai="center"
