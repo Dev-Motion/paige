@@ -22,8 +22,8 @@
     "@radix-ui/react-tabs": "^1.0.1",
     "@stitches/react": "^1.2.8",
     "blurhash": "^2.0.4",
-    "cmdk": "^0.1.21",
-    "framer-motion": "^9.0.0",
+    "cmdk": "^0.2.0",
+    "framer-motion": "^10.0.0",
     "react": "^18.2.0",
     "react-blurhash": "^0.3.0",
     "react-dom": "^18.2.0",
@@ -36,8 +36,8 @@
   "devDependencies": {
     "@commitlint/cli": "^17.2.0",
     "@commitlint/config-conventional": "^17.2.0",
+    "@types/chrome": "^0.0.225",
     "@total-typescript/ts-reset": "^0.4.2",
-    "@types/chrome": "^0.0.217",
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.8",
@@ -48,8 +48,8 @@
     "eslint-plugin-react": "^7.31.10",
     "husky": "^8.0.2",
     "lint-staged": "^13.0.3",
-    "prettier": "2.8.4",
-    "typescript": "^4.6.4",
+    "prettier": "2.8.6",
+    "typescript": "^5.0.0",
     "vite": "^4.0.0"
   },
   "watch": {
