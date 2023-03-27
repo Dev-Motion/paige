@@ -20,12 +20,15 @@ const initialState = {
 
 const Time = () => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
-  const [is24Hour, setIs24Hour, showTime, showGreeting] = useStore((state) => [
-    state.is24Hour,
-    state.setIs24Hour,
-    state.showTime,
-    state.showGreeting,
-  ]);
+  const [name, is24Hour, setIs24Hour, showTime, showGreeting] = useStore(
+    (state) => [
+      state.name,
+      state.is24Hour,
+      state.setIs24Hour,
+      state.showTime,
+      state.showGreeting,
+    ]
+  );
   const dayofWeek = useRef(state.time.getDay());
 
   const { timeString, isAM } = processTime(state.time, is24Hour);
@@ -98,7 +101,7 @@ const Time = () => {
       )}
       {showGreeting && (
         <Text fs="2xl" ta="center" css={{ mt: "$2", fontWeight: 600 }}>
-          Good {getDaySegment(state.time)}, Victor
+          Good {getDaySegment(state.time)}, {name}
         </Text>
       )}
     </Box>

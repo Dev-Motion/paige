@@ -12,6 +12,8 @@ import { getTimeItem } from "@utils";
 import autoGetTheme from "@utils/autoTheme";
 
 export interface ThemeSlice {
+  name?: string;
+  setName: (name: string) => void;
   autoTheme: boolean;
   setAutoTheme: (autoTheme: boolean) => void;
   theme: AvailableThemes;
@@ -24,6 +26,9 @@ export function changeTheme(theme: string, className: string) {
 }
 
 const createThemeSlice: StateCreator<ThemeSlice> = (set) => ({
+  setName: (name) => {
+    set({ name });
+  },
   autoTheme: false,
   setAutoTheme: (autoTheme) => {
     set((state) => {
