@@ -6,12 +6,7 @@ import { styled } from "stitches.config";
 import useStore from "@store";
 import { searchProviders, SearchProviders } from "@constants";
 import search from "@utils/Search";
-import {
-  BookmarkIcon,
-  More,
-  SearchIcon,
-  SuggestionIcon,
-} from "@components/icons";
+import { HistoryIcon, More, SearchIcon } from "@components/icons";
 import { faviconURL } from "@utils";
 interface Link {
   id: string;
@@ -33,30 +28,33 @@ const CommandMenu = () => {
   const deferedInputValue = React.useDeferredValue(inputValue);
   const [bookmarks, setBookmarks] = React.useState<Link[]>([]);
   const [chromeHist, setChromeHist] = React.useState<Link[]>([]);
-
+  const providerLogo = searchProviders.find(
+    (p) => p.name === searchProvider
+  )!.image;
   function tabAction(url: string) {
-    setHistory([...history, inputValue]);
     window.open(url, "_self");
   }
   function searchAction(query: string) {
-    setHistory([...history, inputValue]);
+    if (inputValue.trim()) {
+      setHistory([...history, inputValue]);
+    }
     search(query, searchProvider);
   }
-  // React.useEffect(() => {
-  //   // Toggle the menu when ⌘K is pressed
-  //   const down = (e: KeyboardEvent) => {
-  //     if (e.key === "k" && (e.ctrlKey || e.metaKey)) {
-  //       setOpen(true);
-  //       e.preventDefault();
-  //     }
-  //     if (e.key === "Escape") {
-  //       setOpen(false);
-  //     }
-  //   };
+  React.useEffect(() => {
+    // Toggle the menu when ⌘K is pressed
+    const down = (e: KeyboardEvent) => {
+      if (e.key === "k" && (e.ctrlKey || e.metaKey)) {
+        setOpen(true);
+        e.preventDefault();
+      }
+      if (e.key === "Escape") {
+        setOpen(false);
+      }
+    };
 
-  //   document.addEventListener("keydown", down);
-  //   return () => document.removeEventListener("keydown", down);
-  // }, []);
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+  }, []);
   React.useEffect(() => {
     chrome.bookmarks.search(deferedInputValue, (results) => {
       const bookmarks: Link[] = results
@@ -131,13 +129,13 @@ const CommandMenu = () => {
             onClick={(e) => e.stopPropagation()}
             id="hey"
           >
-            <StyledCommand label="Chroma web search" value={inputValue}>
+            <StyledCommand label="Chroma web search">
               <Flex cmdk-chroma-header="">
                 <SearchIcon />
                 <Command.Input
                   value={inputValue}
                   onValueChange={setInputValue}
-                  placeholder="Search Google or type a URL"
+                  placeholder={`Search ${searchProvider} or type a URL`}
                   autoFocus
                 />
                 <Popover
@@ -159,6 +157,24 @@ const CommandMenu = () => {
               </Flex>
               <Command.List>
                 <Box cmdk-chroma-items="">
+                  {inputValue && (
+                    <Command.Group heading="Recent">
+                      {history.slice(0, 3).map((h) => {
+                        return (
+                          <Command.Item
+                            key={"recent: " + h}
+                            value={h}
+                            onSelect={() => searchAction(h)}
+                          >
+                            <Flex ai="center" gap="2">
+                              <HistoryIcon />
+                              <Text fs="sm">{h}</Text>
+                            </Flex>
+                          </Command.Item>
+                        );
+                      })}
+                    </Command.Group>
+                  )}
                   <Command.Group heading="History">
                     {chromeHist.map((h) => {
                       return (
@@ -167,13 +183,7 @@ const CommandMenu = () => {
                           value={"hist: " + h.title}
                           onSelect={() => tabAction(h.url)}
                         >
-                          <Flex
-                            ai="center"
-                            gap="2"
-                            css={{
-                              pl: "$5",
-                            }}
-                          >
+                          <Flex ai="center" gap="2">
                             <Box
                               as="img"
                               css={{
@@ -188,53 +198,58 @@ const CommandMenu = () => {
                       );
                     })}
                   </Command.Group>
-                  <Command.Group heading="Search">
-                    <Command.Item
-                      value={`"${inputValue}"`}
-                      onSelect={() => searchAction(inputValue)}
-                    >
-                      <Flex
-                        ai="center"
-                        gap="2"
-                        css={{
-                          pl: "$5",
-                        }}
+                  {inputValue && (
+                    <Command.Group heading="Search">
+                      <Command.Item
+                        value={`"${inputValue}"`}
+                        onSelect={() => searchAction(inputValue)}
                       >
-                        <SuggestionIcon />
-                        <Text fs="sm">{inputValue}</Text>
-                      </Flex>
-                    </Command.Item>
-                  </Command.Group>
-                  <Command.Group heading={"Bookmarks"}>
-                    {bookmarks.map((bookmark) => {
-                      return (
-                        <Command.Item
-                          key={"bookmark: " + bookmark.id}
-                          value={"bookmark: " + bookmark.title}
-                          onSelect={() => tabAction(bookmark.url)}
-                        >
-                          <Flex
-                            ai="center"
-                            gap="2"
+                        <Flex ai="center" gap="2">
+                          <Box
+                            as="img"
+                            src={providerLogo}
+                            height="25"
+                            width="25"
                             css={{
-                              pl: "$5",
+                              objectFit: "cover",
                             }}
+                          />
+                          <Text fs="sm">
+                            {inputValue}{" "}
+                            <Text as="span" css={{ color: "Gray" }}>
+                              - {searchProvider} Search
+                            </Text>
+                          </Text>
+                        </Flex>
+                      </Command.Item>
+                    </Command.Group>
+                  )}
+                  {bookmarks.length !== 0 && (
+                    <Command.Group heading={"Bookmarks"}>
+                      {bookmarks.map((bookmark) => {
+                        return (
+                          <Command.Item
+                            key={"bookmark: " + bookmark.id}
+                            value={"bookmark: " + bookmark.title}
+                            onSelect={() => tabAction(bookmark.url)}
                           >
-                            <Box
-                              as="img"
-                              css={{
-                                size: "$5",
-                                br: "50%",
-                              }}
-                              src={faviconURL(bookmark.url)}
-                            />
-                            <Text fs="sm">{bookmark.title}</Text>
-                          </Flex>
-                        </Command.Item>
-                      );
-                    })}
-                    {/* <Command.Separator /> */}
-                  </Command.Group>
+                            <Flex ai="center" gap="2">
+                              <Box
+                                as="img"
+                                css={{
+                                  size: "$5",
+                                  br: "50%",
+                                }}
+                                src={faviconURL(bookmark.url)}
+                              />
+                              <Text fs="sm">{bookmark.title}</Text>
+                            </Flex>
+                          </Command.Item>
+                        );
+                      })}
+                      {/* <Command.Separator /> */}
+                    </Command.Group>
+                  )}
                 </Box>
               </Command.List>
             </StyledCommand>
@@ -349,6 +364,8 @@ const StyledCommand = styled(Command, {
     spacey: "$4",
     "& [cmdk-item]": {
       py: "$2",
+      px: "$3",
+      ml: "$2",
       br: "$2",
       "& p": {
         textOverflow: "ellipsis",
@@ -359,10 +376,14 @@ const StyledCommand = styled(Command, {
       },
       "&[aria-selected='true'], &:hover": {
         bg: "rgba(256,256,256,0.3)",
+        "& span": {
+          color: "white",
+        },
       },
     },
     "& [cmdk-group-heading]": {
       opacity: 0.8,
+      mb: "$2",
     },
   },
 });
