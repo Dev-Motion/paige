@@ -252,6 +252,37 @@ const CommandMenu = () => {
                   )}
                 </Box>
               </Command.List>
+              <Flex
+                jc="between"
+                ai="center"
+                cmdk-chroma-footer=""
+                css={{
+                  pd: "$4",
+                }}
+              >
+                <Box as="img" src="/logo/64x64.png" css={{ size: 24 }} />
+
+                <Flex
+                  gap="2"
+                  ai="center"
+                  css={{
+                    "& kbd": {
+                      fontSize: "$md",
+                      br: "$1",
+                      size: "$5",
+                      bg: "rgba(0,0,0,0.4)",
+                      display: "grid",
+                      placeItems: "center",
+                    },
+                  }}
+                >
+                  <Text>Short cut</Text>
+                  <Flex gap="1">
+                    <kbd>⌘</kbd>
+                    <kbd>K</kbd>
+                  </Flex>
+                </Flex>
+              </Flex>
             </StyledCommand>
           </Box>
         </Overlay>

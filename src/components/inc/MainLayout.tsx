@@ -62,7 +62,7 @@ const MainLayout = () => {
         </Flex>
       </Grid>
       <BottomBar />
-      {/* <CommandMenu /> */}
+      <CommandMenu />
     </Grid>
   );
 };
