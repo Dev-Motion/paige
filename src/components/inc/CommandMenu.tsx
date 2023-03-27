@@ -12,6 +12,7 @@ import {
   SearchIcon,
   SuggestionIcon,
 } from "@components/icons";
+import { faviconURL } from "@utils";
 interface Link {
   id: string;
   url: string;
@@ -41,21 +42,21 @@ const CommandMenu = () => {
     setHistory([...history, inputValue]);
     search(query, searchProvider);
   }
-  React.useEffect(() => {
-    // Toggle the menu when ⌘K is pressed
-    const down = (e: KeyboardEvent) => {
-      if (e.key === "k" && (e.ctrlKey || e.metaKey)) {
-        setOpen(true);
-        e.preventDefault();
-      }
-      if (e.key === "Escape") {
-        setOpen(false);
-      }
-    };
+  // React.useEffect(() => {
+  //   // Toggle the menu when ⌘K is pressed
+  //   const down = (e: KeyboardEvent) => {
+  //     if (e.key === "k" && (e.ctrlKey || e.metaKey)) {
+  //       setOpen(true);
+  //       e.preventDefault();
+  //     }
+  //     if (e.key === "Escape") {
+  //       setOpen(false);
+  //     }
+  //   };
 
-    document.addEventListener("keydown", down);
-    return () => document.removeEventListener("keydown", down);
-  }, []);
+  //   document.addEventListener("keydown", down);
+  //   return () => document.removeEventListener("keydown", down);
+  // }, []);
   React.useEffect(() => {
     chrome.bookmarks.search(deferedInputValue, (results) => {
       const bookmarks: Link[] = results
@@ -158,42 +159,36 @@ const CommandMenu = () => {
               </Flex>
               <Command.List>
                 <Box cmdk-chroma-items="">
-                  {/* set empty to true if */}
-                  <Command.Empty>{inputValue}</Command.Empty>
-                  {chromeHist.length !== 0 && (
-                    <Command.Group>
-                      {chromeHist.map((h) => {
-                        const baseUrl = h.url.split("//")[1].split("/")[0];
-
-                        return (
-                          <Command.Item
-                            key={h.id}
-                            value={h.title}
-                            onSelect={() => tabAction(h.url)}
+                  <Command.Group heading="History">
+                    {chromeHist.map((h) => {
+                      return (
+                        <Command.Item
+                          key={"hist: " + h.id}
+                          value={"hist: " + h.title}
+                          onSelect={() => tabAction(h.url)}
+                        >
+                          <Flex
+                            ai="center"
+                            gap="2"
+                            css={{
+                              pl: "$5",
+                            }}
                           >
-                            <Flex
-                              ai="center"
-                              gap="2"
+                            <Box
+                              as="img"
                               css={{
-                                pl: "$5",
+                                size: "$5",
+                                br: "50%",
                               }}
-                            >
-                              <Box
-                                as="img"
-                                css={{
-                                  size: "$5",
-                                  br: "50%",
-                                }}
-                                src={`https://www.google.com/s2/favicons?domain=${baseUrl}&sz=128`}
-                              />
-                              <Text fs="sm">{h.title}</Text>
-                            </Flex>
-                          </Command.Item>
-                        );
-                      })}
-                    </Command.Group>
-                  )}
-                  <Command.Group>
+                              src={faviconURL(h.url)}
+                            />
+                            <Text fs="sm">{h.title}</Text>
+                          </Flex>
+                        </Command.Item>
+                      );
+                    })}
+                  </Command.Group>
+                  <Command.Group heading="Search">
                     <Command.Item
                       value={`"${inputValue}"`}
                       onSelect={() => searchAction(inputValue)}
@@ -210,49 +205,36 @@ const CommandMenu = () => {
                       </Flex>
                     </Command.Item>
                   </Command.Group>
-                  {bookmarks.length !== 0 && (
-                    <Command.Group
-                      heading={
-                        <Flex>
-                          <BookmarkIcon />
-                          <Text>Bookmarks</Text>
-                        </Flex>
-                      }
-                    >
-                      {bookmarks.map((bookmark) => {
-                        const baseUrl = bookmark.url
-                          .split("//")[1]
-                          .split("/")[0];
-
-                        return (
-                          <Command.Item
-                            key={bookmark.id}
-                            value={bookmark.title}
-                            onSelect={() => tabAction(bookmark.url)}
+                  <Command.Group heading={"Bookmarks"}>
+                    {bookmarks.map((bookmark) => {
+                      return (
+                        <Command.Item
+                          key={"bookmark: " + bookmark.id}
+                          value={"bookmark: " + bookmark.title}
+                          onSelect={() => tabAction(bookmark.url)}
+                        >
+                          <Flex
+                            ai="center"
+                            gap="2"
+                            css={{
+                              pl: "$5",
+                            }}
                           >
-                            <Flex
-                              ai="center"
-                              gap="2"
+                            <Box
+                              as="img"
                               css={{
-                                pl: "$5",
+                                size: "$5",
+                                br: "50%",
                               }}
-                            >
-                              <Box
-                                as="img"
-                                css={{
-                                  size: "$5",
-                                  br: "50%",
-                                }}
-                                src={`https://www.google.com/s2/favicons?domain=${baseUrl}&sz=128`}
-                              />
-                              <Text fs="sm">{bookmark.title}</Text>
-                            </Flex>
-                          </Command.Item>
-                        );
-                      })}
-                      {/* <Command.Separator /> */}
-                    </Command.Group>
-                  )}
+                              src={faviconURL(bookmark.url)}
+                            />
+                            <Text fs="sm">{bookmark.title}</Text>
+                          </Flex>
+                        </Command.Item>
+                      );
+                    })}
+                    {/* <Command.Separator /> */}
+                  </Command.Group>
                 </Box>
               </Command.List>
             </StyledCommand>
@@ -375,7 +357,7 @@ const StyledCommand = styled(Command, {
         overflow: "hidden",
         whiteSpace: "nowrap",
       },
-      "&[aria-selected='true']": {
+      "&[aria-selected='true'], &:hover": {
         bg: "rgba(256,256,256,0.3)",
       },
     },

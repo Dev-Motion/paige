@@ -36,6 +36,14 @@ export function processTime(time: Date, is24Hour: boolean) {
   )}:${Minutes.toString().padStart(2, "0")}`;
   return { timeString, isAM };
 }
+// get's image from chrome
+export function faviconURL(u: string) {
+  // https://www.google.com/s2/favicons?domain=${u}&sz=128
+  const url = new URL(chrome.runtime.getURL("/_favicon/"));
+  url.searchParams.set("pageUrl", u);
+  url.searchParams.set("size", "32");
+  return url.toString();
+}
 // Caching and Preloading Images
 export function preloadImage(image: string, priority?: boolean) {
   const link = document.createElement("link");
