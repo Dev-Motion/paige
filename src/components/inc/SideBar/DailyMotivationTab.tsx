@@ -3,7 +3,7 @@ import { Box, Flex, Switch, Text, Grid } from "@components/base";
 import TagInput from "../TagInput";
 import useStore from "@store";
 import { Quote } from "@store/slices/QuotesSlice";
-import { HeartIcon, TwitterOutlineIcon } from "@components/icons";
+import { HeartIcon, Quotes, TwitterOutlineIcon } from "@components/icons";
 import { tweetHandler } from "@utils";
 
 const DailyMotivationTab = () => {
@@ -59,8 +59,20 @@ const DailyMotivationTab = () => {
                   bg: "rgba($bgRGB,0.8)",
                   pd: "$3",
                   br: "$4",
+                  position: "relative",
+                  isolation: "isolate",
                 }}
               >
+                <Quotes
+                  css={{
+                    position: "absolute",
+                    zIndex: -1,
+                    size: "$6",
+                    opacity: 0.3,
+                    top: 4,
+                    left: 4,
+                  }}
+                />
                 <Text fs="sm" css={{ flex: 1 }}>
                   {quote.text}
                 </Text>
