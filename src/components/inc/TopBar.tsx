@@ -48,7 +48,7 @@ const TopBar = () => {
         />
         <Text css={{ include: "screenReaderOnly" }}>Open side bar</Text>
       </IconButton>
-      <Text fs="2xl">Today</Text>
+      <Flex />
     </Flex>
   );
 };
