@@ -15,6 +15,7 @@ export interface ImageSlice {
   cloudPhotos: Picture[];
   // create react query like api for getCloudPhotos
   getCloudPhotos: (fetchmore?: boolean) => void;
+  lastFetchCloudPhotos?: Date;
   favoritePhotos: Picture[];
   setFavoritePhotos: (photos: Picture[]) => void;
   // update meaning your are adding a new image(refresh is the opposite)
@@ -27,7 +28,7 @@ const unsplash = createApi({
 });
 
 const createImageSlice: StateCreator<ImageSlice> = (set, get) => ({
-  keywords: ["Wallpapers"],
+  keywords: ["Wallpapers", "Nature"],
   todayPhoto: { ...defaultTodayPhoto, for: new Date() },
   setTodayPhoto: (photo) => {
     set({ todayPhoto: photo });
@@ -52,7 +53,7 @@ const createImageSlice: StateCreator<ImageSlice> = (set, get) => ({
       });
       const response = (await result.response!) as RandomPicture[];
       const pictures = response.map((resp) => getPicture(resp));
-      set({ cloudPhotos: pictures });
+      set({ cloudPhotos: pictures, lastFetchCloudPhotos: new Date() });
     } catch (err) {
       const mute = err;
     }

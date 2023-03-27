@@ -4,11 +4,16 @@ import { Box, Text } from "@components/base";
 import { styled } from "stitches.config";
 
 const Mantra = () => {
-  const [value, setValue] = useStore((state) => [state.goal, state.setGoal]);
+  const [value, setValue, showTodayGoal] = useStore((state) => [
+    state.goal,
+    state.setGoal,
+    state.showTodayGoal,
+  ]);
+
   const empty = value.text.trim() === "";
   const [active, setActive] = React.useState(empty);
 
-  console.log("empty: ", empty);
+  if (!showTodayGoal) return null;
   return (
     <Box css={{ color: "$text", fontWeight: "$4" }}>
       <Text ta="center" fs="lg" as="h3">

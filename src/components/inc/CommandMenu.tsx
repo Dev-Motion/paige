@@ -260,7 +260,7 @@ const CommandMenu = () => {
   );
 };
 
-function ProviderItem({ provider }: { provider: SearchProviders }) {
+export function ProviderItem({ provider }: { provider: SearchProviders }) {
   const [searchProvider, setSearchProvider] = useStore((state) => [
     state.searchProvider,
     state.setSearchProvider,

@@ -60,6 +60,16 @@ handleImages();
 handleQuotes();
 // fetches goals when stale
 handleGoals();
-useStore.getState().getCloudPhotos();
+if (useStore.getState().cloudPhotos.length === 0) {
+  useStore.getState().getCloudPhotos();
+} else if (useStore.getState().lastFetchCloudPhotos !== undefined) {
+  if (
+    new Date().getTime() -
+      new Date(useStore.getState().lastFetchCloudPhotos || "").getTime() >
+    1000 * 60 * 60 * 24
+  ) {
+    useStore.getState().getCloudPhotos();
+  }
+}
 
 useStore.getState().setTheme();

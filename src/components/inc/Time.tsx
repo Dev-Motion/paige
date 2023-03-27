@@ -20,9 +20,11 @@ const initialState = {
 
 const Time = () => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
-  const [is24Hour, setIs24Hour] = useStore((state) => [
+  const [is24Hour, setIs24Hour, showTime, showGreeting] = useStore((state) => [
     state.is24Hour,
     state.setIs24Hour,
+    state.showTime,
+    state.showGreeting,
   ]);
   const dayofWeek = useRef(state.time.getDay());
 
@@ -53,41 +55,52 @@ const Time = () => {
         $$opacity: 0.3,
       }}
     >
-      <Box
-        onMouseOver={() => dispatch({ visible: true })}
-        css={{
-          position: "relative",
-        }}
-      >
-        <Text
-          as="h1"
-          fs="6xl"
-          css={{
-            fontWeight: 700,
-          }}
-        >
-          {timeString}
-        </Text>
-        <Popover
-          openChange={openChange}
-          content={<Menu checked={is24Hour} onChecked={onChecked} />}
-        >
-          <MoreButton size="sm" bg="transparent" visible={state.visible}>
-            <More css={{ circle: { fill: "$text !important" } }} />
-          </MoreButton>
-        </Popover>
-      </Box>
-      {!is24Hour && (
-        <Text
-          fs="lg"
-          css={{ ml: "auto", display: "block", width: "min-content", mt: -20 }}
-        >
-          {isAM ? "am" : "pm"}
+      {showTime && (
+        <Box>
+          <Box
+            onMouseOver={() => dispatch({ visible: true })}
+            css={{
+              position: "relative",
+            }}
+          >
+            <Text
+              as="h1"
+              fs="6xl"
+              css={{
+                fontWeight: 700,
+              }}
+            >
+              {timeString}
+            </Text>
+            <Popover
+              openChange={openChange}
+              content={<Menu checked={is24Hour} onChecked={onChecked} />}
+            >
+              <MoreButton size="sm" bg="transparent" visible={state.visible}>
+                <More css={{ circle: { fill: "$text !important" } }} />
+              </MoreButton>
+            </Popover>
+          </Box>
+          {!is24Hour && (
+            <Text
+              fs="lg"
+              css={{
+                ml: "auto",
+                display: "block",
+                width: "min-content",
+                mt: -20,
+              }}
+            >
+              {isAM ? "am" : "pm"}
+            </Text>
+          )}
+        </Box>
+      )}
+      {showGreeting && (
+        <Text fs="2xl" ta="center" css={{ mt: "$2", fontWeight: 600 }}>
+          Good {getDaySegment(state.time)}, Victor
         </Text>
       )}
-      <Text fs="2xl" ta="center" css={{ mt: "$2", fontWeight: 600 }}>
-        Good {getDaySegment(state.time)}, Victor
-      </Text>
     </Box>
   );
 };

@@ -134,7 +134,7 @@ const GalleryContent = () => {
                     bottom: 0,
                     left: 0,
                     px: "$2",
-                    bg: "linear-gradient(0deg, rgba($bgRGB,1) 0%,rgba($bgRGB,0.8) 50%,transparent 100%)",
+                    bg: "linear-gradient(0deg, rgba($bgRGB,0.8) 0%,rgba($bgRGB,0.4) 50%,transparent 100%)",
                     opacity: 0,
                     transform: "translateY(100%)",
                     transition: "all 0.5s ease-in-out",
@@ -168,8 +168,13 @@ const GalleryContent = () => {
 };
 
 const FavoriteContent = () => {
-  const [favorites, setFavorites] = useStore(
-    (state) => [state.favoritePhotos, state.setFavoritePhotos] as const
+  const [favorites, setFavorites, setTodayPhoto] = useStore(
+    (state) =>
+      [
+        state.favoritePhotos,
+        state.setFavoritePhotos,
+        state.setTodayPhoto,
+      ] as const
   );
   function isFavorite(picture: Picture) {
     return favorites.some((photo) => photo.id === picture.id);
@@ -194,6 +199,10 @@ const FavoriteContent = () => {
               "&:hover": {
                 "& > button": {
                   opacity: 1,
+                },
+                [`${Flex}`]: {
+                  opacity: 1,
+                  transform: "translateY(0)",
                 },
               },
             }}
@@ -230,7 +239,41 @@ const FavoriteContent = () => {
                 }}
               />
             </Box>
-
+            <Flex
+              jc="end"
+              ai="center"
+              css={{
+                border: "none",
+                position: "absolute",
+                height: "40%",
+                width: "100%",
+                bottom: 0,
+                left: 0,
+                px: "$2",
+                bg: "linear-gradient(0deg, rgba($bgRGB,0.8) 0%,rgba($bgRGB,0.4) 50%,transparent 100%)",
+                opacity: 0,
+                transform: "translateY(100%)",
+                transition: "all 0.5s ease-in-out",
+              }}
+            >
+              <Box
+                as="button"
+                css={{
+                  padding: "4px 8px",
+                  fontSize: "$xs",
+                  br: "$2",
+                  bg: "$text",
+                  color: "$bg",
+                  border: "none",
+                }}
+                onClick={() => {
+                  setTodayPhoto({ ...fav, for: new Date() });
+                  toast("Photo set as today's background");
+                }}
+              >
+                Set
+              </Box>
+            </Flex>
             <Box
               as="img"
               src={fav.urls.thumb}
