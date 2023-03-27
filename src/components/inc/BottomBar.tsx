@@ -64,7 +64,12 @@ const BottomBar = () => {
       <Box className="fixed">
         <HoverCard
           trigger={
-            <IconButton bg="transparent">
+            <IconButton
+              bg="transparent"
+              css={{
+                include: "accessibleShadow",
+              }}
+            >
               <Info
                 css={{
                   size: 30,
@@ -85,6 +90,7 @@ const BottomBar = () => {
         <Box
           css={{
             include: "accessibleShadow",
+            $$blur: "30px",
           }}
         >
           <HoverReveal>
