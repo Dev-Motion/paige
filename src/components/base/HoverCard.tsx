@@ -44,7 +44,8 @@ const HoverCard = ({
           br: 6,
           padding: 20,
           width: 300,
-          bg: "$bg",
+          backgroundColor: "rgba($bgRGB,0.5)",
+          backdropFilter: "blur(50px)",
           boxShadow:
             "hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px",
           animationDuration: "800ms",
