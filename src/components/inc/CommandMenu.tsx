@@ -276,7 +276,7 @@ const CommandMenu = () => {
                     },
                   }}
                 >
-                  <Text>Short cut</Text>
+                  <Text>Shortcut</Text>
                   <Flex gap="1">
                     <kbd>⌘</kbd>
                     <kbd>K</kbd>
