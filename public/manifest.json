@@ -1,7 +1,7 @@
 {
   "name": "Paige",
-  "description": "Helping you stay motivated and focused",
-  "version": "0.1.0",
+  "description": " a space where you can customize your focus, immerse yourself in calm scenes, and find inspiration whenever you open a new tab in your browser",
+  "version": "1.0.0",
   "manifest_version": 3,
   "icons": {
     "16": "/logo/16x16.png",
