@@ -47,8 +47,13 @@ const GalleryTabs = () => {
           <Flex gap="1" css={{ pb: "$2" }}>
             {galleryTabs.map(({ value, name }) => {
               return (
-                <TabTrigger key={name} value={value} asChild>
-                  <GalleryBtn onClick={() => setActiveTab(value)}>
+                <TabTrigger
+                  key={name}
+                  value={value}
+                  onClick={() => setActiveTab(value)}
+                  asChild
+                >
+                  <GalleryBtn>
                     {name}
                     {value === activeTab && (
                       <GalleryBtnUnderline layoutId="gallery-btn-underline" />
