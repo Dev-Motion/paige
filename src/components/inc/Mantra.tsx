@@ -15,37 +15,52 @@ const Mantra = () => {
 
   if (!showTodayGoal) return null;
   return (
-    <Box css={{ color: "$text", fontWeight: "$4" }}>
-      <Text ta="center" fs="lg" as="h3">
-        {empty || active ? "What is your Goal for today?" : "Today"}
-      </Text>
-      {empty || active ? (
-        <Box
-          as="form"
-          onKeyDown={(e) => {
-            if (e.key === "Escape" || e.key === "Enter") {
-              setActive(false);
-            }
-          }}
-        >
-          <Input
-            autoFocus
-            value={value.text}
-            onChange={(e) => setValue({ text: e.target.value, for: value.for })}
-            onBlur={() => setActive(empty)}
-          />
-        </Box>
-      ) : (
-        <Text
-          fs="xl"
-          ta="center"
-          onDoubleClick={() => {
-            setActive(true);
-          }}
-        >
-          {value.text}
+    <Box
+      css={{
+        color: "$text",
+        fontWeight: "$4",
+      }}
+    >
+      <Box
+        css={{
+          include: "accessibleShadow",
+          $$blur: "60px",
+          $$opacity: 0.8,
+        }}
+      >
+        <Text ta="center" fs="lg" as="h3">
+          {empty || active ? "What is your Goal for today?" : "Today"}
         </Text>
-      )}
+        {empty || active ? (
+          <Box
+            as="form"
+            onKeyDown={(e) => {
+              if (e.key === "Escape" || e.key === "Enter") {
+                setActive(false);
+              }
+            }}
+          >
+            <Input
+              autoFocus
+              value={value.text}
+              onChange={(e) =>
+                setValue({ text: e.target.value, for: value.for })
+              }
+              onBlur={() => setActive(empty)}
+            />
+          </Box>
+        ) : (
+          <Text
+            fs="xl"
+            ta="center"
+            onDoubleClick={() => {
+              setActive(true);
+            }}
+          >
+            {value.text}
+          </Text>
+        )}
+      </Box>
     </Box>
   );
 };
