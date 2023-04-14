@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from "react";
-import { Flex, Grid } from "@components/base";
+import { Box, Flex, Grid } from "@components/base";
 import {
   Time,
   Mantra,
@@ -11,8 +11,9 @@ import {
 } from "@components/inc";
 import Portal from "@utils/Portals";
 
+const SideBar = lazy(() => import("./SideBar"));
+
 const MainLayout = () => {
-  const SideBar = lazy(() => import("./SideBar"));
   return (
     <Grid
       // fd="column"
@@ -23,7 +24,19 @@ const MainLayout = () => {
       }}
     >
       <Portal root="side_bar_root">
-        <Suspense fallback={<div />}>
+        <Suspense
+          fallback={
+            <Box
+              css={{
+                bg: "Blue",
+                size: 100,
+                position: "absolute",
+                left: "50%",
+                zIndex: 1000000,
+              }}
+            />
+          }
+        >
           <SideBar />
         </Suspense>
       </Portal>

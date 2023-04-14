@@ -1,6 +1,16 @@
-import { defineConfig, splitVendorChunkPlugin } from "vite";
+import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
+import { dependencies } from "./package.json";
+function renderChunks(deps: Record<string, string>) {
+  // eslint-disable-next-line prefer-const
+  let chunks = {};
+  Object.keys(deps).forEach((key) => {
+    if (["react", "react-dom"].includes(key)) return;
+    chunks[key] = [key];
+  });
+  return chunks;
+}
 // split the code into multiple files based on REact.lazy components
 // https://vitejs.dev/guide/features.html#glob-import
 
@@ -10,7 +20,7 @@ function pathResolve(dir: string) {
 
 // https://vitejs.  /config/
 export default defineConfig({
-  plugins: [react(), splitVendorChunkPlugin()],
+  plugins: [react()],
   resolve: {
     alias: [
       {
@@ -59,6 +69,10 @@ export default defineConfig({
           return assetInfo.name === "service-worker"
             ? "service-worker.js"
             : "assets/[name].min.js";
+        },
+        manualChunks: {
+          vendor: ["react", "react-dom"],
+          ...renderChunks(dependencies),
         },
       },
     },

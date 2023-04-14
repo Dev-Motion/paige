@@ -35,8 +35,8 @@
   "devDependencies": {
     "@commitlint/cli": "^17.2.0",
     "@commitlint/config-conventional": "^17.2.0",
-    "@types/chrome": "^0.0.225",
     "@total-typescript/ts-reset": "^0.4.2",
+    "@types/chrome": "^0.0.225",
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.8",
@@ -48,6 +48,7 @@
     "husky": "^8.0.2",
     "lint-staged": "^13.0.3",
     "prettier": "2.8.6",
+    "simple-zustand-devtools": "^1.1.0",
     "typescript": "^5.0.0",
     "vite": "^4.0.0"
   }

@@ -28,11 +28,7 @@ const createTodoSlice: StateCreator<TodoSlice> = (set) => ({
   setGoal: (goal) => {
     set((state) => ({ goal }));
   },
-  todos: [
-    { id: 1, text: "Learn React", completed: false },
-    { id: 2, text: "Learn TypeScript", completed: false },
-    { id: 3, text: "Learn Tailwind", completed: false },
-  ],
+  todos: [{ id: 1, text: "Add your to-dos here", completed: false }],
   addTodo: (todo) => {
     set((state) => ({ todos: [...state.todos, todo] }));
   },

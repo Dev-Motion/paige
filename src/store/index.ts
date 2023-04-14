@@ -8,19 +8,29 @@ import { preloadImage, handleImages, handleQuotes, handleGoals } from "@utils";
 import { imageQuality } from "@constants";
 import createQuotesSlice, { QuotesSlice } from "./slices/QuotesSlice";
 import createSearchSlice, { SearchSlice } from "./slices/searchSlice";
+import { mountStoreDevtool } from "simple-zustand-devtools";
+
+interface GeneralSlice {
+  name?: string;
+  setName: (name: string) => void;
+}
 
 export type Slices = LayoutSlice &
   ThemeSlice &
   ImageSlice &
   TodoSlice &
   QuotesSlice &
-  SearchSlice;
+  SearchSlice &
+  GeneralSlice;
 export type StateCreator<T> = ZStateCreator<Slices, [], [], T>;
 
 const useStore = create<Slices>()(
   subscribeWithSelector(
     persist(
       (...a) => ({
+        setName: (name) => {
+          a[0]({ name });
+        },
         ...createLayoutSlice(...a),
         ...createThemeSlice(...a),
         ...createImageSlice(...a),
@@ -73,3 +83,6 @@ if (useStore.getState().cloudPhotos.length === 0) {
 }
 
 useStore.getState().setTheme();
+if (process.env.NODE_ENV === "development") {
+  mountStoreDevtool("Main Store", useStore);
+}
