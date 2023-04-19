@@ -1,7 +1,7 @@
-import { getTimeItem, getPicture } from "@utils";
+import { getPicture } from "@utils";
 import { createApi } from "unsplash-js";
 import type { StateCreator } from "..";
-import { Picture, PictureWithDate, Random, RandomPicture } from "src/types";
+import { Picture, PictureWithDate, RandomPicture } from "src/types";
 import { defaultNextPhoto, defaultTodayPhoto } from "@constants";
 
 export interface ImageSlice {
@@ -53,7 +53,13 @@ const createImageSlice: StateCreator<ImageSlice> = (set, get) => ({
       });
       const response = (await result.response!) as RandomPicture[];
       const pictures = response.map((resp) => getPicture(resp));
-      set({ cloudPhotos: pictures, lastFetchCloudPhotos: new Date() });
+
+      fetchmore
+        ? set((state) => ({
+          cloudPhotos: state.cloudPhotos.concat(pictures),
+          lastFetchCloudPhotos: new Date(),
+        }))
+        : set({ cloudPhotos: pictures, lastFetchCloudPhotos: new Date() });
     } catch (err) {
       const mute = err;
     }

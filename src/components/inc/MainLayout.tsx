@@ -13,6 +13,9 @@ import Portal from "@utils/Portals";
 
 const SideBar = lazy(() => import("./SideBar"));
 
+const isRunningInExtension =
+  window.chrome && chrome.runtime && chrome.runtime.id ? true : false;
+
 const MainLayout = () => {
   return (
     <Grid
@@ -75,7 +78,7 @@ const MainLayout = () => {
         </Flex>
       </Grid>
       <BottomBar />
-      <CommandMenu />
+      {isRunningInExtension && <CommandMenu />}
     </Grid>
   );
 };

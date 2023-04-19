@@ -4,9 +4,10 @@ import React from "react";
 import { styled } from "stitches.config";
 
 const ThemeCategories = () => {
-  const [keywords, setKeywords] = useStore((state) => [
+  const [keywords, setKeywords, getCloudPhotos] = useStore((state) => [
     state.keywords,
     state.setKeywords,
+    state.getCloudPhotos,
   ]);
 
   function onClick(keyword: string) {
@@ -17,6 +18,7 @@ const ThemeCategories = () => {
       // add keyword
       setKeywords([...keywords, keyword]);
     }
+    getCloudPhotos();
   }
 
   return (
