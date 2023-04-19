@@ -1,6 +1,5 @@
 import React from "react";
-import { MainLayout, Scaffold } from "@components/inc";
-import { Toaster } from "sonner";
+import { MainLayout, Scaffold, Toaster } from "@components/inc";
 
 function App() {
   return (

@@ -14,3 +14,4 @@ export { default as BottomBar } from "./BottomBar";
 export { default as CommandMenu } from "./CommandMenu";
 export { default as TodoPane } from "./TodoPane";
 export { default as ImageInfo } from "./ImageInfo";
+export { default as Toaster } from "./Toaster";

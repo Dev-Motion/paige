@@ -8,7 +8,6 @@ import { Grid, Flex, Skeleton, Box, Text } from "@components/base";
 import { ScrollArea } from ".";
 import { StarIcon } from "@components/icons";
 import { Picture } from "@types";
-import { toast } from "sonner";
 import { HeartIcon } from "@components/icons";
 
 const TabRoot = styled(Tabs.Root, {});
@@ -83,20 +82,25 @@ const GalleryContent = ({ favoriteTab = false }: { favoriteTab?: boolean }) => {
     setTodayPhoto,
     favoritePhotos,
     setFavoritePhotos,
+    getCloudPhotos,
+    toast,
   ] = useStore((state) => [
     state.cloudPhotos,
     state.setTemporaryBackground,
     state.setTodayPhoto,
     state.favoritePhotos,
     state.setFavoritePhotos,
+    state.getCloudPhotos,
+    state.addToast,
   ]);
   const isFavorite = (photo: Picture) => {
     return favoritePhotos.some((p) => p.id === photo.id);
   };
   const empty = cloudPhotos.length === 0;
   const photos = favoriteTab ? favoritePhotos : cloudPhotos;
+  const fetchedmore = cloudPhotos.length === 10;
   return (
-    <>
+    <Box>
       {empty ? (
         <Grid columns={{ "@initial": 1, "@lg": 2 }} gap="2" css={{ pt: "$2" }}>
           {Array.from({ length: 6 }).map((_, i) => {
@@ -136,6 +140,7 @@ const GalleryContent = ({ favoriteTab = false }: { favoriteTab?: boolean }) => {
                 <Box
                   as="img"
                   src={photo.urls.thumb}
+                  alt={photo.alt_description ?? ""}
                   css={{
                     size: "100%",
                     aspectRation: "16/9",
@@ -199,7 +204,9 @@ const GalleryContent = ({ favoriteTab = false }: { favoriteTab?: boolean }) => {
                     }}
                     onClick={() => {
                       setTodayPhoto({ ...photo, for: new Date() });
-                      toast("Photo set as today's background");
+                      toast({
+                        message: "Photo set as today's background",
+                      });
                     }}
                   >
                     Set
@@ -210,7 +217,27 @@ const GalleryContent = ({ favoriteTab = false }: { favoriteTab?: boolean }) => {
           })}
         </Grid>
       )}
-    </>
+      {!favoriteTab && !fetchedmore && (
+        <Flex jc="center" css={{ py: "$4" }}>
+          <Box
+            as="button"
+            css={{
+              padding: "4px 8px",
+              fontSize: "$xs",
+              br: "$2",
+              bg: "$text",
+              color: "$bg",
+              border: "none",
+            }}
+            onClick={() => {
+              getCloudPhotos(true);
+            }}
+          >
+            Load more
+          </Box>
+        </Flex>
+      )}
+    </Box>
   );
 };
 
