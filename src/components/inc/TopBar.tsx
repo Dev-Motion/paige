@@ -2,11 +2,13 @@ import React from "react";
 import { Flex, IconButton, Text } from "@components/base";
 import { Hamburger } from "@components/icons";
 import useStore from "@store";
+import { WiCloudy, WiDegrees } from "react-icons/wi";
 
 const TopBar = () => {
-  const [sideBar, setOpen] = useStore((state) => [
+  const [sideBar, setOpen, weather] = useStore((state) => [
     state.sideBarPosition,
     state.setSideBarOpen,
+    state.weather,
   ]);
   const left = sideBar === "left";
   return (
@@ -37,18 +39,28 @@ const TopBar = () => {
         onClick={() => setOpen(true)}
       >
         <Hamburger
-          css={
-            !left
-              ? {
-                transform: "rotate(-180deg)",
-                path: { stroke: "$text !important" },
-              }
-              : { path: { stroke: "$text !important" } }
-          }
+          css={{
+            transform: !left ? "rotate(-180deg)" : "unset",
+            path: { stroke: "$text !important" },
+          }}
         />
         <Text css={{ include: "screenReaderOnly" }}>Open side bar</Text>
       </IconButton>
-      <Flex />
+      <Flex fd="column">
+        {weather ? (
+          <>
+            <Flex ai="center" css={{ color: "$text" }}>
+              <WiCloudy size={40} />
+              <Text fs={"3xl"} fw="semibold">
+                {Math.round(weather.temperature)}˚
+              </Text>
+            </Flex>
+            <Text color="text" css={{ alignSelf: "end" }}>
+              Lagos
+            </Text>
+          </>
+        ) : null}
+      </Flex>
     </Flex>
   );
 };

@@ -140,6 +140,11 @@ export function tweetHandler(text: string, hashtags: string[], via: string) {
   )}&via=${via}&hashtags=${hashtags.join(",")}`;
   return url;
 }
+export function geocodeToCityName(long: number, lat: number) {
+  const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${long}`;
+  return fetch(url).then((res) => res.json());
+}
+
 export function getPicture(photo: RandomPicture): Picture {
   const {
     id,

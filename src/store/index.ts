@@ -1,6 +1,5 @@
 import create, { StateCreator as ZStateCreator } from "zustand";
-import { persist, subscribeWithSelector } from "zustand/middleware";
-import { mountStoreDevtool } from "simple-zustand-devtools";
+import { persist, subscribeWithSelector, devtools } from "zustand/middleware";
 import createLayoutSlice, { LayoutSlice } from "./slices/layoutSlice";
 import createThemeSlice, { ThemeSlice } from "./slices/themeSlice";
 import createImageSlice, { ImageSlice } from "./slices/imageSlice";
@@ -8,6 +7,7 @@ import createTodoSlice, { TodoSlice } from "./slices/todoSlice";
 import createQuotesSlice, { QuotesSlice } from "./slices/QuotesSlice";
 import createSearchSlice, { SearchSlice } from "./slices/searchSlice";
 import createToastSlice, { ToastSlice } from "./slices/ToastSlice";
+import createWeatherSlice, { WeatherSlice } from "./slices/weatherSlice";
 import { preloadImage, handleImages, handleQuotes, handleGoals } from "@utils";
 import { imageQuality } from "@constants";
 
@@ -23,13 +23,14 @@ export type Slices = LayoutSlice &
   QuotesSlice &
   SearchSlice &
   ToastSlice &
+  WeatherSlice &
   GeneralSlice;
 export type StateCreator<T> = ZStateCreator<Slices, [], [], T>;
 
 const useStore = create<Slices>()(
   subscribeWithSelector(
     persist(
-      (...a) => ({
+      devtools((...a) => ({
         setName: (name) => {
           a[0]({ name });
         },
@@ -40,7 +41,8 @@ const useStore = create<Slices>()(
         ...createQuotesSlice(...a),
         ...createSearchSlice(...a),
         ...createToastSlice(...a),
-      }),
+        ...createWeatherSlice(...a),
+      })),
       {
         name: "store",
         partialize: (state) =>
@@ -87,6 +89,7 @@ if (useStore.getState().cloudPhotos.length === 0) {
 }
 
 useStore.getState().setTheme();
-if (process.env.NODE_ENV === "development") {
-  mountStoreDevtool("Main Store", useStore);
-}
+
+useStore.getState().getCurrentLocation();
+
+useStore.getState().getWeather();
