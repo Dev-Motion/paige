@@ -51,6 +51,10 @@ export default defineConfig({
         find: "@types",
         replacement: pathResolve("src/types"),
       },
+      {
+        find: "@hooks",
+        replacement: pathResolve("src/hooks"),
+      },
     ],
   },
   build: {
