@@ -41,7 +41,7 @@ const HoverCard = ({
       <RadixHoverCard.Content
         collisionPadding={10}
         className={css({
-          br: 6,
+          br: 10,
           padding: 20,
           width: 300,
           backgroundColor: "rgba($bgRGB,0.5)",
