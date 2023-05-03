@@ -14,16 +14,18 @@ interface Link {
   title: string;
 }
 
-const CommandMenu = () => {
-  const [open, setOpen, history, setHistory, searchProvider] = useStore(
-    (state) => [
-      state.searchOpen,
-      state.setSearchOpen,
-      state.history,
-      state.setHistory,
-      state.searchProvider,
-    ]
-  );
+const CommandMenu = ({
+  open,
+  setOpen,
+}: {
+  open: boolean;
+  setOpen: (val: boolean) => void;
+}) => {
+  const [history, setHistory, searchProvider] = useStore((state) => [
+    state.history,
+    state.setHistory,
+    state.searchProvider,
+  ]);
   const [inputValue, setInputValue] = React.useState("");
   const deferedInputValue = React.useDeferredValue(inputValue);
   const [bookmarks, setBookmarks] = React.useState<Link[]>([]);
@@ -40,21 +42,7 @@ const CommandMenu = () => {
     }
     search(query, searchProvider);
   }
-  React.useEffect(() => {
-    // Toggle the menu when ⌘K is pressed
-    const down = (e: KeyboardEvent) => {
-      if (e.key === "k" && (e.ctrlKey || e.metaKey)) {
-        setOpen(true);
-        e.preventDefault();
-      }
-      if (e.key === "Escape") {
-        setOpen(false);
-      }
-    };
 
-    document.addEventListener("keydown", down);
-    return () => document.removeEventListener("keydown", down);
-  }, []);
   React.useEffect(() => {
     chrome.bookmarks.search(deferedInputValue, (results) => {
       const bookmarks: Link[] = results

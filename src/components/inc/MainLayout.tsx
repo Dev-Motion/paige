@@ -1,20 +1,12 @@
 import React, { Suspense, lazy } from "react";
 import { Box, Flex, Grid } from "@components/base";
-import {
-  Time,
-  Mantra,
-  Reminder,
-  TopBar,
-  BottomBar,
-  CommandMenu,
-  Search,
-} from "@components/inc";
+
+import { Time, Mantra, Reminder, Search } from "@components/inc/widgets";
+
+import { TopBar, BottomBar } from "@components/inc";
 import Portal from "@utils/Portals";
 
 const SideBar = lazy(() => import("./SideBar"));
-
-const isRunningInExtension =
-  window.chrome && chrome.runtime && chrome.runtime.id ? true : false;
 
 const MainLayout = () => {
   return (
@@ -78,7 +70,6 @@ const MainLayout = () => {
         </Flex>
       </Grid>
       <BottomBar />
-      {isRunningInExtension && <CommandMenu />}
     </Grid>
   );
 };
