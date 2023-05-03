@@ -1,4 +1,4 @@
-import useStore from "@store";
+import { api } from "@store";
 import { cacheName } from "@constants";
 import {
   Random,
@@ -7,7 +7,13 @@ import {
   PictureInfo,
   PictureAttribution,
   PictureWithDate,
+  Condition,
+  NominatimResponse,
 } from "@types";
+
+export const SECONDS = 1000;
+export const MINUTES = 60 * SECONDS;
+export const HOURS = 60 * MINUTES;
 export function formatDate(date: Date) {
   return new Date(date).toLocaleDateString("en-US", {
     year: "numeric",
@@ -87,8 +93,8 @@ export function getTimeItem<T extends { for: Date }[]>(
 }
 
 export function handleImages() {
-  const todayPhoto = useStore.getState().todayPhoto;
-  const nextPhoto = useStore.getState().nextPhoto;
+  const todayPhoto = api.todayPhoto;
+  const nextPhoto = api.nextPhoto;
   const today = new Date().toDateString();
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
@@ -100,39 +106,35 @@ export function handleImages() {
   // write the code
   if (isOnline) {
     if (!todayPhoto && !nextPhoto) {
-      useStore.getState().getPhotos(false);
+      api.getPhotos(false);
     } else if (
       new Date(todayPhoto.for).toDateString() !== today ||
       !nextPhoto
     ) {
-      useStore.getState().getPhotos(true);
-    }
-  }
-}
-export function handleQuotes() {
-  const todayQuote = useStore.getState().quote;
-  const isOnline = navigator.onLine;
-  const today = new Date().toDateString();
-  const isStale = new Date(todayQuote.for).toDateString() !== today;
-  if (isOnline) {
-    if (!todayQuote || isStale) {
-      useStore.getState().getQuotes();
+      api.getPhotos(true);
     }
   }
 }
 
 export function handleGoals() {
-  const todayGoal = useStore.getState().goal;
+  const todayGoal = api.goal;
   const isOnline = navigator.onLine;
   const today = new Date().toDateString();
   const isStale = new Date(todayGoal.for).toDateString() !== today;
   if (isOnline) {
     if (!todayGoal || isStale) {
-      useStore.getState().setGoal({ text: "", for: new Date() });
+      api.setGoal({ text: "", for: new Date() });
       console.log("checkeddddd");
     }
   }
 }
+
+export function getData() {
+  handleGoals();
+  handleImages();
+  handleQuotes();
+}
+
 export function tweetHandler(text: string, hashtags: string[], via: string) {
   const baseUrl = "https://twitter.com/intent/tweet";
   const url = `${baseUrl}?text=${encodeURI(
@@ -142,7 +144,12 @@ export function tweetHandler(text: string, hashtags: string[], via: string) {
 }
 export function geocodeToCityName(long: number, lat: number) {
   const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${long}`;
-  return fetch(url).then((res) => res.json());
+  return fetch(url)
+    .then((res) => res.json())
+    .then((json) => {
+      const data = json as NominatimResponse;
+      return data.address.state.replace(" state", "");
+    });
 }
 
 export function getPicture(photo: RandomPicture): Picture {
@@ -217,3 +224,12 @@ export function getPictureAttribution(
     downloads,
   };
 }
+
+export const findCurrent = (
+  conditions: Condition[],
+  now: number
+): Condition | null =>
+  conditions
+    .slice()
+    .reverse()
+    .find((condition) => now >= condition.timestamp) ?? null;
