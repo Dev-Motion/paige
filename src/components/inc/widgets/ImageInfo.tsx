@@ -3,6 +3,7 @@ import {
   DownloadIcon,
   ExternalLinkIcon,
   HeartIcon,
+  LikeIcon,
   StarIcon,
   WatchIcon,
 } from "@components/icons";
@@ -31,49 +32,24 @@ const ImageInfo = () => {
   return (
     <Flex
       fd="column"
-      gap="4"
+      gap="3"
       css={{
         position: "relative",
-        pt: "$4",
       }}
     >
-      <IconButton
-        size="sm"
-        bg="transparent"
-        css={{
-          position: "absolute",
-          top: -10,
-          right: -10,
-        }}
-        onClick={ToggleFavorite}
-      >
-        <StarIcon
-          css={{
-            size: "$4",
-            color: "$text",
-            fill: isFavorite ? "$text" : "transparent",
-            transition: "all 300ms ease-in-out",
-          }}
-        />
-      </IconButton>
       <Text>
         {todayAttribution?.description || todayAttribution?.alt_description}
       </Text>
-      <Flex gap="3">
+      <Flex gap="3" jc="between">
         <Flex ai="center" gap="1">
-          <WatchIcon css={{ size: "$3" }} />
-          <Text css={{ include: "screenReaderOnly" }}>image views</Text>
-          <Text fs="sm">{formatter.format(todayAttribution.views)}</Text>
-        </Flex>
-        <Flex ai="center" gap="1">
-          <HeartIcon css={{ size: "$3" }} />
+          <LikeIcon css={{ size: "$3" }} />
           <Text css={{ include: "screenReaderOnly" }}>image likes</Text>
-          <Text fs="sm">{formatter.format(todayAttribution?.likes)}</Text>
+          <Text fs="xs">{formatter.format(todayAttribution?.likes)}</Text>
         </Flex>
         <Flex ai="center" gap="1">
           <DownloadIcon css={{ size: "$3" }} />
           <Text css={{ include: "screenReaderOnly" }}>image downloads</Text>
-          <Text fs="sm">{formatter.format(todayAttribution?.downloads)}</Text>
+          <Text fs="xs">{formatter.format(todayAttribution?.downloads)}</Text>
         </Flex>
         <Flex
           as="a"
@@ -83,8 +59,18 @@ const ImageInfo = () => {
           gap="1"
         >
           <ExternalLinkIcon css={{ size: "$3" }} />
-          <Text fs="sm">link</Text>
+          <Text fs="xs">link</Text>
         </Flex>
+        <IconButton size="sm" bg="transparent" onClick={ToggleFavorite}>
+          <HeartIcon
+            css={{
+              size: "$3",
+              color: "$text",
+              fill: isFavorite ? "$text" : "transparent",
+              transition: "all 300ms ease-in-out",
+            }}
+          />
+        </IconButton>
       </Flex>
       <Flex ai="center" gap="2">
         <Box
@@ -96,7 +82,13 @@ const ImageInfo = () => {
           src={todayAttribution?.user.profile_image.small}
         ></Box>
 
-        <Text as="a" target="_blank" href={todayAttribution.user.links.html}>
+        <Text
+          as="a"
+          target="_blank"
+          fs="sm"
+          fw="semibold"
+          href={todayAttribution.user.links.html}
+        >
           {todayAttribution?.user.name}
         </Text>
       </Flex>

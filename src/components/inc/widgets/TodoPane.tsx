@@ -3,7 +3,7 @@ import { AddIcon, More } from "@components/icons";
 import useStore from "@store";
 import * as React from "react";
 import { styled } from "stitches.config";
-import TodoItem, { Input, MenuButton } from "./TodoItem";
+import TodoItem, { Input, MenuButton } from "../TodoItem";
 
 function TodoPane() {
   const todos = useStore((state) => state.todos);
