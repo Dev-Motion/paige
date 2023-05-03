@@ -19,6 +19,7 @@ export default function Toaster() {
           position: "fixed",
           bottom: "10px",
           right: "10px",
+          zIndex: "$max",
         }}
       >
         <AnimatePresence initial={false}>
