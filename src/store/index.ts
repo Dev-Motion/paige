@@ -8,7 +8,8 @@ import createQuotesSlice, { QuotesSlice } from "./slices/QuotesSlice";
 import createSearchSlice, { SearchSlice } from "./slices/searchSlice";
 import createToastSlice, { ToastSlice } from "./slices/ToastSlice";
 import createWeatherSlice, { WeatherSlice } from "./slices/weatherSlice";
-import { preloadImage, handleImages, handleQuotes, handleGoals } from "@utils";
+import createTimeSlice, { TimeSlice } from "./slices/TimeSlice";
+import { preloadImage, handleImages, handleGoals } from "@utils";
 import { imageQuality } from "@constants";
 
 interface GeneralSlice {
@@ -24,6 +25,7 @@ export type Slices = LayoutSlice &
   SearchSlice &
   ToastSlice &
   WeatherSlice &
+  TimeSlice &
   GeneralSlice;
 export type StateCreator<T> = ZStateCreator<Slices, [], [], T>;
 
@@ -42,14 +44,17 @@ const useStore = create<Slices>()(
         ...createSearchSlice(...a),
         ...createToastSlice(...a),
         ...createWeatherSlice(...a),
+        ...createTimeSlice(...a),
       })),
       {
-        name: "store",
+        name: "store1",
         partialize: (state) =>
           Object.fromEntries(
             Object.entries(state).filter(
               ([key]) =>
-                !["searchOpen", "sideBarOpen", "activeToasts"].includes(key)
+                !["searchOpen", "time", "sideBarOpen", "activeToasts"].includes(
+                  key
+                )
             )
           ),
       }
@@ -58,38 +63,36 @@ const useStore = create<Slices>()(
 );
 export default useStore;
 
+export const api = useStore.getState();
+
+// regular updates the time
+setInterval(() => api.setTime(), 1000);
 // Actions
 
 useStore.subscribe(
   (state) => state.todayPhoto,
   (photo) => {
     preloadImage(photo.urls.raw + imageQuality);
-    useStore.getState().setTheme();
+    api.setTheme();
   }
 );
+
 // add image to link tag in head
-preloadImage(useStore.getState().todayPhoto.urls.raw + imageQuality, true);
-preloadImage(useStore.getState().nextPhoto.urls.raw + imageQuality);
+preloadImage(api.todayPhoto.urls.raw + imageQuality, true);
+preloadImage(api.nextPhoto.urls.raw + imageQuality);
 // fetches images when stale
 handleImages();
-// fetches quotes when stale
-handleQuotes();
 // fetches goals when stale
 handleGoals();
-if (useStore.getState().cloudPhotos.length === 0) {
-  useStore.getState().getCloudPhotos();
-} else if (useStore.getState().lastFetchCloudPhotos !== undefined) {
+if (api.cloudPhotos.length === 0) {
+  api.getCloudPhotos();
+} else if (api.lastFetchCloudPhotos !== undefined) {
   if (
-    new Date().getTime() -
-      new Date(useStore.getState().lastFetchCloudPhotos || "").getTime() >
+    new Date().getTime() - new Date(api.lastFetchCloudPhotos || "").getTime() >
     1000 * 60 * 60 * 24
   ) {
-    useStore.getState().getCloudPhotos();
+    api.getCloudPhotos();
   }
 }
 
-useStore.getState().setTheme();
-
-useStore.getState().getCurrentLocation();
-
-useStore.getState().getWeather();
+api.setTheme();

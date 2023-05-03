@@ -39,16 +39,32 @@ export interface OpenmeteoResponse {
   timezone: string;
   timezone_abbreviation: string;
   elevation: number;
-  current_weather: CurrentWeather;
+  hourly_units: HourlyUnits;
+  hourly: Hourly;
 }
 
-export interface CurrentWeather {
-  temperature: number;
-  windspeed: number;
-  winddirection: number;
-  weathercode: number;
-  is_day: number;
+export interface Hourly {
+  time: number[];
+  temperature_2m: number[];
+  apparent_temperature: number[];
+  weathercode: number[];
+}
+
+export interface HourlyUnits {
   time: string;
+  temperature_2m: string;
+  apparent_temperature: string;
+  weathercode: string;
+}
+export interface Condition {
+  timestamp: number;
+  temperature: number;
+  apparentTemperature: number;
+  weatherCode: number;
+}
+export interface Weather {
+  timestamp: number;
+  conditions: Condition[];
 }
 
 export interface IpapiResponse {
