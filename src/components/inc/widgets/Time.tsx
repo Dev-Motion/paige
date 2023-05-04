@@ -1,12 +1,20 @@
 import React, { useRef, useState } from "react";
-import { Box, Flex, IconButton, Popover, Switch, Text } from "@components/base";
+import {
+  Box,
+  Flex,
+  IconButton,
+  Popover,
+  Switch,
+  Text,
+  Card,
+} from "@components/base";
 import { More } from "@components/icons";
 import { getDaySegment, processTime } from "@utils";
 import { styled } from "stitches.config";
 import useStore from "@store";
 
 const Time = () => {
-  const [visible, setVisible] = useState(false);
+  const [open, setOpen] = useState(false);
   const [time, name, is24Hour, setIs24Hour, showTime, showGreeting] = useStore(
     (state) => [
       state.time,
@@ -21,13 +29,10 @@ const Time = () => {
   const dayofWeek = useRef(timeDate.getDay());
 
   const { timeString, isAM } = processTime(timeDate, is24Hour);
-
-  const openChange = (visible: boolean) => {
-    setVisible(visible);
-  };
   const onChecked = (checked: boolean) => setIs24Hour(checked);
   return (
     <Box
+      data-show-more={open}
       css={{
         include: "accessibleShadow",
         justifySelf: "flex-start",
@@ -35,12 +40,23 @@ const Time = () => {
         transition: "opacity 0.3s ease-in-out",
         $$blur: "50px",
         $$opacity: 0.3,
+        "&:hover": {
+          [`& ${MoreButton}`]: {
+            opacity: 1,
+            pointerEvents: "all",
+          },
+        },
+        "&[data-show-more = 'true']": {
+          [`& ${MoreButton}`]: {
+            opacity: 1,
+            pointerEvents: "all",
+          },
+        },
       }}
     >
       {showTime && (
-        <Box>
+        <Box css={{}}>
           <Box
-            onMouseOver={() => setVisible(true)}
             css={{
               position: "relative",
             }}
@@ -54,13 +70,16 @@ const Time = () => {
             >
               {timeString}
             </Text>
-            <Popover
-              openChange={openChange}
-              content={<Menu checked={is24Hour} onChecked={onChecked} />}
-            >
-              <MoreButton size="sm" bg="transparent" visible={visible}>
-                <More css={{ circle: { fill: "$text !important" } }} />
-              </MoreButton>
+            <Popover open={open} onOpenChange={setOpen}>
+              <Popover.Button asChild>
+                <MoreButton size="sm" bg="transparent">
+                  <More css={{ circle: { fill: "$text !important" } }} />
+                </MoreButton>
+              </Popover.Button>
+              <Popover.Content>
+                <Menu checked={is24Hour} onChecked={onChecked} />
+                <Popover.Arrow />
+              </Popover.Content>
             </Popover>
           </Box>
           {!is24Hour && (
@@ -88,6 +107,8 @@ const Time = () => {
 };
 
 const MoreButton = styled(IconButton, {
+  pd: "$16",
+  boxSizing: "content-box",
   position: "absolute",
   right: -40,
   transition: "all 0.3s ease-in-out",
@@ -95,17 +116,11 @@ const MoreButton = styled(IconButton, {
   color: "$text",
   transform: "translateY(-50%)",
   opacity: 0,
-  pointerEvents: "none",
   "&:focus": {
     opacity: 1,
   },
-  variants: {
-    visible: {
-      true: {
-        opacity: 100,
-        pointerEvents: "all",
-      },
-    },
+  "&:hover": {
+    opacity: 1,
   },
 });
 const Menu = ({
@@ -116,10 +131,12 @@ const Menu = ({
   onChecked: (check: boolean) => void;
 }) => {
   return (
-    <Flex jc="between" gap="2">
-      <Text as="label">24-hour clock</Text>
-      <Switch checked={checked} onCheckedChange={onChecked} />
-    </Flex>
+    <Card css={{ pd: "$2" }}>
+      <Flex jc="between" gap="2">
+        <Text as="label">24-hour clock</Text>
+        <Switch checked={checked} onCheckedChange={onChecked} />
+      </Flex>
+    </Card>
   );
 };
 
