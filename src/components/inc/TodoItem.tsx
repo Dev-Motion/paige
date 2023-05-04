@@ -1,17 +1,23 @@
-import { Box, Text, Flex, CheckBox, Popover } from "@components/base";
-import { More } from "@components/icons";
+import {
+  Card,
+  CheckBox,
+  Dropdown,
+  Flex,
+  IconButton,
+  Text,
+} from "@components/base";
+import { AlarmIcon, More, StarIcon } from "@components/icons";
+import { motion } from "framer-motion";
 import useStore from "@store";
+import { Todo } from "@store/slices/todoSlice";
 import * as React from "react";
 import { styled } from "stitches.config";
 
-function TodoItem({
-  todo,
-}: {
-  todo: { id: number; text: string; completed: boolean };
-}) {
-  const [toggleTodo, editTodo] = useStore((state) => [
+function TodoItem({ todo }: { todo: Todo }) {
+  const [toggleTodo, editTodo, toggleImportant] = useStore((state) => [
     state.toggleTodo,
     state.editTodo,
+    state.toggleImportant,
   ]);
   const [text, setText] = React.useState(todo.text);
   const [isEditing, setIsEditing] = React.useState(false);
@@ -28,16 +34,37 @@ function TodoItem({
     }
   };
   return (
-    <Flex
-      gap="2"
-      ai="center"
+    <Card
+      as={motion.div}
+      layoutId={todo.id.toString()}
+      // key={todo.id}
+      data-option-open={show}
+      initial={{
+        y: "100%",
+        opacity: 0,
+      }}
+      animate={{
+        y: "0",
+        opacity: 1,
+      }}
       css={{
+        display: "flex",
+        gap: "$2",
+        ai: "center",
         width: "100%",
+        py: "$2",
+        px: "$1",
         "&:hover": {
           ".options": {
-            opacity: 1,
+            transform: "translateY(-50%) translateX(0)",
           },
         },
+        "&[data-option-open = 'true']": {
+          ".options": {
+            transform: "translateY(-50%) translateX(0)",
+          },
+        },
+        position: "relative",
       }}
     >
       <CheckBox
@@ -62,37 +89,51 @@ function TodoItem({
           {todo.text}
         </Text>
       )}
-      <Popover
-        side="top"
-        showClose={false}
-        open={show}
-        openChange={(open) => setShow(open)}
-        content={
-          <TodoItemOptions
-            id={todo.id}
-            toggleEdit={() => {
-              toggleEditing();
-              setShow(false);
-            }}
-          />
-        }
+      <Flex
+        ai="center"
+        className="options"
+        css={{
+          position: "absolute",
+          overflow: "hidden",
+          top: "50%",
+          right: 0,
+          transform: "translateY(-50%) translateX(50%)",
+          transition: "all .3s ease-in-out",
+        }}
       >
-        <Box
-          as="button"
-          className="options"
-          onClick={() => setShow(true)}
-          css={{
-            include: "buttonReset",
-            color: "$text",
-            opacity: 0,
-            transition: "all 300ms ease-in-out",
-          }}
+        <IconButton
+          size="sm"
+          bg="transparent"
+          onClick={() => toggleImportant(todo.id)}
         >
-          <More />
-          <Text css={{ include: "screenReaderOnly" }}>more options</Text>
-        </Box>
-      </Popover>
-    </Flex>
+          <StarIcon
+            css={{ size: "$4", fill: todo.important ? "$text" : "none" }}
+          />
+        </IconButton>
+        <Dropdown open={show} onOpenChange={setShow} key={todo.id}>
+          <Dropdown.Button asChild>
+            <IconButton
+              size="sm"
+              bg="transparent"
+              onClick={() => setShow(true)}
+              css={{}}
+            >
+              <More css={{ size: "$3" }} />
+              <Text css={{ include: "screenReaderOnly" }}>more options</Text>
+            </IconButton>
+          </Dropdown.Button>
+          <Dropdown.Menu>
+            <TodoItemOptions
+              id={todo.id}
+              toggleEdit={() => {
+                toggleEditing();
+                setShow(false);
+              }}
+            />
+          </Dropdown.Menu>
+        </Dropdown>
+      </Flex>
+    </Card>
   );
 }
 function TodoItemOptions({
@@ -104,10 +145,23 @@ function TodoItemOptions({
 }) {
   const [removeTodo] = useStore((state) => [state.removeTodo]);
   return (
-    <Flex fd="column" gap="1" css={{ width: 100 }}>
-      <MenuButton onClick={toggleEdit}>Edit</MenuButton>
-      <MenuButton onClick={() => removeTodo(id)}>Delete</MenuButton>
-    </Flex>
+    <>
+      <Dropdown.MenuItem>
+        <MenuButton onClick={() => toggleEdit()}>
+          <AlarmIcon /> <Text fs="sm">Edit</Text>
+        </MenuButton>
+      </Dropdown.MenuItem>
+      <Dropdown.MenuItem>
+        <MenuButton onClick={() => removeTodo(id)}>
+          <AlarmIcon /> <Text fs="sm">Delete</Text>
+        </MenuButton>
+      </Dropdown.MenuItem>
+      <Dropdown.MenuItem>
+        <MenuButton>
+          <AlarmIcon /> <Text fs="sm">set reminder</Text>
+        </MenuButton>
+      </Dropdown.MenuItem>
+    </>
   );
 }
 
@@ -127,6 +181,9 @@ export default TodoItem;
 export const MenuButton = styled("button", {
   include: "buttonReset",
   color: "$text",
+  display: "flex",
+  gap: "$1",
+  ai: "center",
   fontSize: "$sm",
   fontWeight: "$medium",
   br: "$2",
@@ -136,5 +193,8 @@ export const MenuButton = styled("button", {
   textAlign: "left",
   "&:hover": {
     bg: "rgba($textRGB, 0.1)",
+  },
+  "& svg": {
+    size: "$3",
   },
 });

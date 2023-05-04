@@ -7,14 +7,16 @@ export interface TodoSlice {
   addTodo: (todo: Todo) => void;
   removeTodo: (id: number) => void;
   toggleTodo: (id: number) => void;
+  toggleImportant: (id: number) => void;
   editTodo: (id: number, text: string) => void;
   clearCompleted: () => void;
   toggleAll: () => void;
 }
-interface Todo {
+export interface Todo {
   id: number;
   text: string;
   completed: boolean;
+  important?: boolean;
 }
 interface Goal {
   text: string;
@@ -26,7 +28,7 @@ const createTodoSlice: StateCreator<TodoSlice> = (set) => ({
     for: new Date(),
   },
   setGoal: (goal) => {
-    set((state) => ({ goal }));
+    set(() => ({ goal }));
   },
   todos: [{ id: 1, text: "Add your to-dos here", completed: false }],
   addTodo: (todo) => {
@@ -55,6 +57,13 @@ const createTodoSlice: StateCreator<TodoSlice> = (set) => ({
   toggleAll: () => {
     set((state) => ({
       todos: state.todos.map((todo) => ({ ...todo, completed: true })),
+    }));
+  },
+  toggleImportant(id) {
+    set((state) => ({
+      todos: state.todos.map((todo) =>
+        todo.id === id ? { ...todo, important: !todo.important } : todo
+      ),
     }));
   },
 });
