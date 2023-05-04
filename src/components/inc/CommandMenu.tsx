@@ -1,13 +1,13 @@
-import React from "react";
-import { Command } from "cmdk";
-import { motion, AnimatePresence } from "framer-motion";
-import { Box, Flex, Text, IconButton, Popover } from "@components/base";
-import { styled } from "stitches.config";
-import useStore from "@store";
-import { searchProviders, SearchProviders } from "@constants";
-import search from "@utils/Search";
+import { Box, Flex, IconButton, Popover, Text } from "@components/base";
 import { HistoryIcon, More, SearchIcon } from "@components/icons";
+import { SearchProviders, searchProviders } from "@constants";
+import useStore from "@store";
 import { faviconURL } from "@utils";
+import search from "@utils/Search";
+import { Command } from "cmdk";
+import { AnimatePresence, motion } from "framer-motion";
+import React from "react";
+import { styled } from "stitches.config";
 interface Link {
   id: string;
   url: string;
@@ -126,21 +126,23 @@ const CommandMenu = ({
                   placeholder={`Search ${searchProvider} or type a URL`}
                   autoFocus
                 />
-                <Popover
-                  content={
+                <Popover>
+                  <Popover.Button asChild>
+                    <IconButton size="sm" bg="transparent">
+                      <Text css={{ include: "screenReaderOnly" }}>
+                        show search providers
+                      </Text>
+                      <More css={{ color: "White" }} />
+                    </IconButton>
+                  </Popover.Button>
+                  <Popover.Content>
                     <Box css={{ width: 150 }}>
                       {searchProviders.map(({ name }) => (
                         <ProviderItem key={name} provider={name} />
                       ))}
                     </Box>
-                  }
-                >
-                  <IconButton size="sm" bg="transparent">
-                    <Text css={{ include: "screenReaderOnly" }}>
-                      show search providers
-                    </Text>
-                    <More css={{ color: "White" }} />
-                  </IconButton>
+                    <Popover.Arrow />
+                  </Popover.Content>
                 </Popover>
               </Flex>
               <Command.List>

@@ -18,7 +18,7 @@ export default CheckBox;
 const CheckboxRoot = styled(Checkbox.Root, {
   all: "unset",
   backgroundColor: "transparent",
-  size: 15,
+  size: 14,
   borderRadius: "$round",
   display: "flex",
   alignItems: "center",
