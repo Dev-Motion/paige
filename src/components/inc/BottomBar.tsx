@@ -3,8 +3,8 @@ import {
   Box,
   Flex,
   Text,
-  Popover,
   Badge,
+  Popover,
   IconButton,
   HoverCard,
 } from "@components/base";
@@ -63,32 +63,39 @@ const BottomBar = () => {
       <DailyMotivation />
       <Flex ai="center" jc="end" gap={2} className="fixed">
         {showTodo && (
-          <Popover openChange={openChange} content={<TodoPane />}>
-            <Flex
-              ai="center"
-              gap="1"
-              as="button"
-              css={{
-                color: "$text",
-                include: ["buttonReset", "accessibleShadow"],
-                position: "relative",
-              }}
-            >
-              <TodoIcon />
-              <Text>Todo</Text>
-              <Badge
-                ping
-                hidden={unCompletedTodos.length === 0}
+          <Popover>
+            <Popover.Button asChild>
+              <Flex
+                ai="center"
+                gap="1"
+                as="button"
                 css={{
-                  position: "absolute",
-                  top: 0,
-                  right: 0,
-                  transform: "translate(50%, -50%)",
+                  color: "$text",
+                  include: ["buttonReset", "accessibleShadow"],
+                  position: "relative",
                 }}
               >
-                {unCompletedTodos.length}
-              </Badge>
-            </Flex>
+                <TodoIcon />
+                <Text>Todo</Text>
+                <Badge
+                  ping
+                  hidden={unCompletedTodos.length === 0}
+                  css={{
+                    position: "absolute",
+                    top: 0,
+                    right: 0,
+                    transform: "translate(50%, -50%)",
+                  }}
+                >
+                  {unCompletedTodos.length}
+                </Badge>
+              </Flex>
+            </Popover.Button>
+            <Popover.Content>
+              <TodoPane />
+              <Popover.Close />
+              <Popover.Arrow />
+            </Popover.Content>
           </Popover>
         )}
       </Flex>
