@@ -10,6 +10,7 @@ const Reminder = () => {
         $$y: "15px",
         isolation: "isolate",
         gap: "$$y",
+        minWidth: 420,
       }}
     >
       {reminders.slice(0, 2).map((reminder, index) => {
@@ -18,11 +19,10 @@ const Reminder = () => {
           <Card
             key={index}
             css={{
-              bg: "$bg",
               opacity: (1 / (index + 0.2)) * 1,
               $$height: first ? "120px" : "80px",
               height: "$$height",
-              pd: "$5",
+              pd: "$4",
               mt: first ? "" : "calc(-1 * $$height)",
               zIndex: 3 - index,
               transform: `scale(calc(-1 * ${index} * 0.05 + 1))`,
@@ -67,25 +67,25 @@ const Reminder = () => {
 const reminders = [
   {
     id: 1,
-    title: "1 Get help to setup my laptop",
+    title: "Get help to setup my laptop",
     description: "I need to set up my laptop and get it running",
     date: "Today, 10:00 AM",
   },
   {
     id: 2,
-    title: "2 Schedule a meeting with my team",
+    title: "Schedule a meeting with my team",
     description: "Meet with my team to discuss the next step in the project",
     date: "Today, 4:30 PM",
   },
   {
     id: 3,
-    title: "3 Schedule a meeting with my team",
+    title: "Schedule a meeting with my team",
     description: "Meet with my team to discuss the next step in the project",
     date: "Today, 4:30 PM",
   },
   {
     id: 4,
-    title: "4 Schedule a meeting with my team",
+    title: "Schedule a meeting with my team",
     description: "Meet with my team to discuss the next step in the project",
     date: "Today, 4:30 PM",
   },
