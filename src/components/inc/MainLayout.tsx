@@ -66,7 +66,7 @@ const MainLayout = () => {
           gap={6}
         >
           <Mantra />
-          {/* <Reminder /> */}
+          <Reminder />
         </Flex>
       </Grid>
       <BottomBar />
