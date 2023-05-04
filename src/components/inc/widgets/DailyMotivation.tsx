@@ -1,10 +1,10 @@
 import React from "react";
 import { Box, Flex, Text } from "@components/base";
-import { HoverReveal } from "@components/inc";
 import { HeartIcon, SkipIcon, TwitterOutlineIcon } from "@components/icons";
-import useStore from "@store";
-import { tweetHandler, HOURS, SECONDS } from "@utils";
+import { HoverReveal } from "@components/inc";
 import { useCachedEffect } from "@hooks";
+import useStore from "@store";
+import { HOURS, tweetHandler } from "@utils";
 
 function DailyMotivation() {
   const [
@@ -30,7 +30,7 @@ function DailyMotivation() {
       if (!isOnline) return;
       getQuotes();
     },
-    quote ? new Date(quote.for).getTime() + 10 * SECONDS : 0,
+    quote ? new Date(quote.for).getTime() + 6 * HOURS : 0,
     []
   );
   if (!showDailyMotivation) return null;
