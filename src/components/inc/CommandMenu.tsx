@@ -14,13 +14,7 @@ interface Link {
   title: string;
 }
 
-const CommandMenu = ({
-  open,
-  setOpen,
-}: {
-  open: boolean;
-  setOpen: (val: boolean) => void;
-}) => {
+const CommandMenu = () => {
   const [history, setHistory, searchProvider] = useStore((state) => [
     state.history,
     state.setHistory,
@@ -87,197 +81,163 @@ const CommandMenu = ({
   }, [deferedInputValue]);
 
   return (
-    <AnimatePresence>
-      {open && (
-        <Overlay
-          initial={{
-            opacity: 0,
-          }}
-          animate={{
-            opacity: 1,
-          }}
-          exit={{
-            opacity: 0,
-          }}
-          onClick={() => setOpen(false)}
-        >
-          <Box
-            as={motion.div}
-            initial={{
-              y: 100,
-              height: "auto",
-            }}
-            exit={{
-              y: 100,
-            }}
-            animate={{
-              y: 0,
-              height: "auto",
-            }}
-            onClick={(e) => e.stopPropagation()}
-            id="hey"
-          >
-            <StyledCommand label="Chroma web search">
-              <Flex cmdk-chroma-header="">
-                <SearchIcon />
-                <Command.Input
-                  value={inputValue}
-                  onValueChange={setInputValue}
-                  placeholder={`Search ${searchProvider} or type a URL`}
-                  autoFocus
-                />
-                <Popover>
-                  <Popover.Button asChild>
-                    <IconButton size="sm" bg="transparent">
-                      <Text css={{ include: "screenReaderOnly" }}>
-                        show search providers
-                      </Text>
-                      <More css={{ color: "White" }} />
-                    </IconButton>
-                  </Popover.Button>
-                  <Popover.Content>
-                    <Box css={{ width: 150 }}>
-                      {searchProviders.map(({ name }) => (
-                        <ProviderItem key={name} provider={name} />
-                      ))}
-                    </Box>
-                    <Popover.Arrow />
-                  </Popover.Content>
-                </Popover>
-              </Flex>
-              <Command.List>
-                <Box cmdk-chroma-items="">
-                  {inputValue && (
-                    <Command.Group heading="Recent">
-                      {history.slice(0, 3).map((h) => {
-                        return (
-                          <Command.Item
-                            key={"recent: " + h}
-                            value={h}
-                            onSelect={() => searchAction(h)}
-                          >
-                            <Flex ai="center" gap="2">
-                              <HistoryIcon />
-                              <Text fs="sm">{h}</Text>
-                            </Flex>
-                          </Command.Item>
-                        );
-                      })}
-                    </Command.Group>
-                  )}
-                  <Command.Group heading="History">
-                    {chromeHist.map((h) => {
-                      return (
-                        <Command.Item
-                          key={"hist: " + h.id}
-                          value={"hist: " + h.title}
-                          onSelect={() => tabAction(h.url)}
-                        >
-                          <Flex ai="center" gap="2">
-                            <Box
-                              as="img"
-                              css={{
-                                size: "$5",
-                                br: "50%",
-                              }}
-                              src={faviconURL(h.url)}
-                            />
-                            <Text fs="sm">{h.title}</Text>
-                          </Flex>
-                        </Command.Item>
-                      );
-                    })}
-                  </Command.Group>
-                  {inputValue && (
-                    <Command.Group heading="Search">
-                      <Command.Item
-                        value={`"${inputValue}"`}
-                        onSelect={() => searchAction(inputValue)}
-                      >
-                        <Flex ai="center" gap="2">
-                          <Box
-                            as="img"
-                            src={providerLogo}
-                            height="25"
-                            width="25"
-                            css={{
-                              objectFit: "cover",
-                            }}
-                          />
-                          <Text fs="sm">
-                            {inputValue}{" "}
-                            <Text as="span" css={{ color: "Gray" }}>
-                              - {searchProvider} Search
-                            </Text>
-                          </Text>
-                        </Flex>
-                      </Command.Item>
-                    </Command.Group>
-                  )}
-                  {bookmarks.length !== 0 && (
-                    <Command.Group heading={"Bookmarks"}>
-                      {bookmarks.map((bookmark) => {
-                        return (
-                          <Command.Item
-                            key={"bookmark: " + bookmark.id}
-                            value={"bookmark: " + bookmark.title}
-                            onSelect={() => tabAction(bookmark.url)}
-                          >
-                            <Flex ai="center" gap="2">
-                              <Box
-                                as="img"
-                                css={{
-                                  size: "$5",
-                                  br: "50%",
-                                }}
-                                src={faviconURL(bookmark.url)}
-                              />
-                              <Text fs="sm">{bookmark.title}</Text>
-                            </Flex>
-                          </Command.Item>
-                        );
-                      })}
-                      {/* <Command.Separator /> */}
-                    </Command.Group>
-                  )}
-                </Box>
-              </Command.List>
-              <Flex
-                jc="between"
-                ai="center"
-                cmdk-chroma-footer=""
-                css={{
-                  pd: "$4",
-                }}
-              >
-                <Box as="img" src="/logo/64x64.png" css={{ size: 24 }} />
-
-                <Flex
-                  gap="2"
-                  ai="center"
-                  css={{
-                    "& kbd": {
-                      fontSize: "$md",
-                      br: "$1",
-                      size: "$5",
-                      bg: "rgba(0,0,0,0.4)",
-                      display: "grid",
-                      placeItems: "center",
-                    },
-                  }}
+    <StyledCommand label="Chroma web search">
+      <Flex cmdk-chroma-header="">
+        <SearchIcon />
+        <Command.Input
+          value={inputValue}
+          onValueChange={setInputValue}
+          placeholder={`Search ${searchProvider} or type a URL`}
+          autoFocus
+        />
+        <Popover>
+          <Popover.Button asChild>
+            <IconButton size="sm" bg="transparent">
+              <Text css={{ include: "screenReaderOnly" }}>
+                show search providers
+              </Text>
+              <More css={{ color: "White" }} />
+            </IconButton>
+          </Popover.Button>
+          <Popover.Content>
+            <Box css={{ width: 150 }}>
+              {searchProviders.map(({ name }) => (
+                <ProviderItem key={name} provider={name} />
+              ))}
+            </Box>
+            <Popover.Arrow />
+          </Popover.Content>
+        </Popover>
+      </Flex>
+      <Command.List>
+        <Box cmdk-chroma-items="">
+          {inputValue && (
+            <Command.Group heading="Recent">
+              {history.slice(0, 3).map((h) => {
+                return (
+                  <Command.Item
+                    key={"recent: " + h}
+                    value={h}
+                    onSelect={() => searchAction(h)}
+                  >
+                    <Flex ai="center" gap="2">
+                      <HistoryIcon />
+                      <Text fs="sm">{h}</Text>
+                    </Flex>
+                  </Command.Item>
+                );
+              })}
+            </Command.Group>
+          )}
+          <Command.Group heading="History">
+            {chromeHist.map((h) => {
+              return (
+                <Command.Item
+                  key={"hist: " + h.id}
+                  value={"hist: " + h.title}
+                  onSelect={() => tabAction(h.url)}
                 >
-                  <Text>Shortcut</Text>
-                  <Flex gap="1">
-                    <kbd>⌘</kbd>
-                    <kbd>K</kbd>
+                  <Flex ai="center" gap="2">
+                    <Box
+                      as="img"
+                      css={{
+                        size: "$5",
+                        br: "50%",
+                      }}
+                      src={faviconURL(h.url)}
+                    />
+                    <Text fs="sm">{h.title}</Text>
                   </Flex>
+                </Command.Item>
+              );
+            })}
+          </Command.Group>
+          {inputValue && (
+            <Command.Group heading="Search">
+              <Command.Item
+                value={`"${inputValue}"`}
+                onSelect={() => searchAction(inputValue)}
+              >
+                <Flex ai="center" gap="2">
+                  <Box
+                    as="img"
+                    src={providerLogo}
+                    height="25"
+                    width="25"
+                    css={{
+                      objectFit: "cover",
+                    }}
+                  />
+                  <Text fs="sm">
+                    {inputValue}{" "}
+                    <Text as="span" css={{ color: "Gray" }}>
+                      - {searchProvider} Search
+                    </Text>
+                  </Text>
                 </Flex>
-              </Flex>
-            </StyledCommand>
-          </Box>
-        </Overlay>
-      )}
-    </AnimatePresence>
+              </Command.Item>
+            </Command.Group>
+          )}
+          {bookmarks.length !== 0 && (
+            <Command.Group heading={"Bookmarks"}>
+              {bookmarks.map((bookmark) => {
+                return (
+                  <Command.Item
+                    key={"bookmark: " + bookmark.id}
+                    value={"bookmark: " + bookmark.title}
+                    onSelect={() => tabAction(bookmark.url)}
+                  >
+                    <Flex ai="center" gap="2">
+                      <Box
+                        as="img"
+                        css={{
+                          size: "$5",
+                          br: "50%",
+                        }}
+                        src={faviconURL(bookmark.url)}
+                      />
+                      <Text fs="sm">{bookmark.title}</Text>
+                    </Flex>
+                  </Command.Item>
+                );
+              })}
+              {/* <Command.Separator /> */}
+            </Command.Group>
+          )}
+        </Box>
+      </Command.List>
+      <Flex
+        jc="between"
+        ai="center"
+        cmdk-chroma-footer=""
+        css={{
+          pd: "$4",
+        }}
+      >
+        <Box as="img" src="/logo/64x64.png" css={{ size: 24 }} />
+
+        <Flex
+          gap="2"
+          ai="center"
+          css={{
+            "& kbd": {
+              fontSize: "$md",
+              br: "$1",
+              size: "$5",
+              bg: "rgba(0,0,0,0.4)",
+              display: "grid",
+              placeItems: "center",
+            },
+          }}
+        >
+          <Text>Shortcut</Text>
+          <Flex gap="1">
+            <kbd>⌘</kbd>
+            <kbd>K</kbd>
+          </Flex>
+        </Flex>
+      </Flex>
+    </StyledCommand>
   );
 };
 
