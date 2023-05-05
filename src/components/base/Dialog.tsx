@@ -47,7 +47,7 @@ function OverlayContent({
   );
 }
 
-const StyledDialogClose = styled(RadixDialog.Close, {
+const DialogClose = styled(RadixDialog.Close, {
   $$size: 18,
   all: "unset",
   fontFamily: "inherit",
@@ -59,6 +59,7 @@ const StyledDialogClose = styled(RadixDialog.Close, {
   color: "$text",
   bg: "rgba($bgRGB,0.5)",
   backdropFilter: "blur(50px)",
+  cursor: "pointer",
   "& svg": {
     size: "70%",
   },
@@ -68,9 +69,9 @@ const StyledDialogClose = styled(RadixDialog.Close, {
 
 function OverlayClose({ css }: { css: CSS }) {
   return (
-    <StyledDialogClose css={css}>
+    <DialogClose aria-label="close" css={css}>
       <CancelIcon />
-    </StyledDialogClose>
+    </DialogClose>
   );
 }
 
