@@ -5,11 +5,7 @@ import { CSS, styled } from "stitches.config";
 
 export default function Dropdown({
   ...props
-}: {
-  children: React.ReactNode;
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
-}) {
+}: RadixDropdownMenu.DropdownMenuProps) {
   return <RadixDropdownMenu.Root {...props} />;
 }
 

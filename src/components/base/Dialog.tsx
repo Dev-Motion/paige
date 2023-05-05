@@ -10,7 +10,7 @@ const slideIn = keyframes({
   "0%": { transform: "translate(-50%,50%)" },
   "100%": { transform: "translate(-50%,-50%)" },
 });
-function Dialog(props: ComponentProps<typeof RadixDialog.Root>) {
+function Dialog(props: RadixDialog.DialogProps) {
   return <RadixDialog.Root {...props} />;
 }
 
