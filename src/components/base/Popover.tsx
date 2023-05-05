@@ -1,7 +1,15 @@
 import * as React from "react";
 import * as RadixPopover from "@radix-ui/react-popover";
-import { styled, keyframes } from "stitches.config";
+import { styled } from "stitches.config";
 import { CancelIcon } from "@components/icons";
+import { animation } from "@utils";
+
+const {
+  slideDownAndFade,
+  slideUpAndFade,
+  slideRightAndFade,
+  slideLeftAndFade,
+} = animation;
 
 export default function Popover({
   children,
@@ -77,26 +85,6 @@ Popover.Content = PopoverContent;
 Popover.Close = PopoverClose;
 
 Popover.Arrow = PopoverArrow;
-
-const slideUpAndFade = keyframes({
-  "0%": { opacity: 0, transform: "translateY(10px)" },
-  "100%": { opacity: 1, transform: "translateY(0)" },
-});
-
-const slideRightAndFade = keyframes({
-  "0%": { opacity: 0, transform: "translateX(-10px)" },
-  "100%": { opacity: 1, transform: "translateX(0)" },
-});
-
-const slideDownAndFade = keyframes({
-  "0%": { opacity: 0, transform: "translateY(-10px)" },
-  "100%": { opacity: 1, transform: "translateY(0)" },
-});
-
-const slideLeftAndFade = keyframes({
-  "0%": { opacity: 0, transform: "translateX(10px)" },
-  "100%": { opacity: 1, transform: "translateX(0)" },
-});
 
 const StyledPopoverContent = styled(RadixPopover.Content, {
   animationDuration: "1000ms",

@@ -1,21 +1,8 @@
 import * as React from "react";
-import { styled, keyframes } from "stitches.config";
+import { styled } from "stitches.config";
+import { animation } from "@utils";
 
-const ping = keyframes({
-  "0%": {
-    transform: "scale(1)",
-    opacity: 1,
-  },
-  "75%": {
-    transform: "scale(2)",
-    opacity: 0,
-  },
-  "100%": {
-    transform: "scale(2.5)",
-    opacity: 0,
-  },
-});
-
+const { ping } = animation;
 const Badge = styled("div", {
   // Reset
   boxSizing: "border-box",

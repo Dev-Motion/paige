@@ -1,15 +1,8 @@
 import React from "react";
-import { Box } from "@components/base";
-import { styled, keyframes, CSS } from "stitches.config";
+import { styled, CSS } from "stitches.config";
+import { animation } from "@utils";
 
-const shimmer = keyframes({
-  "0%": {
-    backgroundPosition: "200% 0",
-  },
-  "100%": {
-    backgroundPosition: "-200% 0",
-  },
-});
+const { shimmer } = animation;
 
 const Skeleton = ({
   width,

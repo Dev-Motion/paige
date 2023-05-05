@@ -10,7 +10,7 @@ import {
   Condition,
   NominatimResponse,
 } from "@types";
-
+export { default as animation } from "./animations";
 export const SECONDS = 1000;
 export const MINUTES = 60 * SECONDS;
 export const HOURS = 60 * MINUTES;
@@ -132,7 +132,6 @@ export function handleGoals() {
 export function getData() {
   handleGoals();
   handleImages();
-  handleQuotes();
 }
 
 export function tweetHandler(text: string, hashtags: string[], via: string) {
