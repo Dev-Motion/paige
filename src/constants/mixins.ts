@@ -29,10 +29,13 @@ const mixins = createMixins({
     appearance: "none",
     border: "none",
     bg: "transparent",
-    outline: "none",
+    outline: "1px solid transparent",
     cursor: "pointer",
     p: 0,
     m: 0,
+    "&:focus": {
+      boxShadow: "0 0 0 2px $colors$text",
+    },
   },
 });
 

@@ -10,6 +10,12 @@ const IconButton = styled("button", {
   size: 50,
   br: "$round",
   transition: "transform 0.2s ease-in-out",
+  //add accessibility on focus
+  "&:focus": {
+    boxShadow: "0 0 0 2px $colors$text",
+    transform: "scale(1.05)",
+    transformOrigin: "center center",
+  },
   "&:active": {
     scale: 0.95,
     transformOrigin: "center center",
