@@ -11,3 +11,4 @@ export { default as Badge } from "./Badge";
 export { default as HoverCard } from "./HoverCard";
 export { default as Skeleton } from "./Skeleton";
 export { default as Dropdown } from "./Dropdown";
+export { default as Dialog } from "./Dialog";
