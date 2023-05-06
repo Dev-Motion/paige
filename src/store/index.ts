@@ -9,8 +9,11 @@ import createSearchSlice, { SearchSlice } from "./slices/searchSlice";
 import createToastSlice, { ToastSlice } from "./slices/ToastSlice";
 import createWeatherSlice, { WeatherSlice } from "./slices/weatherSlice";
 import createTimeSlice, { TimeSlice } from "./slices/TimeSlice";
+import createPinnedSitesSlice, {
+  PinnedSitesSlice,
+} from "./slices/PinnedSitesSlice";
 import { preloadImage, handleImages, handleGoals } from "@utils";
-import { imageQuality } from "@constants";
+import { imageQuality, isRunningInExtension } from "@constants";
 
 interface GeneralSlice {
   name?: string;
@@ -26,6 +29,7 @@ export type Slices = LayoutSlice &
   ToastSlice &
   WeatherSlice &
   TimeSlice &
+  PinnedSitesSlice &
   GeneralSlice;
 export type StateCreator<T> = ZStateCreator<Slices, [], [], T>;
 
@@ -45,6 +49,7 @@ const useStore = create<Slices>()(
         ...createToastSlice(...a),
         ...createWeatherSlice(...a),
         ...createTimeSlice(...a),
+        ...createPinnedSitesSlice(...a),
       })),
       {
         name: "store1",
@@ -96,3 +101,11 @@ if (api.cloudPhotos.length === 0) {
 }
 
 api.setTheme();
+
+if (isRunningInExtension && api.pinnedSites.length === 0) {
+  chrome.topSites.get((data) => {
+    data.slice(0, 4).map((d) => {
+      api.addPinnedSite(d);
+    });
+  });
+}
