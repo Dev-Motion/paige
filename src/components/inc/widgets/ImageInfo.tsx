@@ -37,7 +37,7 @@ const ImageInfo = () => {
         position: "relative",
       }}
     >
-      <Text>
+      <Text fs="sm">
         {todayAttribution?.description || todayAttribution?.alt_description}
       </Text>
       <Flex gap="3" jc="between">
@@ -61,7 +61,13 @@ const ImageInfo = () => {
           <ExternalLinkIcon css={{ size: "$3" }} />
           <Text fs="xs">link</Text>
         </Flex>
-        <IconButton size="sm" bg="transparent" onClick={ToggleFavorite}>
+        <Flex
+          as="button"
+          css={{ include: "buttonReset" }}
+          gap="1"
+          ai="center"
+          onClick={ToggleFavorite}
+        >
           <HeartIcon
             css={{
               size: "$3",
@@ -70,7 +76,10 @@ const ImageInfo = () => {
               transition: "all 300ms ease-in-out",
             }}
           />
-        </IconButton>
+          <Text fs="xs" css={{ color: "$text" }}>
+            favorite
+          </Text>
+        </Flex>
       </Flex>
       <Flex ai="center" gap="2">
         <Box
