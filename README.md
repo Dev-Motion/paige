@@ -5,13 +5,13 @@
 <h1 align="center">Paige Browser Extension</h1>
 
 <h3 align="center">
-  An open source browser extension , made by Devmotio.
+  An open source browser extension , made by Devmotion.
 </h3>
 
 <h3 align="center">a space where you can customize your focus, immerse yourself in calm scenes, and find inspiration whenever you open a new tab in your browser</h3>
 
 <p align="center">
-  <img src="./public/images/preview.png"  alt="Paige Icon" />
+  <img src="./public/images/preview.png"  alt="Paige preview" />
 </p>
 
 ### ✨ Features
