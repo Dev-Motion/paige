@@ -5,7 +5,9 @@ import * as React from "react";
 import TodoItem, { Input, MenuButton } from "../TodoItem";
 
 function TodoPane() {
-  const todos = useStore((state) => state.todos);
+  const todos = useStore((state) =>
+    state.todos.sort((a) => (a.important ? -1 : 1))
+  );
   return (
     <Box css={{ width: 330, spacey: "$2" }}>
       <Card
@@ -38,11 +40,9 @@ function TodoPane() {
         </Popover>
       </Card>
       <Flex fd="column" gap="1">
-        {todos
-          .sort((a, b) => (a.important ? -1 : 1))
-          .map((todo, i) => (
-            <TodoItem key={todo.id.toString()} todo={todo} />
-          ))}
+        {todos.map((todo, i) => (
+          <TodoItem key={todo.id.toString() + i.toString()} todo={todo} />
+        ))}
         <AddTodo />
       </Flex>
     </Box>
@@ -90,9 +90,9 @@ function AddTodo() {
     }
   });
   return (
-    <Card css={{ px: "$1", py: "$2" }}>
+    <Card>
       {showInput ? (
-        <Flex>
+        <Flex css={{ px: "$1", py: "$2" }}>
           <Input
             value={text}
             onChange={(e) => setText(e.currentTarget.value)}
@@ -102,7 +102,7 @@ function AddTodo() {
           />
           <Flex>
             <IconButton bg="transparent" size="sm">
-              <AlarmIcon css={{ size: "$3" }} />
+              <AlarmIcon css={{ size: "$3", color: "$text" }} />
             </IconButton>
             <IconButton
               bg="transparent"
@@ -114,6 +114,7 @@ function AddTodo() {
                   size: "$3",
                   fill: important ? "$text" : "transparent",
                   transition: "all 300ms ease-in-out",
+                  color: "$text",
                 }}
               />
             </IconButton>
@@ -122,13 +123,19 @@ function AddTodo() {
       ) : (
         <Flex
           as="button"
-          css={{ include: "buttonReset", color: "$text" }}
+          css={{
+            include: "buttonReset",
+            color: "$text",
+            mx: "$1",
+            my: "$2",
+            width: "100%",
+          }}
           ai="center"
           gap="2"
           onClick={() => setShowInput(true)}
         >
           <IconButton bg="transparent" size="sm">
-            <AddIcon />
+            <AddIcon css={{ color: "$text" }} />
           </IconButton>
           <Text fs="sm" fw="medium">
             Add a todo

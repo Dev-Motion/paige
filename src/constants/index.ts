@@ -5,6 +5,9 @@ const tempImageQuality = "&w=1080&q=80&auto=format";
 export { imageQuality, tempImageQuality };
 export const cacheName = "paige-assets";
 
+export const isRunningInExtension =
+  window.chrome && chrome.runtime && chrome.runtime.id ? true : false;
+
 export const defaultTodayPhoto = {
   id: "KX6ECaHP6wQ",
   created_at: "2017-10-08T18:15:05Z",
@@ -223,4 +226,5 @@ export const searchProviders = [
     image: "/images/bing.png",
   },
 ] as const;
+
 export type SearchProviders = (typeof searchProviders)[number]["name"];
