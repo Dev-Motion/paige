@@ -39,14 +39,6 @@ function TodoItem({ todo }: { todo: Todo }) {
       layoutId={todo.id.toString()}
       // key={todo.id}
       data-option-open={show}
-      initial={{
-        y: "100%",
-        opacity: 0,
-      }}
-      animate={{
-        y: "0",
-        opacity: 1,
-      }}
       css={{
         display: "flex",
         gap: "$2",
