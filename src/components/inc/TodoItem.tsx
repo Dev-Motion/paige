@@ -39,21 +39,13 @@ function TodoItem({ todo }: { todo: Todo }) {
       layoutId={todo.id.toString()}
       // key={todo.id}
       data-option-open={show}
-      initial={{
-        y: "100%",
-        opacity: 0,
-      }}
-      animate={{
-        y: "0",
-        opacity: 1,
-      }}
       css={{
         display: "flex",
         gap: "$2",
         ai: "center",
         width: "100%",
-        py: "$2",
-        px: "$1",
+        py: "$3",
+        px: "$2",
         "&:hover": {
           ".options": {
             transform: "translateY(-50%) translateX(0)",
@@ -65,6 +57,7 @@ function TodoItem({ todo }: { todo: Todo }) {
           },
         },
         position: "relative",
+        overflow: "hidden",
       }}
     >
       <CheckBox
@@ -107,7 +100,11 @@ function TodoItem({ todo }: { todo: Todo }) {
           onClick={() => toggleImportant(todo.id)}
         >
           <StarIcon
-            css={{ size: "$4", fill: todo.important ? "$text" : "none" }}
+            css={{
+              size: "$4",
+              fill: todo.important ? "$text" : "none",
+              color: "$text",
+            }}
           />
         </IconButton>
         <Dropdown open={show} onOpenChange={setShow} key={todo.id}>
@@ -118,7 +115,7 @@ function TodoItem({ todo }: { todo: Todo }) {
               onClick={() => setShow(true)}
               css={{}}
             >
-              <More css={{ size: "$3" }} />
+              <More css={{ size: "$3", color: "$text" }} />
               <Text css={{ include: "screenReaderOnly" }}>more options</Text>
             </IconButton>
           </Dropdown.Button>

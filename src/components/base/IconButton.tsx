@@ -1,18 +1,14 @@
 import { styled } from "stitches.config";
 
 const IconButton = styled("button", {
-  appearance: "none",
-  outline: "none",
-  border: "none",
+  include: "buttonReset",
   display: "flex",
   ai: "center",
   jc: "center",
   size: 50,
   br: "$round",
   transition: "transform 0.2s ease-in-out",
-  //add accessibility on focus
   "&:focus": {
-    boxShadow: "0 0 0 2px $colors$text",
     transform: "scale(1.05)",
     transformOrigin: "center center",
   },

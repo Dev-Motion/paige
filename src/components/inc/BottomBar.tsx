@@ -70,6 +70,8 @@ const BottomBar = () => {
                 gap="1"
                 as="button"
                 css={{
+                  py: "$2",
+                  px: "$3",
                   color: "$text",
                   include: ["buttonReset", "accessibleShadow"],
                   position: "relative",

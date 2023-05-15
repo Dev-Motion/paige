@@ -3,9 +3,7 @@ import { SearchIcon } from "@components/icons";
 import { Flex, IconButton, Text, Dialog } from "@components/base";
 import useStore from "@store";
 import CommandMenu from "../CommandMenu";
-
-const isRunningInExtension =
-  window.chrome && chrome.runtime && chrome.runtime.id ? true : false;
+import { isRunningInExtension } from "@constants";
 
 function Search() {
   const [open, setOpen] = useStore((state) => [
@@ -15,6 +13,7 @@ function Search() {
   function openChange(open: boolean) {
     if (isRunningInExtension) {
       setOpen(open);
+      return;
     }
     setOpen(false);
   }

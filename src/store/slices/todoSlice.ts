@@ -16,7 +16,7 @@ export interface Todo {
   id: number;
   text: string;
   completed: boolean;
-  important?: boolean;
+  important: boolean;
 }
 interface Goal {
   text: string;
@@ -30,7 +30,9 @@ const createTodoSlice: StateCreator<TodoSlice> = (set) => ({
   setGoal: (goal) => {
     set(() => ({ goal }));
   },
-  todos: [{ id: 1, text: "Add your to-dos here", completed: false }],
+  todos: [
+    { id: 1, text: "Add your to-dos here", completed: false, important: false },
+  ],
   addTodo: (todo) => {
     set((state) => ({ todos: [...state.todos, todo] }));
   },

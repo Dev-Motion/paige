@@ -6,3 +6,4 @@ export { default as TodoPane } from "./TodoPane";
 export { default as Time } from "./Time";
 export { default as ImageInfo } from "./ImageInfo";
 export { default as Search } from "./Search";
+export { default as PinnedSites } from "./PinnedSites";

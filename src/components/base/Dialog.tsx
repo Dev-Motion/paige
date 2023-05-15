@@ -29,7 +29,7 @@ const DialogContent = styled(RadixDialog.Content, {
   position: "fixed",
   top: "50%",
   left: "50%",
-  animation: `${fadeIn} .3s ease-in-out, ${slideIn} .3s ease-in-out`,
+  animation: `${fadeIn} .5s ease-in-out, ${slideIn} .5s ease-in-out`,
   animationFillMode: "forwards",
 });
 
@@ -57,9 +57,12 @@ const DialogClose = styled(RadixDialog.Close, {
   alignItems: "center",
   justifyContent: "center",
   color: "$text",
+  position: "absolute",
+  top: 0,
+  right: 0,
+  transform: "translate(50%, -50%)",
   bg: "rgba($bgRGB,0.5)",
   backdropFilter: "blur(50px)",
-  cursor: "pointer",
   "& svg": {
     size: "70%",
   },
@@ -67,7 +70,7 @@ const DialogClose = styled(RadixDialog.Close, {
   "&:focus": { boxShadow: "0 0 0 2px rgba($textRGB,0.4)" },
 });
 
-function OverlayClose({ css }: { css: CSS }) {
+function OverlayClose({ css }: { css?: CSS }) {
   return (
     <DialogClose aria-label="close" css={css}>
       <CancelIcon />

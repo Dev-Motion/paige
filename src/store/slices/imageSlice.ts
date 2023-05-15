@@ -23,7 +23,7 @@ export interface ImageSlice {
 }
 
 const unsplash = createApi({
-  accessKey: "KxpNPWHtw7i2ylXHm1MRNLLReT1rabDWHSfU61zpUfg",
+  accessKey: import.meta.env.VITE_UNSPLASH_KEY,
   //...other fetch options
 });
 
