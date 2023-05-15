@@ -26,16 +26,16 @@ const mixins = createMixins({
     },
   },
   buttonReset: {
-    appearance: "none",
-    border: "none",
-    bg: "transparent",
-    outline: "1px solid transparent",
+    "-webkit-appearance": "none",
+    borderRadius: 0,
+    textAlign: "inherit",
+    background: "none",
+    boxShadow: "none",
+    padding: "0",
     cursor: "pointer",
-    p: 0,
-    m: 0,
-    "&:focus": {
-      boxShadow: "0 0 0 2px $colors$text",
-    },
+    border: "none",
+    color: "inherit",
+    font: "inherit",
   },
 });
 
