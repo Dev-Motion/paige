@@ -1,4 +1,4 @@
-import create, { StateCreator as ZStateCreator } from "zustand";
+import { create, StateCreator as ZStateCreator } from "zustand";
 import { persist, subscribeWithSelector, devtools } from "zustand/middleware";
 import createLayoutSlice, { LayoutSlice } from "./slices/layoutSlice";
 import createThemeSlice, { ThemeSlice } from "./slices/themeSlice";
@@ -52,7 +52,7 @@ const useStore = create<Slices>()(
         ...createPinnedSitesSlice(...a),
       })),
       {
-        name: "store1",
+        name: "store",
         partialize: (state) =>
           Object.fromEntries(
             Object.entries(state).filter(
@@ -108,4 +108,7 @@ if (isRunningInExtension && api.pinnedSites.length === 0) {
       api.addPinnedSite(d);
     });
   });
+}
+if (Notification.permission === "default") {
+  Notification.requestPermission().then((res) => console.log(res));
 }

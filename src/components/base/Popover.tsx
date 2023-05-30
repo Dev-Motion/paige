@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as RadixPopover from "@radix-ui/react-popover";
+import * as PopoverPrimitive from "@radix-ui/react-popover";
 import { styled } from "stitches.config";
 import { CancelIcon } from "@components/icons";
 import { animation } from "@utils";
@@ -11,59 +11,30 @@ const {
   slideLeftAndFade,
 } = animation;
 
-export default function Popover({
-  children,
-  open,
-  onOpenChange,
-}: {
-  children: React.ReactNode;
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
-}) {
-  const [isOpen, setIsOpen] = React.useState(false);
-
-  return (
-    <RadixPopover.Root
-      open={open ? open : isOpen}
-      onOpenChange={onOpenChange ? onOpenChange : setIsOpen}
-    >
-      {children}
-    </RadixPopover.Root>
-  );
+export default function Popover(props: PopoverPrimitive.PopoverProps) {
+  return <PopoverPrimitive.Root {...props} />;
 }
 
-function PopoverButton({
-  children,
-  asChild,
-}: {
-  children: React.ReactNode;
-  asChild?: boolean;
-}) {
-  return (
-    <RadixPopover.Trigger asChild={asChild}>{children}</RadixPopover.Trigger>
-  );
-}
+export const PopoverTrigger = PopoverPrimitive.Trigger;
 
-function PopoverContent({
-  children,
-  asChild,
-  side,
-}: {
-  children: React.ReactNode;
-  asChild?: boolean;
-  side?: "top" | "right" | "bottom" | "left";
-}) {
+export const PopoverContent = React.forwardRef<
+  HTMLDivElement,
+  PopoverPrimitive.PopoverContentProps
+>(function PopoverC({ children, ...props }, forwardedRef) {
   return (
-    <StyledPopoverContent
-      asChild={asChild}
-      collisionPadding={10}
-      sideOffset={5}
-      side={side}
-    >
-      {children}
-    </StyledPopoverContent>
+    <PopoverPrimitive.Portal>
+      <StyledPopoverContent
+        sideOffset={5}
+        collisionPadding={10}
+        {...props}
+        ref={forwardedRef}
+      >
+        {children}
+        <PopoverPrimitive.Arrow />
+      </StyledPopoverContent>
+    </PopoverPrimitive.Portal>
   );
-}
+});
 
 function PopoverClose() {
   return (
@@ -73,12 +44,12 @@ function PopoverClose() {
   );
 }
 
-const PopoverArrow = styled(RadixPopover.Arrow, {
+const PopoverArrow = styled(PopoverPrimitive.Arrow, {
   fill: "$bg",
   // backdropFilter: "blur(50px)",
 });
 
-Popover.Button = PopoverButton;
+Popover.Button = PopoverTrigger;
 
 Popover.Content = PopoverContent;
 
@@ -86,7 +57,7 @@ Popover.Close = PopoverClose;
 
 Popover.Arrow = PopoverArrow;
 
-const StyledPopoverContent = styled(RadixPopover.Content, {
+const StyledPopoverContent = styled(PopoverPrimitive.Content, {
   animationDuration: "1000ms",
   animationTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
   willChange: "transform, opacity",
@@ -108,7 +79,7 @@ const StyledPopoverContent = styled(RadixPopover.Content, {
   },
 });
 
-const StyledPopoverClose = styled(RadixPopover.Close, {
+const StyledPopoverClose = styled(PopoverPrimitive.Close, {
   $$size: 18,
   all: "unset",
   fontFamily: "inherit",

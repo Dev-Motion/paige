@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { Box, Text, Flex, Card, CheckBox, Dialog } from "@components/base";
 import { RepeatIcon } from "@components/icons";
 import { motion } from "framer-motion";
-
+import useStore from "@store";
+import { analyzeDate } from "@utils";
+import { shallow } from "zustand/shallow";
 const ReminderItems = () => {
+  const todos = useStore((store) => store.todos, shallow);
+  const reminders = todos.flatMap((t) => (t.reminder ? [t] : []));
   return (
     <Flex
       fd="column"
@@ -11,7 +15,7 @@ const ReminderItems = () => {
         $$y: "15px",
         isolation: "isolate",
         gap: "$$y",
-        minWidth: 420,
+        minWidth: 330,
       }}
     >
       {reminders.slice(0, 2).map((reminder, index) => {
@@ -23,20 +27,20 @@ const ReminderItems = () => {
             layoutId={`reminder-item-${index + 1}`}
             initial={false}
             animate={{
-              scale: -1 * index * 0.05 + 1,
+              scale: -1 * index * 0.1 + 1,
+              opacity: (1 / (index + 0.2)) * 1,
             }}
             css={{
-              opacity: (1 / (index + 0.2)) * 1,
               $$height: first ? "120px" : "80px",
               height: "$$height",
               pd: "$4",
               mt: first ? "" : "calc(-1 * $$height)",
               zIndex: 3 - index,
-              spacey: "$2",
+              spacey: "$1",
             }}
           >
             {first && (
-              <Flex jc="between">
+              <Flex as={motion.div} layoutId="reminder-top" jc="between">
                 <Text as={"h3"} fs="md" fw="bold">
                   Reminder
                 </Text>
@@ -62,22 +66,21 @@ const ReminderItems = () => {
               <CheckBox />
               <Box css={{ spacey: "$1" }}>
                 <Text fs="sm" fw="medium">
-                  {reminder.title}
+                  {reminder.text}
                 </Text>
                 <Flex
                   css={{
-                    border: "1px solid $text",
+                    border: "0.3px solid $text",
                     px: "$2",
                     py: "$1",
                     br: "$pill",
                     gap: "$1",
-                    fontSize: "$xs",
+                    fontSize: "$2xs",
                     width: "fit-content",
                     color: "$text",
                   }}
                 >
-                  {reminder.date}
-                  <RepeatIcon />
+                  {analyzeDate(new Date(reminder.date))}
                 </Flex>
               </Box>
             </Flex>
@@ -89,6 +92,8 @@ const ReminderItems = () => {
 };
 
 const FloatingReminderItems = () => {
+  const todos = useStore((store) => store.todos);
+  const reminders = todos.flatMap((t) => (t.reminder ? [t] : []));
   return (
     <Flex
       fd="column"
@@ -96,10 +101,14 @@ const FloatingReminderItems = () => {
         $$y: "8px",
         isolation: "isolate",
         gap: "$$y",
-        minWidth: 420,
+        minWidth: 380,
       }}
     >
-      <Card css={{ px: "$4", py: "$2" }}>
+      <Card
+        as={motion.div}
+        layoutId="reminder-top"
+        css={{ px: "$4", py: "$2" }}
+      >
         <Text as={"h3"} fs="md" fw="bold">
           Reminder
         </Text>
@@ -119,22 +128,21 @@ const FloatingReminderItems = () => {
               <CheckBox />
               <Box css={{ spacey: "$1" }}>
                 <Text fs="sm" fw="medium">
-                  {reminder.title}
+                  {reminder.text}
                 </Text>
                 <Flex
                   css={{
-                    border: "1px solid $text",
+                    border: "0.3px solid $text",
                     px: "$2",
                     py: "$1",
                     br: "$pill",
                     gap: "$1",
-                    fontSize: "$xs",
+                    fontSize: "$2xs",
                     width: "fit-content",
                     color: "$text",
                   }}
                 >
-                  {reminder.date}
-                  <RepeatIcon />
+                  {analyzeDate(new Date(reminder.date))}
                 </Flex>
               </Box>
             </Flex>
@@ -158,30 +166,4 @@ const Reminder = () => {
   );
 };
 
-const reminders = [
-  {
-    id: 1,
-    title: "Get help to setup my laptop",
-    description: "I need to set up my laptop and get it running",
-    date: "Today, 10:00 AM",
-  },
-  {
-    id: 2,
-    title: "Schedule a meeting with my team",
-    description: "Meet with my team to discuss the next step in the project",
-    date: "Today, 4:30 PM",
-  },
-  {
-    id: 3,
-    title: "Schedule a meeting with my team",
-    description: "Meet with my team to discuss the next step in the project",
-    date: "Today, 4:30 PM",
-  },
-  {
-    id: 4,
-    title: "Schedule a meeting with my team",
-    description: "Meet with my team to discuss the next step in the project",
-    date: "Today, 4:30 PM",
-  },
-];
 export default Reminder;

@@ -11,13 +11,26 @@ export interface TodoSlice {
   editTodo: (id: number, text: string) => void;
   clearCompleted: () => void;
   toggleAll: () => void;
+  toggleReminded: (id: number) => void;
 }
-export interface Todo {
+
+export type TodoOnly = {
   id: number;
   text: string;
   completed: boolean;
   important: boolean;
-}
+  reminder: false;
+};
+export type Reminder = {
+  id: number;
+  text: string;
+  completed: boolean;
+  important: boolean;
+  reminder: true;
+  reminded?: boolean;
+  date: Date;
+};
+export type Todo = TodoOnly | Reminder;
 interface Goal {
   text: string;
   for: Date;
@@ -31,7 +44,13 @@ const createTodoSlice: StateCreator<TodoSlice> = (set) => ({
     set(() => ({ goal }));
   },
   todos: [
-    { id: 1, text: "Add your to-dos here", completed: false, important: false },
+    {
+      id: 1,
+      text: "Add your to-dos here",
+      completed: false,
+      important: false,
+      reminder: false,
+    },
   ],
   addTodo: (todo) => {
     set((state) => ({ todos: [...state.todos, todo] }));
@@ -66,6 +85,18 @@ const createTodoSlice: StateCreator<TodoSlice> = (set) => ({
       todos: state.todos.map((todo) =>
         todo.id === id ? { ...todo, important: !todo.important } : todo
       ),
+    }));
+  },
+  toggleReminded(id) {
+    set((state) => ({
+      todos: state.todos.map((todo) => {
+        if (todo.reminder) {
+          if (todo.id === id) {
+            return { ...todo, reminded: !todo.reminded };
+          }
+        }
+        return todo;
+      }),
     }));
   },
 });

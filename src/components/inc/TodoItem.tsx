@@ -6,12 +6,19 @@ import {
   IconButton,
   Text,
 } from "@components/base";
-import { AlarmIcon, More, StarIcon } from "@components/icons";
+import {
+  AlarmIcon,
+  DeleteIcon,
+  EditIcon,
+  More,
+  StarIcon,
+} from "@components/icons";
 import { motion } from "framer-motion";
 import useStore from "@store";
 import { Todo } from "@store/slices/todoSlice";
 import * as React from "react";
 import { styled } from "stitches.config";
+import { analyzeDate } from "@utils";
 
 function TodoItem({ todo }: { todo: Todo }) {
   const [toggleTodo, editTodo, toggleImportant] = useStore((state) => [
@@ -27,7 +34,7 @@ function TodoItem({ todo }: { todo: Todo }) {
     setIsEditing((prev) => !prev);
   };
   const onEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && text) {
       editTodo(todo.id, text);
       toggleEditing();
       setText("");
@@ -42,7 +49,7 @@ function TodoItem({ todo }: { todo: Todo }) {
       css={{
         display: "flex",
         gap: "$2",
-        ai: "center",
+        ai: "start",
         width: "100%",
         py: "$3",
         px: "$2",
@@ -72,15 +79,32 @@ function TodoItem({ todo }: { todo: Todo }) {
           ref={(e) => e?.focus()}
         />
       ) : (
-        <Text
-          fs="sm"
-          css={{
-            textDecoration: todo.completed ? "line-through" : "none",
-            flex: 1,
-          }}
-        >
-          {todo.text}
-        </Text>
+        <Flex fd="column" gap="1" css={{ flex: 1 }}>
+          <Text
+            fs="sm"
+            css={{
+              textDecoration: todo.completed ? "line-through" : "none",
+            }}
+          >
+            {todo.text}
+          </Text>
+          {todo.reminder && (
+            <Flex
+              css={{
+                border: "0.3px solid $text",
+                px: "$2",
+                py: "$1",
+                br: "$pill",
+                gap: "$1",
+                fontSize: "$2xs",
+                width: "fit-content",
+                color: "$text",
+              }}
+            >
+              {analyzeDate(new Date(todo.date))}
+            </Flex>
+          )}
+        </Flex>
       )}
       <Flex
         ai="center"
@@ -88,7 +112,7 @@ function TodoItem({ todo }: { todo: Todo }) {
         css={{
           position: "absolute",
           overflow: "hidden",
-          top: "50%",
+          top: "min(50%,23px)",
           right: 0,
           transform: "translateY(-50%) translateX(50%)",
           transition: "all .3s ease-in-out",
@@ -143,20 +167,20 @@ function TodoItemOptions({
   const [removeTodo] = useStore((state) => [state.removeTodo]);
   return (
     <>
-      <Dropdown.MenuItem>
-        <MenuButton onClick={() => toggleEdit()}>
-          <AlarmIcon /> <Text fs="sm">Edit</Text>
-        </MenuButton>
+      <Dropdown.MenuItem onClick={() => toggleEdit()}>
+        <Flex gap="1" ai="center">
+          <EditIcon css={{ size: "$3" }} /> <Text fs="sm">Edit to-do</Text>
+        </Flex>
+      </Dropdown.MenuItem>
+      <Dropdown.MenuItem onClick={() => removeTodo(id)}>
+        <Flex gap="1" ai="center">
+          <DeleteIcon css={{ size: "$3" }} /> <Text fs="sm">Delete</Text>
+        </Flex>
       </Dropdown.MenuItem>
       <Dropdown.MenuItem>
-        <MenuButton onClick={() => removeTodo(id)}>
-          <AlarmIcon /> <Text fs="sm">Delete</Text>
-        </MenuButton>
-      </Dropdown.MenuItem>
-      <Dropdown.MenuItem>
-        <MenuButton>
-          <AlarmIcon /> <Text fs="sm">set reminder</Text>
-        </MenuButton>
+        <Flex gap="1" ai="center">
+          <AlarmIcon css={{ size: "$3" }} /> <Text fs="sm">Set reminder</Text>
+        </Flex>
       </Dropdown.MenuItem>
     </>
   );
@@ -174,24 +198,3 @@ export const Input = styled("input", {
   },
 });
 export default TodoItem;
-
-export const MenuButton = styled("button", {
-  include: "buttonReset",
-  color: "$text",
-  display: "flex",
-  gap: "$1",
-  ai: "center",
-  fontSize: "$sm",
-  fontWeight: "$medium",
-  br: "$2",
-  py: 2,
-  px: 5,
-  width: "100%",
-  textAlign: "left",
-  "&:hover": {
-    bg: "rgba($textRGB, 0.1)",
-  },
-  "& svg": {
-    size: "$3",
-  },
-});

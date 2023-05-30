@@ -18,6 +18,9 @@ const IconButton = styled("button", {
   },
   variants: {
     size: {
+      xs: {
+        size: "$5",
+      },
       sm: {
         size: "$6",
       },

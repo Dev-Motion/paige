@@ -15,7 +15,14 @@
   "background": {
     "service_worker": "service-worker.js"
   },
-  "permissions": ["history", "bookmarks", "search", "favicon", "topSites"],
+  "permissions": [
+    "history",
+    "bookmarks",
+    "search",
+    "favicon",
+    "topSites",
+    "notifications"
+  ],
   "web_accessible_resources": [
     {
       "resources": ["_favicon/*"],

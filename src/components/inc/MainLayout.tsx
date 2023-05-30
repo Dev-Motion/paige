@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useEffect } from "react";
 import { Box, Flex, Grid } from "@components/base";
 
 import {
@@ -11,10 +11,41 @@ import {
 
 import { TopBar, BottomBar } from "@components/inc";
 import Portal from "@utils/Portals";
+import useStore from "@store";
+import { spawnNotification } from "@utils";
+import { shallow } from "zustand/shallow";
 
 const SideBar = lazy(() => import("./SideBar"));
 
 const MainLayout = () => {
+  const [todos, toggleReminded] = useStore(
+    (store) => [store.todos, store.toggleReminded],
+    shallow
+  );
+  const reminders = todos.flatMap((t) => (t.reminder ? [t] : []));
+
+  useEffect(() => {
+    const timeouts: NodeJS.Timeout[] = [];
+    reminders.forEach((r) => {
+      if (r.reminded) {
+        return;
+      }
+      const time = new Date(r.date);
+      if (time.getTime() < Date.now()) {
+        spawnNotification(r.text, "Todo Reminder");
+        toggleReminded(r.id);
+        return;
+      }
+      const timeout = setTimeout(() => {
+        spawnNotification(r.text, "Todo Reminder");
+        toggleReminded(r.id);
+      }, time.getTime() - Date.now());
+      timeouts.push(timeout);
+    });
+    return () => {
+      timeouts.forEach((t) => clearTimeout(t));
+    };
+  }, [reminders]);
   return (
     <Grid
       css={{
