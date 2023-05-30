@@ -1,6 +1,5 @@
-import * as React from "react";
-import { styled } from "stitches.config";
 import { animation } from "@utils";
+import { styled } from "stitches.config";
 
 const { ping } = animation;
 const Badge = styled("div", {
@@ -26,6 +25,7 @@ const Badge = styled("div", {
       sm: {
         px: "$1",
         borderRadius: "$pill",
+        fontSize: "$sm",
       },
       md: {
         pd: "$2",
