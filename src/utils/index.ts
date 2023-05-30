@@ -1,7 +1,6 @@
 import { api } from "@store";
-import { cacheName } from "@constants";
+import { cacheName, isRunningInExtension } from "@constants";
 import {
-  Random,
   Picture,
   RandomPicture,
   PictureInfo,
@@ -11,6 +10,8 @@ import {
   NominatimResponse,
 } from "@types";
 export { default as animation } from "./animations";
+export { default as analyzeDate } from "./date";
+
 export const SECONDS = 1000;
 export const MINUTES = 60 * SECONDS;
 export const HOURS = 60 * MINUTES;
@@ -77,6 +78,21 @@ export function cacheImages(images: string[]) {
       });
     });
   });
+}
+
+export function requestNotificationPermission(action?: () => void) {
+  if (!("Notification" in window)) {
+    alert("Notification API not supported!");
+    return;
+  }
+
+  Notification.requestPermission(function () {
+    action;
+  });
+}
+
+export function spawnNotification(body: string, title: string) {
+  new Notification(title, { body });
 }
 
 export function getTimeItem<T extends { for: Date }[]>(
