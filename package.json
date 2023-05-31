@@ -62,6 +62,6 @@
     "typescript": "^5.0.4",
     "vite": "^4.3.6",
     "vite-plugin-pwa": "^0.15.0",
-    "workbox-window": "^6.5.4"
+    "workbox-window": "^7.0.0"
   }
 }
