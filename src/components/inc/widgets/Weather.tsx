@@ -1,9 +1,9 @@
 import { Box, Flex, Text } from "@components/base";
 import React from "react";
 import useStore from "@store";
-import { WiCloudy } from "react-icons/wi";
 import { findCurrent, HOURS } from "@utils";
 import { useCachedEffect } from "@hooks";
+import { weatherCodes, icon } from "@utils/weatherConditions";
 
 const WeatherWidget = () => {
   const [weather, location, getWeather, getCurrentLocation, getCityName] =
@@ -31,11 +31,18 @@ const WeatherWidget = () => {
   );
   // Blank or loading state
   if (!conditions) return <div className="Weather">-</div>;
-
+  const iconName = weatherCodes[conditions.weatherCode];
   return (
     <Flex fd="column">
       <Flex ai="center" css={{ color: "$text" }}>
-        <WiCloudy size={40} />
+        <Box css={{ position: "relative" }}>
+          <Box
+            as="img"
+            css={{ size: 40 }}
+            src={icon(iconName)}
+            alt={iconName}
+          />
+        </Box>
         <Text fs={"3xl"} fw="semibold">
           {Math.round(conditions.temperature)}˚
         </Text>
