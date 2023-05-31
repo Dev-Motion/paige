@@ -23,7 +23,12 @@ function DatePicker({ onChange }: { onChange: (newDate: Date) => void }) {
       />
       <TimeField
         value={value}
-        onChange={(t) => setValue((v) => v.set(t))}
+        onChange={(t) => {
+          if (!(t?.hour || t?.minute)) {
+            return;
+          }
+          setValue((v) => v.set(t));
+        }}
         label="time"
       />
       <Box
