@@ -175,7 +175,7 @@ function AddTodo() {
           gap="2"
           onClick={() => setState({ showInput: true })}
         >
-          <IconButton bg="transparent" size="xs">
+          <IconButton as="div" bg="transparent" size="xs">
             <AddIcon css={{ color: "$text" }} />
           </IconButton>
           <Text fs="sm" fw="medium">
