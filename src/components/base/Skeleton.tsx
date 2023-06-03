@@ -34,4 +34,5 @@ const BareSkeleton = styled("div", {
   animation: `${shimmer} 8s ease-in-out infinite`,
 });
 
+Skeleton.displayName = "Skeleton";
 export default Skeleton;

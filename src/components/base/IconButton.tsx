@@ -50,4 +50,6 @@ const IconButton = styled("button", {
     },
   },
 });
+IconButton.displayName = "IconButton";
+
 export default IconButton;

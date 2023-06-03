@@ -160,5 +160,5 @@ const Grid = styled("div", {
     },
   },
 });
-
+Grid.displayName = "Grid";
 export default Grid;
