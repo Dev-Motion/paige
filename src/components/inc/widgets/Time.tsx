@@ -120,6 +120,7 @@ const MoreButton = styled(IconButton, {
   opacity: 0,
   "&:focus": {
     opacity: 1,
+    transform: "scale(1)",
   },
   "&:hover": {
     opacity: 1,
