@@ -5,15 +5,19 @@ import useStore from "@store";
 import { Quote } from "@store/slices/QuotesSlice";
 import { HeartIcon, Quotes, TwitterOutlineIcon } from "@components/icons";
 import { tweetHandler } from "@utils";
+import { shallow } from "zustand/shallow";
 
 const DailyMotivationTab = () => {
   const [quoteKeywords, setQuoteKeywords, favouriteQuotes, setFavouriteQuotes] =
-    useStore((state) => [
-      state.quoteKeywords,
-      state.setQuoteKeywords,
-      state.favouriteQuotes,
-      state.setFavouriteQuotes,
-    ]);
+    useStore(
+      (state) => [
+        state.quoteKeywords,
+        state.setQuoteKeywords,
+        state.favouriteQuotes,
+        state.setFavouriteQuotes,
+      ],
+      shallow
+    );
   function isFavorite(quote: Quote) {
     return favouriteQuotes.some((favQuote) => favQuote.id === quote.id);
   }

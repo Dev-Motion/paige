@@ -107,11 +107,9 @@ const MenuBg = styled(motion.div, {
 });
 const SideBar = () => {
   const [activeTab, setActiveTab] = useState("general");
-  const [sideBarOpen, setSideBarOpen, sideBarPosition] = useStore((state) => [
-    state.sideBarOpen,
-    state.setSideBarOpen,
-    state.sideBarPosition,
-  ]);
+  const sideBarOpen = useStore((state) => state.sideBarOpen);
+  const setSideBarOpen = useStore((state) => state.setSideBarOpen);
+  const sideBarPosition = useStore((state) => state.sideBarPosition);
 
   let motionProps;
   if (sideBarPosition === "left") {

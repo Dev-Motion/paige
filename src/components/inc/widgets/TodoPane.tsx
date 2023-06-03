@@ -12,13 +12,14 @@ import useStore from "@store";
 import * as React from "react";
 import DatePicker from "../DatePicker";
 import TodoItem, { Input } from "../TodoItem";
+import { shallow } from "zustand/shallow";
 
 function TodoPane() {
-  const [todos, toggleAll, clearCompleted] = useStore((state) => [
-    state.todos.sort((a) => (a.important ? -1 : 1)),
-    state.toggleAll,
-    state.clearCompleted,
-  ]);
+  const [todos, toggleAll, clearCompleted] = useStore(
+    (state) => [state.todos, state.toggleAll, state.clearCompleted],
+    shallow
+  );
+  const orderedTodos = todos.sort((a) => (a.important ? -1 : 1));
   return (
     <Box css={{ width: 330, spacey: "$1" }}>
       <Card
@@ -46,8 +47,8 @@ function TodoPane() {
         </Dropdown>
       </Card>
       <Flex fd="column" gap="1">
-        {todos.map((todo, i) => (
-          <TodoItem key={todo.id.toString() + i.toString()} todo={todo} />
+        {orderedTodos.map((todo, i) => (
+          <TodoItem key={todo.id.toString()} todo={todo} />
         ))}
         <AddTodo />
       </Flex>
@@ -138,9 +139,10 @@ function AddTodo() {
               </Popover.Button>
               <Popover.Content>
                 <DatePicker
-                  onChange={(d) =>
-                    setState({ dateTime: d, popoverOpen: false })
-                  }
+                  onChange={(d) => {
+                    setState({ dateTime: d, popoverOpen: false });
+                    inputRef.current?.focus();
+                  }}
                 />
                 <Popover.Close />
               </Popover.Content>

@@ -12,6 +12,7 @@ import { More } from "@components/icons";
 import { getDaySegment, processTime } from "@utils";
 import { styled } from "stitches.config";
 import useStore from "@store";
+import { shallow } from "zustand/shallow";
 
 const Time = () => {
   const [open, setOpen] = useState(false);
@@ -23,7 +24,8 @@ const Time = () => {
       state.setIs24Hour,
       state.showTime,
       state.showGreeting,
-    ]
+    ],
+    shallow
   );
   const timeDate = new Date(time);
   const dayofWeek = useRef(timeDate.getDay());

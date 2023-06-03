@@ -9,6 +9,7 @@ import { ScrollArea } from ".";
 import { StarIcon } from "@components/icons";
 import { Picture } from "@types";
 import { HeartIcon } from "@components/icons";
+import { shallow } from "zustand/shallow";
 
 const TabRoot = styled(Tabs.Root, {});
 const TabList = styled(Tabs.List, {
@@ -84,15 +85,18 @@ const GalleryContent = ({ favoriteTab = false }: { favoriteTab?: boolean }) => {
     setFavoritePhotos,
     getCloudPhotos,
     toast,
-  ] = useStore((state) => [
-    state.cloudPhotos,
-    state.setTemporaryBackground,
-    state.setTodayPhoto,
-    state.favoritePhotos,
-    state.setFavoritePhotos,
-    state.getCloudPhotos,
-    state.addToast,
-  ]);
+  ] = useStore(
+    (state) => [
+      state.cloudPhotos,
+      state.setTemporaryBackground,
+      state.setTodayPhoto,
+      state.favoritePhotos,
+      state.setFavoritePhotos,
+      state.getCloudPhotos,
+      state.addToast,
+    ],
+    shallow
+  );
   const isFavorite = (photo: Picture) => {
     return favoritePhotos.some((p) => p.id === photo.id);
   };

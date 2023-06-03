@@ -10,11 +10,17 @@ import {
 import useStore from "@store";
 import { getPictureAttribution } from "@utils";
 import React from "react";
+import { shallow } from "zustand/shallow";
 
 const ImageInfo = () => {
   const [todayPhoto, favoritePhotos, setFavoritePhotos] = useStore(
     (state) =>
-      [state.todayPhoto, state.favoritePhotos, state.setFavoritePhotos] as const
+      [
+        state.todayPhoto,
+        state.favoritePhotos,
+        state.setFavoritePhotos,
+      ] as const,
+    shallow
   );
   const todayAttribution = getPictureAttribution(todayPhoto);
   const isFavorite = favoritePhotos.some((photo) => photo.id === todayPhoto.id);

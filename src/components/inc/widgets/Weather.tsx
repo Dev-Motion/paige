@@ -4,16 +4,20 @@ import useStore from "@store";
 import { findCurrent, HOURS } from "@utils";
 import { useCachedEffect } from "@hooks";
 import { weatherCodes, icon } from "@utils/weatherConditions";
+import { shallow } from "zustand/shallow";
 
 const WeatherWidget = () => {
   const [weather, location, getWeather, getCurrentLocation, getCityName] =
-    useStore((state) => [
-      state.weather,
-      state.location,
-      state.getWeather,
-      state.getCurrentLocation,
-      state.getCityName,
-    ]);
+    useStore(
+      (state) => [
+        state.weather,
+        state.location,
+        state.getWeather,
+        state.getCurrentLocation,
+        state.getCityName,
+      ],
+      shallow
+    );
   const conditions =
     weather && weather.conditions
       ? findCurrent(weather.conditions, Date.now())

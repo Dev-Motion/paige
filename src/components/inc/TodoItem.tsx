@@ -19,13 +19,13 @@ import { Todo } from "@store/slices/todoSlice";
 import * as React from "react";
 import { styled } from "stitches.config";
 import { analyzeDate } from "@utils";
+import { shallow } from "zustand/shallow";
 
 function TodoItem({ todo }: { todo: Todo }) {
-  const [toggleTodo, editTodo, toggleImportant] = useStore((state) => [
-    state.toggleTodo,
-    state.editTodo,
-    state.toggleImportant,
-  ]);
+  const [toggleTodo, editTodo, toggleImportant] = useStore(
+    (state) => [state.toggleTodo, state.editTodo, state.toggleImportant],
+    shallow
+  );
   const [text, setText] = React.useState(todo.text);
   const [isEditing, setIsEditing] = React.useState(false);
   const [show, setShow] = React.useState(false);

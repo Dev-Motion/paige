@@ -8,10 +8,8 @@ import { availableThemes } from "@store/slices/themeSlice";
 import ThemeCategories from "../ThemeCategories";
 
 const ThemesTab = () => {
-  const [autoTheme, setAutoTheme] = useStore((state) => [
-    state.autoTheme,
-    state.setAutoTheme,
-  ]);
+  const autoTheme = useStore((state) => state.autoTheme);
+  const setAutoTheme = useStore((state) => state.setAutoTheme);
   return (
     <Box css={{ pt: "$8", pb: "$5", spacey: "$5" }}>
       <Box>
@@ -59,7 +57,8 @@ const ActiveTheme = styled(motion.div, {
   left: "calc(-$$padding / 2)",
 });
 const ThemeChanger = () => {
-  const [theme, setTheme] = useStore((state) => [state.theme, state.setTheme]);
+  const theme = useStore((state) => state.theme);
+  const setTheme = useStore((state) => state.setTheme);
   return (
     <Box
       css={{

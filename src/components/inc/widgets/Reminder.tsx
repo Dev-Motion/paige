@@ -4,9 +4,8 @@ import { RepeatIcon } from "@components/icons";
 import { motion } from "framer-motion";
 import useStore from "@store";
 import { analyzeDate } from "@utils";
-import { shallow } from "zustand/shallow";
 const ReminderItems = () => {
-  const todos = useStore((store) => store.todos, shallow);
+  const todos = useStore((store) => store.todos);
   const reminders = todos.flatMap((t) => (t.reminder ? [t] : []));
   return (
     <Flex

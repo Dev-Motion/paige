@@ -242,13 +242,10 @@ const CommandMenu = () => {
 };
 
 export function ProviderItem({ provider }: { provider: SearchProviders }) {
-  const [searchProvider, setSearchProvider] = useStore((state) => [
-    state.searchProvider,
-    state.setSearchProvider,
-  ]);
+  const searchProvider = useStore((state) => state.searchProvider);
+  const setSearchProvider = useStore((state) => state.setSearchProvider);
   const image = searchProviders.find((p) => p.name === provider)!.image;
   const selected = searchProvider === provider;
-  console.log(`"${searchProvider}"`, `"${provider}"`);
   return (
     <Flex
       jc="between"
