@@ -5,6 +5,7 @@ import { imageQuality } from "@constants";
 import { BlurhashCanvas } from "react-blurhash";
 import { css } from "stitches.config";
 import { getPictureInfo } from "@utils";
+import { shallow } from "zustand/shallow";
 
 const scaffoldCSS = css({
   position: "absolute",
@@ -12,11 +13,10 @@ const scaffoldCSS = css({
   overflow: "hidden",
 });
 const Scaffold = () => {
-  const [photos, nextImage, temporaryBackground] = useStore((state) => [
-    state.todayPhoto,
-    state.nextPhoto,
-    state.temporaryBackground,
-  ]);
+  const [photos, nextImage, temporaryBackground] = useStore(
+    (state) => [state.todayPhoto, state.nextPhoto, state.temporaryBackground],
+    shallow
+  );
   const todayImage = getPictureInfo(photos);
   return (
     <>
