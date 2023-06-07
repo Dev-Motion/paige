@@ -60,10 +60,9 @@ interface addTodoState {
   text: string;
   showInput: boolean;
   important: boolean;
-  popoverOpen: boolean;
   dateTime: Date | null;
 }
-function addTddoReducer(
+function addTodoReducer(
   state: addTodoState,
   action: Partial<addTodoState> | ((state: addTodoState) => addTodoState)
 ): addTodoState {
@@ -74,14 +73,15 @@ function addTddoReducer(
 }
 
 function AddTodo() {
-  const [{ text, showInput, important, popoverOpen, dateTime }, setState] =
-    React.useReducer(addTddoReducer, {
+  const [{ text, showInput, important, dateTime }, setState] = React.useReducer(
+    addTodoReducer,
+    {
       text: "",
       showInput: false,
       important: false,
-      popoverOpen: false,
       dateTime: null,
-    });
+    }
+  );
   const addTodo = useStore((state) => state.addTodo);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const handleAddTodo = () => {
@@ -128,10 +128,7 @@ function AddTodo() {
             css={{ flex: 1, pl: "$2" }}
           />
           <Flex>
-            <Popover
-              open={popoverOpen}
-              onOpenChange={(open) => setState({ popoverOpen: open })}
-            >
+            <Popover>
               <Popover.Button asChild>
                 <IconButton bg="transparent" size="xs">
                   <AlarmIcon css={{ size: "$3", color: "$text" }} />
@@ -140,7 +137,7 @@ function AddTodo() {
               <Popover.Content>
                 <DatePicker
                   onChange={(d) => {
-                    setState({ dateTime: d, popoverOpen: false });
+                    setState({ dateTime: d });
                     inputRef.current?.focus();
                   }}
                 />
