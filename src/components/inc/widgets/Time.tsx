@@ -109,6 +109,7 @@ const Time = () => {
 };
 
 const MoreButton = styled(IconButton, {
+  include: "buttonReset",
   pd: "$16",
   boxSizing: "content-box",
   position: "absolute",
@@ -120,7 +121,7 @@ const MoreButton = styled(IconButton, {
   opacity: 0,
   "&:focus": {
     opacity: 1,
-    transform: "scale(1)",
+    transform: "translateY(-50%)",
   },
   "&:hover": {
     opacity: 1,
