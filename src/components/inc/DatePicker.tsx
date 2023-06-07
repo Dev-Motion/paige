@@ -1,16 +1,22 @@
 import * as React from "react";
 import { Card, Box, Calendar, TimeField } from "@components/base";
 import { getLocalTimeZone, CalendarDateTime } from "@internationalized/date";
-function DatePicker({ onChange }: { onChange: (newDate: Date) => void }) {
-  const now = new Date();
+function DatePicker({
+  date,
+  onChange,
+}: {
+  date?: Date;
+  onChange: (newDate: Date) => void;
+}) {
+  const defaultDate = (date ??= new Date());
   const [value, setValue] = React.useState(
     new CalendarDateTime(
-      now.getFullYear(),
-      now.getMonth() + 1,
-      now.getDate(),
-      now.getHours(),
-      now.getMinutes(),
-      now.getSeconds()
+      defaultDate.getFullYear(),
+      defaultDate.getMonth() + 1,
+      defaultDate.getDate(),
+      defaultDate.getHours(),
+      defaultDate.getMinutes(),
+      defaultDate.getSeconds()
     )
   );
 
