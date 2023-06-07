@@ -57,6 +57,7 @@ Popover.Close = PopoverClose;
 
 Popover.Arrow = PopoverArrow;
 
+Popover.Anchor = PopoverPrimitive.Anchor;
 const StyledPopoverContent = styled(PopoverPrimitive.Content, {
   animationDuration: "1000ms",
   animationTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
