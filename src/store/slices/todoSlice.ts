@@ -76,7 +76,7 @@ const createTodoSlice: StateCreator<TodoSlice> = (set) => ({
   setTodoDate: (id, date) => {
     set((state) => ({
       todos: state.todos.map((todo) =>
-        todo.id === id ? { ...todo, date } : todo
+        todo.id === id ? { ...todo, reminder: true, date } : todo
       ),
     }));
   },
