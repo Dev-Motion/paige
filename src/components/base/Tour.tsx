@@ -238,7 +238,7 @@ export const Trigger = React.forwardRef<HTMLButtonElement, TriggerProps>(
 
 export function withTour<T extends object>(
   component: React.ComponentType<T>,
-  tourProps: TourStepProps
+  tourProps: Omit<TourStepProps, "children">
 ): React.ForwardRefExoticComponent<
   React.PropsWithoutRef<T> & React.RefAttributes<any>
 > {
@@ -248,7 +248,7 @@ export function withTour<T extends object>(
   ) {
     return React.createElement(
       Step,
-      tourProps,
+      tourProps as TourStepProps,
       React.createElement(component, { ...props, ref })
     );
   });
