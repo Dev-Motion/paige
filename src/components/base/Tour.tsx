@@ -5,7 +5,10 @@ import Text from "./Text";
 import Card from "./Card";
 import Box from "./Box";
 import Flex from "./Flex";
+import useMeasure, { RectReadOnly } from "react-use-measure";
+import { mergeRefs } from "react-merge-refs";
 
+const PADDING = 10;
 interface TourContext {
   start: boolean;
   currentStep: string;
@@ -16,7 +19,6 @@ interface TourContext {
   beginTour: () => void;
   endTour: () => void;
   order: string[];
-  steps: Set<string>;
 }
 
 const TourContext = React.createContext<TourContext | null>(null);
@@ -31,8 +33,19 @@ export function Root({
   const [index, setIndex] = React.useState(0);
   const [start, setStart] = React.useState(false);
   const [steps, setSteps] = React.useState(new Set<string>());
-
   const currentStep = order[index];
+
+  React.useEffect(() => {
+    if (start) {
+      order.forEach((step) => {
+        // Checks if all steps are registered
+        if (!steps.has(step)) {
+          throw new Error(`Error: Step "${step}" is not registered`);
+        }
+      });
+    }
+  }, [start]);
+
   const beginTour = () => {
     setStart(true);
   };
@@ -70,7 +83,6 @@ export function Root({
         register,
         beginTour,
         endTour,
-        steps,
         order,
       }}
     >
@@ -86,24 +98,33 @@ function useTour() {
   return context;
 }
 
-export function Step({
-  children,
-  name,
-  title,
-  description,
-}: {
+function boundsPadding(bounds: RectReadOnly, padding: number) {
+  return {
+    top: bounds.top - padding,
+    left: bounds.left - padding,
+    right: bounds.right + padding,
+    bottom: bounds.bottom + padding,
+    width: bounds.width + padding * 2,
+    height: bounds.height + padding * 2,
+  };
+}
+
+interface TourStepProps {
   children: React.ReactNode;
   name: string;
   title: string;
   description: string;
-}) {
+}
+export function Step({ children, name, title, description }: TourStepProps) {
+  const [measureRef, bounds] = useMeasure();
+  const boundsWithPadding = boundsPadding(bounds, PADDING);
+
   const {
     currentStep,
     goToNextStep,
     goToPreviousStep,
     register,
     start,
-    steps,
     endTour,
     order,
   } = useTour();
@@ -113,13 +134,10 @@ export function Step({
   const ref = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
     const unregister = register(name);
-    console.log("registered");
     return () => {
       unregister();
-      console.log("unregistered");
     };
   }, []);
-  console.table({ currentStep, name, display, isBeginning, isEnd });
   React.useEffect(() => {
     if (display && start) {
       //scroll into view
@@ -135,29 +153,47 @@ export function Step({
 
   return (
     <Popover open modal>
+      <Box
+        style={{
+          cursor: "pointer",
+          height: "100%",
+          pointerEvents: "auto",
+          inset: 0,
+          overflow: "hidden",
+          position: "absolute",
+          zIndex: 1,
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          mixBlendMode: "hard-light",
+        }}
+      >
+        <div
+          style={{
+            borderRadius: 4,
+            position: "absolute",
+            backgroundColor: "gray",
+            inset: 0,
+            opacity: 1,
+            pointerEvents: "auto",
+            transition: "opacity 0.2s ease 0s",
+            ...boundsWithPadding,
+          }}
+        />
+      </Box>
       <Popover.Anchor
-        ref={ref}
+        ref={mergeRefs([ref, measureRef])}
         style={{ position: "relative", display: "inline-block", zIndex: 10 }}
       >
         {children}
       </Popover.Anchor>
-      <Box
-        css={{
-          position: "absolute",
-          inset: 0,
-          background: "rgba(0,0,0,.2)",
-          zIndex: 1,
-        }}
-      ></Box>
+
       <Popover.Content style={{ position: "relative", zIndex: 10 }}>
-        <Popover.Arrow />
         <Card css={{ maxWidth: 330, pd: "$3", spacey: "$2" }}>
+          <Popover.Arrow />
           {title && (
             <Text as="h1" fw="bold" fs="lg">
               {title}
             </Text>
           )}
-
           {description && (
             <Text as="p" fs="sm">
               {description}
@@ -199,3 +235,26 @@ export const Trigger = React.forwardRef<HTMLButtonElement, TriggerProps>(
     );
   }
 );
+
+export function withTour<T extends object>(
+  component: React.ComponentType<T>,
+  tourProps: TourStepProps
+): React.ForwardRefExoticComponent<
+  React.PropsWithoutRef<T> & React.RefAttributes<any>
+> {
+  const Wrapped = React.forwardRef<React.ComponentType<T>, T>(function withTour(
+    props,
+    ref: React.ForwardedRef<React.ComponentType<T>>
+  ) {
+    return React.createElement(
+      Step,
+      tourProps,
+      React.createElement(component, { ...props, ref })
+    );
+  });
+  // Format for display in DevTools
+  const name = component.displayName || component.name || "Unknown";
+  Wrapped.displayName = `withTour(${name})`;
+
+  return Wrapped;
+}
