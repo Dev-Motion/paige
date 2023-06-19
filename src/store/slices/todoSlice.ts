@@ -4,6 +4,7 @@ export interface TodoSlice {
   todos: Todo[];
   goal: Goal;
   setGoal: (goal: Goal) => void;
+  setTodoDate: (id: number, date: Date) => void;
   addTodo: (todo: Todo) => void;
   removeTodo: (id: number) => void;
   toggleTodo: (id: number) => void;
@@ -69,6 +70,13 @@ const createTodoSlice: StateCreator<TodoSlice> = (set) => ({
     set((state) => ({
       todos: state.todos.map((todo) =>
         todo.id === id ? { ...todo, text } : todo
+      ),
+    }));
+  },
+  setTodoDate: (id, date) => {
+    set((state) => ({
+      todos: state.todos.map((todo) =>
+        todo.id === id ? { ...todo, reminder: true, date } : todo
       ),
     }));
   },

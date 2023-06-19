@@ -10,4 +10,5 @@ const Box = styled("div", {
     py: getVariants("space", { py: "$$" }),
   },
 });
+Box.displayName = "Box";
 export default Box;

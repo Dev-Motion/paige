@@ -45,4 +45,5 @@ const Badge = styled("div", {
   },
 });
 
+Badge.displayName = "Badge";
 export default Badge;

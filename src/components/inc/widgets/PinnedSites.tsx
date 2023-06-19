@@ -38,10 +38,9 @@ function PinnedSites() {
 }
 
 function AddSite() {
-  const [pinnedSite, addPinnedSite] = useStore((state) => [
-    state.pinnedSites,
-    state.addPinnedSite,
-  ]);
+  const pinnedSite = useStore((state) => state.pinnedSites);
+  const addPinnedSite = useStore((state) => state.addPinnedSite);
+
   const [topSites, setTopSites] = React.useState<
     chrome.topSites.MostVisitedURL[]
   >([]);

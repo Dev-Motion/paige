@@ -5,10 +5,8 @@ import useStore from "@store";
 import WeatherWidget from "./widgets/Weather";
 
 const TopBar = () => {
-  const [sideBar, setOpen] = useStore((state) => [
-    state.sideBarPosition,
-    state.setSideBarOpen,
-  ]);
+  const sideBar = useStore((state) => state.sideBarPosition);
+  const setOpen = useStore((state) => state.setSideBarOpen);
   const left = sideBar === "left";
   return (
     <Flex

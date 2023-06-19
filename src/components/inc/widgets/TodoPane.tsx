@@ -12,13 +12,14 @@ import useStore from "@store";
 import * as React from "react";
 import DatePicker from "../DatePicker";
 import TodoItem, { Input } from "../TodoItem";
+import { shallow } from "zustand/shallow";
 
 function TodoPane() {
-  const [todos, toggleAll, clearCompleted] = useStore((state) => [
-    state.todos.sort((a) => (a.important ? -1 : 1)),
-    state.toggleAll,
-    state.clearCompleted,
-  ]);
+  const [todos, toggleAll, clearCompleted] = useStore(
+    (state) => [state.todos, state.toggleAll, state.clearCompleted],
+    shallow
+  );
+  const orderedTodos = todos.sort((a) => (a.important ? -1 : 1));
   return (
     <Box css={{ width: 330, spacey: "$1" }}>
       <Card
@@ -46,8 +47,8 @@ function TodoPane() {
         </Dropdown>
       </Card>
       <Flex fd="column" gap="1">
-        {todos.map((todo, i) => (
-          <TodoItem key={todo.id.toString() + i.toString()} todo={todo} />
+        {orderedTodos.map((todo, i) => (
+          <TodoItem key={todo.id.toString()} todo={todo} />
         ))}
         <AddTodo />
       </Flex>
@@ -59,10 +60,9 @@ interface addTodoState {
   text: string;
   showInput: boolean;
   important: boolean;
-  popoverOpen: boolean;
   dateTime: Date | null;
 }
-function addTddoReducer(
+function addTodoReducer(
   state: addTodoState,
   action: Partial<addTodoState> | ((state: addTodoState) => addTodoState)
 ): addTodoState {
@@ -73,14 +73,15 @@ function addTddoReducer(
 }
 
 function AddTodo() {
-  const [{ text, showInput, important, popoverOpen, dateTime }, setState] =
-    React.useReducer(addTddoReducer, {
+  const [{ text, showInput, important, dateTime }, setState] = React.useReducer(
+    addTodoReducer,
+    {
       text: "",
       showInput: false,
       important: false,
-      popoverOpen: false,
       dateTime: null,
-    });
+    }
+  );
   const addTodo = useStore((state) => state.addTodo);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const handleAddTodo = () => {
@@ -127,10 +128,7 @@ function AddTodo() {
             css={{ flex: 1, pl: "$2" }}
           />
           <Flex>
-            <Popover
-              open={popoverOpen}
-              onOpenChange={(open) => setState({ popoverOpen: open })}
-            >
+            <Popover>
               <Popover.Button asChild>
                 <IconButton bg="transparent" size="xs">
                   <AlarmIcon css={{ size: "$3", color: "$text" }} />
@@ -138,9 +136,10 @@ function AddTodo() {
               </Popover.Button>
               <Popover.Content>
                 <DatePicker
-                  onChange={(d) =>
-                    setState({ dateTime: d, popoverOpen: false })
-                  }
+                  onChange={(d) => {
+                    setState({ dateTime: d });
+                    inputRef.current?.focus();
+                  }}
                 />
                 <Popover.Close />
               </Popover.Content>
@@ -173,7 +172,7 @@ function AddTodo() {
           gap="2"
           onClick={() => setState({ showInput: true })}
         >
-          <IconButton bg="transparent" size="xs">
+          <IconButton as="div" bg="transparent" size="xs">
             <AddIcon css={{ color: "$text" }} />
           </IconButton>
           <Text fs="sm" fw="medium">

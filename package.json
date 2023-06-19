@@ -11,7 +11,8 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "prepare": "husky install",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx"
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "generate-pwa-assets": "pwa-assets-generator"
   },
   "dependencies": {
     "@h6s/calendar": "1.1.0-alpha.2",

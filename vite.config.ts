@@ -31,26 +31,31 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
       "a space where you can customize your focus, immerse yourself in calm scenes, and find inspiration whenever you open a new tab in your browser",
     icons: [
       {
-        src: "/logo/128x128.png",
+        src: "/pwa-64x64.png",
+        sizes: "64x64",
+        type: "image/png",
+      },
+      {
+        src: "/pwa-192x192.png",
         sizes: "192x192",
         type: "image/png",
       },
       {
-        src: "/logo/128x128.png",
+        src: "/pwa-512x512.png",
         sizes: "512x512",
         type: "image/png",
       },
       {
-        src: "/logo/128x128.png",
+        src: "/maskable-icon-512x512.png",
+        sizes: "512x512",
+        type: "image/png",
+        purpose: "any maskable",
+      },
+      {
+        src: "/apple-touch-icon-180x180.png",
         sizes: "180x180",
         type: "image/png",
         purpose: "apple touch icon",
-      },
-      {
-        src: "/logo/128x128.png",
-        sizes: "225x225",
-        type: "image/png",
-        purpose: "any maskable",
       },
     ],
     theme_color: "#171717",
@@ -65,6 +70,20 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
   },
   workbox: {
     globPatterns: ["**/*.{js,css,html,ico,png,svg,tff}"],
+    runtimeCaching: [
+      {
+        urlPattern: ({ request }) => request.destination === "image",
+        handler: "CacheFirst",
+        options: {
+          cacheName: "images-cache",
+          expiration: {
+            maxEntries: 10,
+          },
+        },
+      },
+    ],
+    cleanupOutdatedCaches: false,
+    sourcemap: true,
   },
 };
 

@@ -50,7 +50,7 @@ export const weatherCodes: Record<number, string> = {
   82: "rain", // heavy rain showers
   85: "snow", // light snow showers
   86: "snow", // heavy snow showers
-  95: "thunderstorm", // thunderstorm
+  95: "thunderstorms", // thunderstorm
   96: "thunderstorms-rain", // thunderstorm light hail
   99: "thunderstorms-rain", // thunderstorm heavy hail
 };

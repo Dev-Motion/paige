@@ -12,6 +12,7 @@ import { More } from "@components/icons";
 import { getDaySegment, processTime } from "@utils";
 import { styled } from "stitches.config";
 import useStore from "@store";
+import { shallow } from "zustand/shallow";
 
 const Time = () => {
   const [open, setOpen] = useState(false);
@@ -23,7 +24,8 @@ const Time = () => {
       state.setIs24Hour,
       state.showTime,
       state.showGreeting,
-    ]
+    ],
+    shallow
   );
   const timeDate = new Date(time);
   const dayofWeek = useRef(timeDate.getDay());
@@ -107,6 +109,7 @@ const Time = () => {
 };
 
 const MoreButton = styled(IconButton, {
+  include: "buttonReset",
   pd: "$16",
   boxSizing: "content-box",
   position: "absolute",
@@ -118,6 +121,7 @@ const MoreButton = styled(IconButton, {
   opacity: 0,
   "&:focus": {
     opacity: 1,
+    transform: "translateY(-50%)",
   },
   "&:hover": {
     opacity: 1,

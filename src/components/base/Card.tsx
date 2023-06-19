@@ -8,4 +8,6 @@ const Card = styled(Box, {
   color: "$text",
 });
 
+Card.displayName = "Card";
+
 export default Card;

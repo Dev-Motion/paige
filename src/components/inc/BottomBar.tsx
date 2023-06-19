@@ -13,7 +13,8 @@ import { Info, TodoIcon } from "@components/icons";
 import useStore from "@store";
 
 const BottomBar = () => {
-  const [todos, showTodo] = useStore((state) => [state.todos, state.showTodo]);
+  const todos = useStore((state) => state.todos);
+  const showTodo = useStore((state) => state.showTodo);
   const unCompletedTodos = todos.filter((todo) => !todo.completed);
   const [visible, setVisible] = useState(false);
   const openChange = (visible: boolean) => {

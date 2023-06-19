@@ -48,6 +48,13 @@ const IconButton = styled("button", {
         bg: "rgba($bgRGB,0.4)",
       },
     },
+    square: {
+      true: {
+        borderRadius: "$2",
+      },
+    },
   },
 });
+IconButton.displayName = "IconButton";
+
 export default IconButton;

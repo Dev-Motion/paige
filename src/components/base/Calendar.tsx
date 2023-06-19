@@ -156,4 +156,5 @@ function CalendarCell({
     </td>
   );
 }
+Calendar.displayName = "Calendar";
 export default Calendar;

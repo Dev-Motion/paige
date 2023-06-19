@@ -6,10 +6,8 @@ import CommandMenu from "../CommandMenu";
 import { isRunningInExtension } from "@constants";
 
 function Search() {
-  const [open, setOpen] = useStore((state) => [
-    state.searchOpen,
-    state.setSearchOpen,
-  ]);
+  const open = useStore((state) => state.searchOpen);
+  const setOpen = useStore((state) => state.setSearchOpen);
   function openChange(open: boolean) {
     if (isRunningInExtension) {
       setOpen(open);

@@ -4,12 +4,11 @@ import { LeftLayout, RightLayout } from "@components/icons";
 import useStore from "@store";
 import { searchProviders } from "@constants";
 import { ProviderItem } from "../CommandMenu";
+import { shallow } from "zustand/shallow";
 
 const GeneralTab = () => {
-  const [is24Hour, setIs24Hour] = useStore((state) => [
-    state.is24Hour,
-    state.setIs24Hour,
-  ]);
+  const is24Hour = useStore((state) => state.is24Hour);
+  const setIs24Hour = useStore((state) => state.setIs24Hour);
   const onChecked = (checked: boolean) => setIs24Hour(checked);
 
   return (
@@ -52,10 +51,6 @@ const GeneralTab = () => {
 };
 
 const SearchProviders = () => {
-  const [searchProvider, setSearchProvider] = useStore((state) => [
-    state.searchProvider,
-    state.setSearchProvider,
-  ]);
   return (
     <Box>
       {searchProviders.map(({ name }) => (
@@ -73,14 +68,17 @@ const LayoutSetting = () => {
     showTodayGoal,
     showTodo,
     showDailyMotivation,
-  ] = useStore((state) => [
-    state.sideBarPosition,
-    state.showTime,
-    state.showGreeting,
-    state.showTodayGoal,
-    state.showTodo,
-    state.showDailyMotivation,
-  ]);
+  ] = useStore(
+    (state) => [
+      state.sideBarPosition,
+      state.showTime,
+      state.showGreeting,
+      state.showTodayGoal,
+      state.showTodo,
+      state.showDailyMotivation,
+    ],
+    shallow
+  );
   const [
     setSideBar,
     setOpen,
@@ -89,15 +87,18 @@ const LayoutSetting = () => {
     setShowTodayGoal,
     setShowTodo,
     setShowDailyMotivation,
-  ] = useStore((state) => [
-    state.setSideBarPosition,
-    state.setSideBarOpen,
-    state.setShowTime,
-    state.setShowGreeting,
-    state.setShowTodayGoal,
-    state.setShowTodo,
-    state.setShowDailyMotivation,
-  ]);
+  ] = useStore(
+    (state) => [
+      state.setSideBarPosition,
+      state.setSideBarOpen,
+      state.setShowTime,
+      state.setShowGreeting,
+      state.setShowTodayGoal,
+      state.setShowTodo,
+      state.setShowDailyMotivation,
+    ],
+    shallow
+  );
   const close = (position: "left" | "right") => {
     setOpen(false);
     setSideBar(position);

@@ -2,13 +2,13 @@ import { Box, Flex, Text } from "@components/base";
 import useStore from "@store";
 import React from "react";
 import { styled } from "stitches.config";
+import { shallow } from "zustand/shallow";
 
 const ThemeCategories = () => {
-  const [keywords, setKeywords, getCloudPhotos] = useStore((state) => [
-    state.keywords,
-    state.setKeywords,
-    state.getCloudPhotos,
-  ]);
+  const [keywords, setKeywords, getCloudPhotos] = useStore(
+    (state) => [state.keywords, state.setKeywords, state.getCloudPhotos],
+    shallow
+  );
 
   function onClick(keyword: string) {
     if (keywords.includes(keyword)) {

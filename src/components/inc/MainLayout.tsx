@@ -13,15 +13,12 @@ import { TopBar, BottomBar } from "@components/inc";
 import Portal from "@utils/Portals";
 import useStore from "@store";
 import { spawnNotification } from "@utils";
-import { shallow } from "zustand/shallow";
 
 const SideBar = lazy(() => import("./SideBar"));
 
 const MainLayout = () => {
-  const [todos, toggleReminded] = useStore(
-    (store) => [store.todos, store.toggleReminded],
-    shallow
-  );
+  const todos = useStore((store) => store.todos);
+  const toggleReminded = useStore((store) => store.toggleReminded);
   const reminders = todos.flatMap((t) => (t.reminder ? [t] : []));
 
   useEffect(() => {
