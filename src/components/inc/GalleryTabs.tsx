@@ -1,15 +1,14 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { Box, Flex, Grid, Skeleton } from "@components/base";
+import { galleryTabs, tempImageQuality } from "@constants";
 import * as Tabs from "@radix-ui/react-tabs";
 import useStore from "@store";
-import { galleryTabs, tempImageQuality } from "@constants";
-import { styled } from "stitches.config";
-import { Grid, Flex, Skeleton, Box, Text } from "@components/base";
-import { ScrollArea } from ".";
-import { StarIcon } from "@components/icons";
 import { Picture } from "@types";
-import { HeartIcon } from "@components/icons";
+import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { styled } from "stitches.config";
 import { shallow } from "zustand/shallow";
+import { ScrollArea } from ".";
+import { GalleryImage } from "./GalleryImage";
 
 const TabRoot = styled(Tabs.Root, {});
 const TabList = styled(Tabs.List, {
@@ -117,106 +116,42 @@ const GalleryContent = ({ favoriteTab = false }: { favoriteTab?: boolean }) => {
         <Grid columns={{ "@initial": 1, "@lg": 2 }} gap="2" css={{ pt: "$2" }}>
           {photos.map((photo, i) => {
             const favorite = isFavorite(photo);
+            const onMouseEnter = () => {
+              setTempBg({
+                bg: photo.urls.raw + tempImageQuality,
+                blur_hash: photo.blur_hash || "",
+              });
+            };
+            const onMouseLeave = () => {
+              setTempBg({ bg: "", blur_hash: "" });
+            };
+            const toggleFavorite = () => {
+              if (!favorite) {
+                setFavoritePhotos([...favoritePhotos, photo]);
+              } else {
+                setFavoritePhotos(
+                  favoritePhotos.filter((p) => p.id !== photo.id)
+                );
+              }
+            };
+            const setPhoto = () => {
+              setTodayPhoto({ ...photo, for: new Date() });
+              toast({
+                message: "Photo set as today's background",
+              });
+            };
             return (
-              <Box
+              <GalleryImage
                 key={i}
-                css={{
-                  position: "relative",
-                  br: "$4",
-                  overflow: "hidden",
-                  "&:hover": {
-                    [`${Flex}`]: {
-                      opacity: 1,
-                      transform: "translateY(0)",
-                    },
-                  },
+                {...{
+                  onMouseEnter,
+                  onMouseLeave,
+                  toggleFavorite,
+                  setPhoto,
+                  favorite,
+                  photo,
                 }}
-                onMouseEnter={() => {
-                  setTempBg({
-                    bg: photo.urls.raw + tempImageQuality,
-                    blur_hash: photo.blur_hash || "",
-                  });
-                }}
-                onMouseLeave={() => {
-                  setTempBg({ bg: "", blur_hash: "" });
-                }}
-              >
-                <Box
-                  as="img"
-                  src={photo.urls.thumb}
-                  alt={photo.alt_description ?? ""}
-                  css={{
-                    size: "100%",
-                    aspectRation: "16/9",
-                    objectFit: "cover",
-                  }}
-                />
-                <Flex
-                  jc="end"
-                  ai="center"
-                  gap="2"
-                  css={{
-                    border: "none",
-                    position: "absolute",
-                    height: "40%",
-                    width: "100%",
-                    bottom: 0,
-                    left: 0,
-                    px: "$2",
-                    bg: "linear-gradient(0deg, rgba($bgRGB,0.8) 0%,rgba($bgRGB,0.4) 50%,transparent 100%)",
-                    opacity: 0,
-                    transform: "translateY(100%)",
-                    transition: "all 0.5s ease-in-out",
-                  }}
-                >
-                  <Box
-                    as="button"
-                    css={{
-                      appearance: "none",
-                      border: "none",
-                      bg: "transparent",
-                      color: "$text",
-                      "&>svg": {
-                        size: 16,
-                        fill: favorite ? "$text" : "transparent",
-                      },
-                    }}
-                    onClick={() => {
-                      if (!favorite) {
-                        setFavoritePhotos([...favoritePhotos, photo]);
-                      } else {
-                        setFavoritePhotos(
-                          favoritePhotos.filter((p) => p.id !== photo.id)
-                        );
-                      }
-                    }}
-                  >
-                    <Text css={{ include: "screenReaderOnly" }}>
-                      Add to favourite quotes
-                    </Text>
-                    <HeartIcon />
-                  </Box>
-                  <Box
-                    as="button"
-                    css={{
-                      padding: "4px 8px",
-                      fontSize: "$xs",
-                      br: "$2",
-                      bg: "$text",
-                      color: "$bg",
-                      border: "none",
-                    }}
-                    onClick={() => {
-                      setTodayPhoto({ ...photo, for: new Date() });
-                      toast({
-                        message: "Photo set as today's background",
-                      });
-                    }}
-                  >
-                    Set
-                  </Box>
-                </Flex>
-              </Box>
+              />
             );
           })}
         </Grid>

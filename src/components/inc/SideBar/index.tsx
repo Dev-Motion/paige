@@ -20,7 +20,7 @@ const TabList = styled(Tabs.List, {
 const TabTrigger = styled(Tabs.Trigger);
 const TabContent = styled(Tabs.Content, {
   gridArea: "tabcontent",
-  bg: "rgba($bgRGB,0.25)",
+  bg: "rgba($bgRGB,0.2)",
   backdropFilter: "blur(50px)",
   px: "$5",
   color: "$text",
@@ -73,7 +73,7 @@ const MenuBg = styled(motion.div, {
   $$opacity: 0.2,
 
   br: "$2",
-  backgroundColor: "rgb($textRGB ,0.2)",
+  backgroundColor: "$accent",
   position: "absolute",
   zIndex: -1,
   // opacity: "0.2",

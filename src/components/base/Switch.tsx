@@ -12,10 +12,10 @@ const SwitchRoot = styled(RadixSwitch.Root, {
   position: "relative",
   boxShadow: "0 0 0 1px $$border",
   WebkitTapHighlightColor: "rgba(0, 0, 0, 0)",
-  "&:focus": { boxShadow: "0 0 0 1px #4CBF3F" },
+  "&:focus": { boxShadow: "0 0 0 1px $colors$accent" },
   "&[data-state='checked']": {
-    backgroundColor: "#4CBF3F",
-    boxShadow: "0 0 0 1px #4CBF3F",
+    backgroundColor: "$accent",
+    boxShadow: "0 0 0 1px $colors$accent",
   },
 });
 

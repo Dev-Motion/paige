@@ -1,4 +1,5 @@
 import { Box, Flex, Text } from "@components/base";
+import { Button } from "@components/base/Button";
 import useStore from "@store";
 import React from "react";
 import { styled } from "stitches.config";
@@ -32,52 +33,30 @@ const ThemeCategories = () => {
         }}
       >
         {categories.map((category) => (
-          <Badge
+          <Button
             key={category}
-            active={keywords.includes(category)}
+            size="xs"
+            br="pill"
+            outline={!keywords.includes(category)}
             onClick={() => onClick(category)}
           >
             {category}
-          </Badge>
+          </Button>
         ))}
       </Flex>
     </Box>
   );
 };
 
-const Badge = styled("button", {
-  appearance: "none",
-  pd: "$1",
-  fontSize: "$xs",
-  border: "none",
-  outlineColor: "transparent",
-  color: "$text",
-  bg: "transparent",
-  br: "$pill",
-  boxShadow: "0 0 0 1px $colors$text",
-  transition: "all 0.2s ease",
-  "&:active": {
-    transform: "scale(0.95)",
-  },
-  variants: {
-    active: {
-      true: {
-        bg: "$text",
-        color: "$bg",
-      },
-    },
-  },
-});
-
 const categories = [
   "Wallpapers",
   "3D Renders",
   "Travel",
+  "Nature",
+  "People",
   "Arts & Culture",
   "Business & Work",
   "Textures & Patterns",
-  "Nature",
-  "People",
   "Architecture & Interiors",
 ];
 

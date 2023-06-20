@@ -6,7 +6,7 @@ const Badge = styled("div", {
   // Reset
   boxSizing: "border-box",
   color: "$bg",
-  bg: "$text",
+  bg: "$$bg",
   position: "relative",
   "&::before": {
     content: "''",
@@ -17,7 +17,7 @@ const Badge = styled("div", {
     height: "100%",
     animation: "$$animation",
     zIndex: -1,
-    bg: "$text",
+    bg: "$$bg",
     br: "$pill",
   },
   variants: {
@@ -39,9 +39,19 @@ const Badge = styled("div", {
     ping: {
       true: { $$animation: `${ping} 1s cubic-bezier(0, 0, 0.2, 1) infinite` },
     },
+    color: {
+      accent: {
+        $$bg: "$colors$accent",
+      },
+      bland: {
+        $$bg: "$colors$text",
+      },
+    },
   },
   defaultVariants: {
     size: "sm",
+    ping: false,
+    color: "accent",
   },
 });
 

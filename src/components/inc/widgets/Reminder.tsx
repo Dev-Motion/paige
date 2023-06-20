@@ -15,6 +15,7 @@ const ReminderItems = () => {
         isolation: "isolate",
         gap: "$$y",
         minWidth: 330,
+        maxWidth: 360,
       }}
     >
       {reminders.slice(0, 2).map((reminder, index) => {

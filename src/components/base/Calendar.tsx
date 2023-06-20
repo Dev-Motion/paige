@@ -136,13 +136,13 @@ function CalendarCell({
           ai: "center",
           jc: "center",
           size: 30,
-          opacity: isOutsideVisibleRange ? 0.5 : 1,
+          opacity: isOutsideVisibleRange ? 0.6 : 1,
           bg: isSelected
-            ? "$bg"
+            ? "$accent"
             : isOutsideVisibleRange
               ? "transparent"
-              : "rgb(255,255,255)",
-          color: "black",
+              : "$text",
+          color: isSelected ? "$text" : "$bg",
           br: "$1",
         }}
         {...buttonProps}
