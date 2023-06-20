@@ -1,10 +1,19 @@
-import { availableThemes } from "@store/slices/themeSlice";
+import { availableAccents, baseTheme } from "@store/slices/themeSlice";
 import { colorPerception } from "./colorDistance";
-export default function autoGetTheme(currentColor: string) {
-  const distances = availableThemes.map((theme) => {
+export function autoGetAccent(currentColor: string) {
+  const distances = availableAccents.map((theme) => {
     return colorPerception(currentColor, theme.color);
   });
   const minDistance = Math.min(...distances);
   const index = distances.indexOf(minDistance);
-  return availableThemes[index]["name"];
+  return availableAccents[index]["name"];
+}
+export default function autoGetTheme(currentColor: string) {
+  const keys = Object.keys(baseTheme) as Array<keyof typeof baseTheme>;
+  const distances = keys.map((key) => {
+    return colorPerception(currentColor, baseTheme[key].color);
+  });
+  const minDistance = Math.min(...distances);
+  const index = distances.indexOf(minDistance);
+  return keys[index];
 }
