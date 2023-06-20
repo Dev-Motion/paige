@@ -4,12 +4,21 @@ import { styled } from "stitches.config";
 import { Box, Flex, Switch, Text } from "@components/base";
 import { GalleryTabs } from "..";
 import useStore from "@store";
-import { availableThemes } from "@store/slices/themeSlice";
+import { availableAccents } from "@store/slices/themeSlice";
 import ThemeCategories from "../ThemeCategories";
+import { shallow } from "zustand/shallow";
 
 const ThemesTab = () => {
-  const autoTheme = useStore((state) => state.autoTheme);
-  const setAutoTheme = useStore((state) => state.setAutoTheme);
+  const [theme, accent, autoTheme, setAutoTheme, setTheme] = useStore(
+    (state) => [
+      state.theme,
+      state.accent,
+      state.autoTheme,
+      state.setAutoTheme,
+      state.setTheme,
+    ],
+    shallow
+  );
   return (
     <Box css={{ pt: "$8", pb: "$5", spacey: "$5" }}>
       <Box>
@@ -28,6 +37,17 @@ const ThemesTab = () => {
           <Switch
             checked={autoTheme}
             onCheckedChange={(checked) => setAutoTheme(checked)}
+          />
+        </Flex>
+        <Flex jc="between" css={{ mb: 8 }}>
+          <Text as="span" fs={{ "@initial": "xs", "@md": "sm" }}>
+            Toggle dark mode
+          </Text>
+          <Switch
+            checked={theme == "dark"}
+            onCheckedChange={(checked) =>
+              setTheme(accent, checked ? "dark" : "light")
+            }
           />
         </Flex>
         <ThemeChanger />
@@ -57,7 +77,7 @@ const ActiveTheme = styled(motion.div, {
   left: "calc(-$$padding / 2)",
 });
 const ThemeChanger = () => {
-  const theme = useStore((state) => state.theme);
+  const theme = useStore((state) => state.accent);
   const setTheme = useStore((state) => state.setTheme);
   return (
     <Box
@@ -73,7 +93,7 @@ const ThemeChanger = () => {
         Choose theme colors
       </Text>
       <Flex jc="between" css={{ mt: "$2", maxWidth: "250px" }}>
-        {availableThemes.map(({ name, color }) => {
+        {availableAccents.map(({ name, color }) => {
           return (
             <ThemeButton
               key={name}

@@ -82,6 +82,7 @@ const BottomBar = () => {
                 <Text>Todo</Text>
                 <Badge
                   ping
+                  color="accent"
                   hidden={unCompletedTodos.length === 0}
                   css={{
                     position: "absolute",

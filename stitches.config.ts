@@ -1,4 +1,4 @@
-import { createStitches } from "@stitches/react";
+import { createStitches, createTheme } from "@stitches/react";
 import type * as Stitches from "@stitches/react";
 export type { VariantProps } from "@stitches/react";
 import { mixins } from "stitches-mixins";
@@ -8,7 +8,6 @@ export const {
   styled,
   css,
   theme,
-  createTheme,
   getCssText,
   globalCss,
   keyframes,
@@ -18,11 +17,11 @@ export const {
   theme: {
     colors: {
       text: "#FFFFFF",
+      textRGB: "255,255,255",
+      bg: "rgb(44 44 44)",
+      bgRGB: "44, 44, 44",
       shadow: "#000000",
       shadowRGB: "0, 0, 0",
-      textRGB: "255, 255, 255",
-      bg: "#000000",
-      bgRGB: "0, 0, 0",
     },
     fonts: {
       inter: "Inter, sans-serif",
@@ -155,7 +154,9 @@ export const {
         marginTop: value,
       },
     }),
-    ta: (value: Stitches.PropertyValue<"textAlign">) => ({ textAlign: value }),
+    ta: (value: Stitches.PropertyValue<"textAlign">) => ({
+      textAlign: value,
+    }),
 
     fd: (value: Stitches.PropertyValue<"flexDirection">) => ({
       flexDirection: value,
@@ -171,12 +172,16 @@ export const {
     jc: (value: Stitches.PropertyValue<"justifyContent">) => ({
       justifyContent: value,
     }),
-    as: (value: Stitches.PropertyValue<"alignSelf">) => ({ alignSelf: value }),
+    as: (value: Stitches.PropertyValue<"alignSelf">) => ({
+      alignSelf: value,
+    }),
     fg: (value: Stitches.PropertyValue<"flexGrow">) => ({ flexGrow: value }),
     fs: (value: Stitches.PropertyValue<"flexShrink">) => ({
       flexShrink: value,
     }),
-    fb: (value: Stitches.PropertyValue<"flexBasis">) => ({ flexBasis: value }),
+    fb: (value: Stitches.PropertyValue<"flexBasis">) => ({
+      flexBasis: value,
+    }),
     gcs: (value: Stitches.PropertyValue<"gridColumn">) => ({
       gridColumn: value,
     }),
@@ -212,14 +217,20 @@ export const {
       borderTopLeftRadius: value,
     }),
 
-    bs: (value: Stitches.PropertyValue<"boxShadow">) => ({ boxShadow: value }),
+    bs: (value: Stitches.PropertyValue<"boxShadow">) => ({
+      boxShadow: value,
+    }),
 
     lh: (value: Stitches.PropertyValue<"lineHeight">) => ({
       lineHeight: value,
     }),
 
-    ox: (value: Stitches.PropertyValue<"overflowX">) => ({ overflowX: value }),
-    oy: (value: Stitches.PropertyValue<"overflowY">) => ({ overflowY: value }),
+    ox: (value: Stitches.PropertyValue<"overflowX">) => ({
+      overflowX: value,
+    }),
+    oy: (value: Stitches.PropertyValue<"overflowY">) => ({
+      overflowY: value,
+    }),
 
     pe: (value: Stitches.PropertyValue<"pointerEvents">) => ({
       pointerEvents: value,
@@ -273,59 +284,47 @@ export const GlobalStyles = globalCss({
 GlobalStyles();
 export const WhiteTheme = createTheme("light-theme", {
   colors: {
-    bg: "#FFFFFF",
+    bg: "rgb(249 249 249 )",
     shadow: "#FFFFFF",
     shadowRGB: "255,255,255",
-    bgRGB: "255,255,255",
+    bgRGB: "249,249,249",
     text: "#000000",
     textRGB: "0,0,0",
   },
 });
 export const OrangeTheme = createTheme("orange-theme", {
   colors: {
-    bg: "#E2654C",
-    bgRGB: "226, 101, 76",
-    text: "#FFFFFF",
-    textRGB: "255,255,255",
+    accent: "rgb(226 101 76)",
+    accentRGB: "226,101,76",
   },
 });
 export const GoldTheme = createTheme("gold-theme", {
   colors: {
-    bg: "#F7A935",
-    bgRGB: "247, 169, 53",
-    text: "#FFFFFF",
-    textRGB: "255,255,255",
+    accent: "rgb(247 169 53)",
+    accentRGB: "247 ,169, 53",
   },
 });
 export const PersianGreenTheme = createTheme("persian-green-theme", {
   colors: {
-    bg: "#01AB9D",
-    bgRGB: "1, 171, 157",
-    text: "#FFFFFF",
-    textRGB: "255,255,255",
+    accent: "rgb(1 171 157)",
+    accentRGB: "1, 171 ,157",
   },
 });
 export const PacificBlueTheme = createTheme("pacific-blue-theme", {
   colors: {
-    bg: "#1B9ECE",
-    bgRGB: "27, 158, 206",
-    text: "#FFFFFF",
-    textRGB: "255,255,255",
+    accent: "rgb(27 158 206)",
+    accentRGB: "27, 158, 206",
   },
 });
 export const CeruleanBlueTheme = createTheme("cerulean-blue-theme", {
   colors: {
-    bg: "#3053B9",
-    bgRGB: "48, 83, 185",
-    text: "#FFFFFF",
-    textRGB: "255,255,255",
+    accent: "rgb(48 83 185)",
+    accentRGB: "48, 83, 185",
   },
 });
 export const IrisTheme = createTheme("iris-theme", {
   colors: {
-    bg: "#6D33CC",
-    bgRGB: "109, 51, 204",
-    text: "#FFFFFF",
-    textRGB: "255,255,255",
+    accent: "rgb(109 51 204)",
+    accentRGB: "109, 51, 204",
   },
 });
