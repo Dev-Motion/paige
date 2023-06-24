@@ -5,8 +5,8 @@ import { styled } from "stitches.config";
 const SwitchRoot = styled(RadixSwitch.Root, {
   $$border: "$colors$text",
   all: "unset",
-  width: 32,
-  height: 18,
+  width: 26,
+  height: 14,
   backgroundColor: "$background",
   borderRadius: "9999px",
   position: "relative",
@@ -21,7 +21,7 @@ const SwitchRoot = styled(RadixSwitch.Root, {
 
 const SwitchThumb = styled(RadixSwitch.Thumb, {
   display: "block",
-  size: 15,
+  size: 9,
   backgroundColor: "$text",
   borderRadius: "9999px",
   boxShadow: "0 2px 2px $background",
