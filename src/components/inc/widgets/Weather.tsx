@@ -9,22 +9,30 @@ import {
   weatherConditions,
 } from "@utils/weatherConditions";
 import { shallow } from "zustand/shallow";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { isToday } from "date-fns";
 const TIME_REFRESH = 1;
 
 const WeatherWidget = () => {
-  const [weather, location, getWeather, getCurrentLocation, getCityName] =
-    useStore(
-      (state) => [
-        state.weather,
-        state.location,
-        state.getWeather,
-        state.getCurrentLocation,
-        state.getCityName,
-      ],
-      shallow
-    );
+  const [
+    weather,
+    location,
+    getWeather,
+    getCurrentLocation,
+    getCityName,
+    position,
+  ] = useStore(
+    (state) => [
+      state.weather,
+      state.location,
+      state.getWeather,
+      state.getCurrentLocation,
+      state.getCityName,
+      state.sideBarPosition,
+    ],
+    shallow
+  );
+  const pos = position === "left" ? "right" : "left";
   const [hovered, setHovered] = useState(false);
   const conditions =
     weather && weather.conditions
@@ -36,7 +44,6 @@ const WeatherWidget = () => {
         isToday(new Date(c.timestamp)) ? c.temperature : []
       )
       : [];
-  console.log(todayCondition);
   useCachedEffect(
     () => {
       getCurrentLocation().then(() => {
@@ -53,15 +60,27 @@ const WeatherWidget = () => {
   const conditionName = weatherConditions[conditions.weatherCode];
 
   return (
-    <>
+    <AnimatePresence mode="wait">
       {hovered ? (
         <Card
+          as={motion.div}
+          initial={{
+            opacity: 0,
+          }}
+          animate={{
+            opacity: 1,
+            transition: { duration: 0.4 },
+          }}
+          exit={{
+            opacity: 0,
+            transition: { duration: 0.4 },
+          }}
           onMouseLeave={() => setHovered(false)}
           css={{
             minWidth: 300,
             position: "absolute",
             top: 10,
-            right: 10,
+            [pos]: 10,
             pd: "$3",
             display: "flex",
             flexDirection: "column",
@@ -69,17 +88,10 @@ const WeatherWidget = () => {
           }}
         >
           <Flex fd="column" gap="1">
-            <Text
-              as={motion.h1}
-              layoutId="weaterh-location"
-              fs="md"
-              fw="medium"
-            >
+            <Text fs="md" fw="medium">
               {location?.cityName}
             </Text>
-            <Text as="p" fs="xs">
-              {conditionName}
-            </Text>
+            <Text fs="xs">{conditionName}</Text>
           </Flex>
           <Flex jc="between" css={{ mt: "$2" }}>
             <Flex ai="center" css={{ color: "$text" }}>
@@ -87,6 +99,11 @@ const WeatherWidget = () => {
                 <Box
                   as={motion.img}
                   layoutId={"weather-icon"}
+                  transition={{
+                    layout: {
+                      duration: 0.4,
+                    },
+                  }}
                   css={{ size: 60 }}
                   src={icon(iconName)}
                   alt={iconName}
@@ -95,6 +112,11 @@ const WeatherWidget = () => {
               <Text
                 as={motion.h2}
                 layoutId="weather-temperature"
+                transition={{
+                  layout: {
+                    duration: 0.4,
+                  },
+                }}
                 fs={"3xl"}
                 fw="semibold"
               >
@@ -127,6 +149,11 @@ const WeatherWidget = () => {
               <Box
                 as={motion.img}
                 layoutId={"weather-icon"}
+                transition={{
+                  layout: {
+                    duration: 0.4,
+                  },
+                }}
                 css={{ size: 45 }}
                 src={icon(iconName)}
                 alt={iconName}
@@ -135,26 +162,23 @@ const WeatherWidget = () => {
             <Text
               as={motion.h2}
               layoutId="weather-temperature"
+              transition={{
+                layout: {
+                  duration: 0.4,
+                },
+              }}
               fs={"2xl"}
               fw="semibold"
             >
               {Math.round(conditions.temperature)}˚
             </Text>
           </Flex>
-          {location?.cityName && (
-            <Text
-              as={motion.h1}
-              layoutId="weaterh-location"
-              color="text"
-              fs="md"
-              fw="medium"
-            >
-              {location?.cityName}
-            </Text>
-          )}
+          <Text color="text" fs="md" fw="medium">
+            {conditionName}
+          </Text>
         </Flex>
       )}
-    </>
+    </AnimatePresence>
   );
 };
 
