@@ -50,7 +50,7 @@ function Search() {
             <Text css={{ include: "screenReaderOnly" }}>Search Google</Text>
           </IconButton>
         </Dialog.Button>
-        <Dialog.Content overlay>
+        <Dialog.Content css={{ backdropFilter: "blur(50px)" }} overlay>
           <CommandMenu />
         </Dialog.Content>
       </Dialog>
