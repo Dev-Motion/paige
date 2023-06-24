@@ -35,6 +35,7 @@ const Input = styled("input", {
   py: 5,
   flex: 1,
   width: "min(50%,100px)",
+  minWidth: 50,
   maxWidth: 150,
   border: "none",
   borderBottom: "2px solid rgba($textRGB,0.5)",
