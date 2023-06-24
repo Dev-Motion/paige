@@ -23,6 +23,7 @@ function TodoPane() {
   return (
     <Box css={{ width: 330, spacey: "$1" }}>
       <Card
+        nested
         as={Flex}
         jc="between"
         ai="center"
@@ -117,7 +118,7 @@ function AddTodo() {
     }
   }, [showInput]);
   return (
-    <Card css={{ py: "$2", px: "$2" }}>
+    <Card nested css={showInput ? { py: "$2", px: "$2" } : {}}>
       {showInput ? (
         <Flex>
           <Input
@@ -167,6 +168,8 @@ function AddTodo() {
             include: "buttonReset",
             color: "$text",
             width: "100%",
+            py: "$2",
+            px: "$2",
           }}
           ai="center"
           gap="2"
