@@ -87,7 +87,7 @@ const MainLayout = () => {
           }}
           gap={6}
         >
-          {/* <Mantra /> */}
+          <Mantra />
           <Reminder />
         </Flex>
       </Grid>
