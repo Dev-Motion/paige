@@ -13,31 +13,31 @@ const GeneralTab = () => {
 
   return (
     <>
-      <Box css={{ pt: "$8", spacey: "$5" }}>
+      <Box css={{ pt: "$5", spacey: "$5" }}>
         <Box>
-          <Text as="h1" fs={{ "@initial": "xl", "@md": "2xl" }} fw="bold">
+          <Text as="h1" fs="lg" fw="bold">
             General
           </Text>
-          <Text as="p" fs={{ "@initial": "sm", "@md": "md" }}>
+          <Text as="p" fs="xs" css={{ mt: 5 }}>
             Personalize your experience by changing the settings below
           </Text>
         </Box>
         <Box>
-          <Text as="h2" fw="semibold">
+          <Text as="h2" fw="semibold" fs="sm">
             Time
           </Text>
           <Flex jc="between" ai="center" css={{ mt: "$2" }}>
-            <Text as="label" fs="sm">
+            <Text as="label" fs="xs">
               set time format to 24 hours
             </Text>
             <Switch checked={is24Hour} onCheckedChange={onChecked} />
           </Flex>
         </Box>
         <Box>
-          <Text as="h2" fw="semibold">
+          <Text as="h2" fs="sm" fw="semibold">
             Search provider
           </Text>
-          <Text fs="sm" css={{ mt: "$2" }}>
+          <Text fs="xs" css={{ mt: "$2" }}>
             Select your default search provider. You can always change it later
           </Text>
           <Box css={{ mt: "$2", bg: "rgba($bgRGB,0.5)", pd: "$2", br: "$2" }}>
@@ -107,71 +107,13 @@ const LayoutSetting = () => {
     }, 1000);
   };
   return (
-    <Box css={{ pb: "$5", spacey: "$4" }}>
-      <Box css={{ mt: "$5" }}>
-        <Text as="h1" fs={{ "@initial": "xl", "@md": "2xl" }} fw="bold">
+    <Box css={{ mt: "$5", pb: "$5", spacey: "$5" }}>
+      <Box>
+        <Text as="h1" fs="sm" fw="bold">
           Layout
         </Text>
-        <Text as="p" fs={{ "@initial": "sm", "@md": "md" }}>
+        <Text as="p" fs={"xs"}>
           Select your preferred layout
-        </Text>
-      </Box>
-      <Box>
-        <Text as="h2" fw="semibold">
-          Show
-        </Text>
-        <Flex fd="column" gap="1" css={{ mt: "$2" }}>
-          <Flex jc="between" ai="center">
-            <Text as="label" fs="sm">
-              Time
-            </Text>
-            <Switch
-              checked={showTime}
-              onCheckedChange={(checked) => setShowTime(checked)}
-            />
-          </Flex>
-          <Flex jc="between" ai="center">
-            <Text as="label" fs="sm">
-              Greeting
-            </Text>
-            <Switch
-              checked={showGreeting}
-              onCheckedChange={(checked) => setShowGreeting(checked)}
-            />
-          </Flex>
-
-          <Flex jc="between" ai="center">
-            <Text as="label" fs="sm">
-              Today&apos;s Goal
-            </Text>
-            <Switch
-              checked={showTodayGoal}
-              onCheckedChange={(checked) => setShowTodayGoal(checked)}
-            />
-          </Flex>
-          <Flex jc="between" ai="center">
-            <Text as="label" fs="sm">
-              Todo
-            </Text>
-            <Switch
-              checked={showTodo}
-              onCheckedChange={(checked) => setShowTodo(checked)}
-            />
-          </Flex>
-          <Flex jc="between" ai="center">
-            <Text as="label" fs="sm">
-              Daily motivation
-            </Text>
-            <Switch
-              checked={showDailyMotivation}
-              onCheckedChange={(checked) => setShowDailyMotivation(checked)}
-            />
-          </Flex>
-        </Flex>
-      </Box>
-      <Box>
-        <Text as="h2" fw="semibold">
-          Change sidebar layout
         </Text>
         <Flex gap="2" css={{ mt: "$2" }}>
           <Box
@@ -181,7 +123,7 @@ const LayoutSetting = () => {
             css={{
               $$tabColor:
                 sideBar === "left"
-                  ? "$colors$text"
+                  ? "$colors$accent"
                   : "rgba($colors$textRGB, 0.5)",
             }}
           >
@@ -190,7 +132,7 @@ const LayoutSetting = () => {
                 $$color: "$$tabColor",
               }}
             />
-            <Text fs="sm" css={{ color: "$$tabColor" }}>
+            <Text fs="sm" css={{ color: "$text" }}>
               Left Layout
             </Text>
           </Box>
@@ -201,7 +143,7 @@ const LayoutSetting = () => {
             css={{
               $$tabColor:
                 sideBar === "right"
-                  ? "$colors$text"
+                  ? "$colors$accent"
                   : "rgba($colors$textRGB, 0.5)",
             }}
           >
@@ -210,10 +152,63 @@ const LayoutSetting = () => {
                 $$color: "$$tabColor",
               }}
             />
-            <Text fs="sm" css={{ color: "$" }}>
+            <Text fs="sm" css={{ color: "$text" }}>
               Right Layout
             </Text>
           </Box>
+        </Flex>
+      </Box>
+      <Box>
+        <Text as="h2" fs="sm" fw="semibold">
+          Show
+        </Text>
+        <Flex fd="column" gap="1" css={{ mt: "$2" }}>
+          <Flex jc="between" ai="center">
+            <Text as="label" fs="xs">
+              Time
+            </Text>
+            <Switch
+              checked={showTime}
+              onCheckedChange={(checked) => setShowTime(checked)}
+            />
+          </Flex>
+          <Flex jc="between" ai="center">
+            <Text as="label" fs="xs">
+              Greeting
+            </Text>
+            <Switch
+              checked={showGreeting}
+              onCheckedChange={(checked) => setShowGreeting(checked)}
+            />
+          </Flex>
+
+          <Flex jc="between" ai="center">
+            <Text as="label" fs="xs">
+              Today&apos;s Goal
+            </Text>
+            <Switch
+              checked={showTodayGoal}
+              onCheckedChange={(checked) => setShowTodayGoal(checked)}
+            />
+          </Flex>
+          <Flex jc="between" ai="center">
+            <Text as="label" fs="xs">
+              Todo
+            </Text>
+            <Switch
+              checked={showTodo}
+              onCheckedChange={(checked) => setShowTodo(checked)}
+            />
+          </Flex>
+          <Flex jc="between" ai="center">
+            <Text as="label" fs="xs">
+              Daily motivation
+            </Text>
+            <Switch
+              checked={showDailyMotivation}
+              onCheckedChange={(checked) => setShowDailyMotivation(checked)}
+            />
+          </Flex>
         </Flex>
       </Box>
     </Box>

@@ -9,55 +9,49 @@ import { styled } from "stitches.config";
 import { shallow } from "zustand/shallow";
 import { ScrollArea } from ".";
 import { GalleryImage } from "./GalleryImage";
+import { GalleryTabItems } from "@constants/galleryTabs";
 
 const TabRoot = styled(Tabs.Root, {});
 const TabList = styled(Tabs.List, {
   bg: "transparent",
   mt: "$1",
 });
-const TabTrigger = styled(Tabs.Trigger);
-const GalleryBtn = styled("button", {
-  appearance: "none",
-  border: "none",
-  bg: "transparent",
+const TabTrigger = styled(Tabs.Trigger, {
+  include: "buttonReset",
   position: "relative",
   color: "$text",
   py: "$1",
   minWidth: 80,
   fontSize: "$xs",
 });
-const GalleryBtnUnderline = styled(motion.div, {
+
+const TabUnderline = styled(motion.div, {
   position: "absolute",
   bottom: 0,
   height: 2,
-  bg: "$text",
+  bg: "$accent",
   br: "$pill",
   width: "100%",
 });
 
 const GalleryTabs = () => {
-  const [activeTab, setActiveTab] =
-    useState<(typeof galleryTabs)[number]["value"]>("cloud");
+  const [activeTab, setActiveTab] = useState<GalleryTabItems>("cloud");
 
   return (
-    <TabRoot defaultValue={activeTab} css={{ maxWidth: "100%" }}>
+    <TabRoot
+      value={activeTab}
+      onValueChange={(value) => setActiveTab(value as GalleryTabItems)}
+      css={{ maxWidth: "100%" }}
+    >
       <TabList asChild>
         <ScrollArea orientation="horizontal" css={{}}>
           <Flex gap="1" css={{ pb: "$2" }}>
             {galleryTabs.map(({ value, name }) => {
+              const active = value === activeTab;
               return (
-                <TabTrigger
-                  key={name}
-                  value={value}
-                  onClick={() => setActiveTab(value)}
-                  asChild
-                >
-                  <GalleryBtn>
-                    {name}
-                    {value === activeTab && (
-                      <GalleryBtnUnderline layoutId="gallery-btn-underline" />
-                    )}
-                  </GalleryBtn>
+                <TabTrigger key={name} value={value}>
+                  {name}
+                  {active && <TabUnderline layoutId="gallery-btn-underline" />}
                 </TabTrigger>
               );
             })}
