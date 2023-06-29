@@ -47,7 +47,7 @@ const ThemeCategories = () => {
                   css: { color: "$text" },
                 }
                 : {
-                  outline: true,
+                  type: "outline",
                 })}
               onClick={() => onClick(category)}
             >

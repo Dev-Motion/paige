@@ -40,11 +40,10 @@ export const Button = styled("button", {
         },
       },
     },
-    outline: {
-      true: {
-        // backgroundColor: "$transparent",
-        // color: "$text",
-      },
+    type: {
+      solid: {},
+      ghost: {},
+      outline: {},
     },
     br: {
       sm: {
@@ -66,7 +65,7 @@ export const Button = styled("button", {
   compoundVariants: [
     {
       color: "accent",
-      outline: "true",
+      type: "outline",
       css: {
         backgroundColor: "transparent",
         color: "$accent",
@@ -79,7 +78,7 @@ export const Button = styled("button", {
     },
     {
       color: "bland",
-      outline: "true",
+      type: "outline",
       css: {
         backgroundColor: "transparent",
         color: "$text",
@@ -87,6 +86,29 @@ export const Button = styled("button", {
         "&:hover": {
           backgroundColor: "$text",
           color: "$bg",
+        },
+      },
+    },
+    {
+      color: "accent",
+      type: "ghost",
+      css: {
+        backgroundColor: "transparent",
+        color: "$text",
+        "&:hover": {
+          backgroundColor: "rgba($accentRGB, 0.5)",
+          color: "$text",
+        },
+      },
+    },
+    {
+      color: "bland",
+      type: "ghost",
+      css: {
+        backgroundColor: "transparent",
+        color: "$text",
+        "&:hover": {
+          backgroundColor: "rgba($bgRGB, 0.5)",
         },
       },
     },
