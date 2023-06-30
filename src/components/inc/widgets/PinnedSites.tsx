@@ -1,29 +1,11 @@
-import { Box, Flex, Card, Text, Dialog } from "@components/base";
+import { Box, Card, Dialog, Flex, Text } from "@components/base";
+import { Button } from "@components/base/Button";
 import { AddIcon } from "@components/icons";
 import { isRunningInExtension } from "@constants";
 import useStore from "@store";
 import { faviconURL } from "@utils";
-import React, { ComponentProps } from "react";
+import React from "react";
 import { CSS } from "stitches.config";
-
-const dummyData = [
-  {
-    url: "https://google.com",
-    title: "Google dkdkakdlkalkdlkdkl",
-  },
-  {
-    url: "https://google.com",
-    title: "Google",
-  },
-  {
-    url: "https://google.com",
-    title: "Google",
-  },
-  {
-    url: "https://google.com",
-    title: "Google",
-  },
-];
 
 function PinnedSites() {
   const pinnedSites = useStore((state) => state.pinnedSites);
@@ -40,7 +22,7 @@ function PinnedSites() {
 function AddSite() {
   const pinnedSite = useStore((state) => state.pinnedSites);
   const addPinnedSite = useStore((state) => state.addPinnedSite);
-
+  const [errorMessage, setErrorMessage] = React.useState<null | string>(null);
   const [topSites, setTopSites] = React.useState<
     chrome.topSites.MostVisitedURL[]
   >([]);
@@ -98,9 +80,15 @@ function AddSite() {
             onSubmit={(e) => {
               e.preventDefault();
               const formData = new FormData(e.currentTarget);
+
               const title = formData.get("website-title") as string;
               const url = formData.get("website-url") as string;
+              if (!(title && url)) {
+                setErrorMessage("Title and Url are neccessary");
+                return;
+              }
               addPinnedSite({ title, url });
+              setErrorMessage(null);
             }}
             css={{ spacey: "$2", py: "$2" }}
           >
@@ -154,21 +142,13 @@ function AddSite() {
                   },
                 }}
               />
+              <Text fs="xs" css={{ color: "red" }}>
+                {errorMessage}
+              </Text>
             </Flex>
+
             <Flex jc="end">
-              <Box
-                as="button"
-                css={{
-                  include: "buttonReset",
-                  bg: "$text",
-                  color: "$bg",
-                  br: "$3",
-                  px: "$3",
-                  py: "$2",
-                }}
-              >
-                Add
-              </Box>
+              <Button size="sm">Add site</Button>
             </Flex>
           </Box>
           {isRunningInExtension && (
