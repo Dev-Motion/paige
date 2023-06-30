@@ -30,9 +30,10 @@ export function GalleryImage({
             size="xs"
             css={{
               "&>svg": {
-                color: "$accent",
                 size: 16,
-                fill: favorite ? "$accent" : "transparent",
+                color: favorite ? "$accent" : "$text",
+                fill: favorite ? "$accent" : "none",
+                transition: "fill 0.4s ease-in-out",
               },
             }}
             onClick={toggleFavorite}

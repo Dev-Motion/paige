@@ -2,6 +2,10 @@ import type { StateCreator } from "..";
 
 export interface QuotesSlice {
   quote: Quote;
+  customQuotes: customQuote[];
+  setCustomQuotes: (
+    quotes: customQuote[] | ((quotes: customQuote[]) => customQuote[])
+  ) => void;
   getQuotes: () => void;
   quoteKeywords: string[];
   quoteAuthor: string;
@@ -18,7 +22,11 @@ export interface Quote {
   author: string;
   for: Date;
 }
-
+export interface customQuote {
+  id: string;
+  text: string;
+  author: string;
+}
 interface QuotableReturn {
   _id: string;
   content: string;
@@ -36,6 +44,15 @@ const createQuotesSlice: StateCreator<QuotesSlice> = (set, get) => ({
     text: "Think lightly of yourself and deeply of the world.",
     author: "Miyamoto Musashi",
     for: new Date(),
+  },
+  customQuotes: [],
+  setCustomQuotes: (quotes) => {
+    if (Array.isArray(quotes)) {
+      set({ customQuotes: quotes });
+    }
+    if (typeof quotes === "function") {
+      set((state) => ({ customQuotes: quotes(state.customQuotes) }));
+    }
   },
   getQuotes: () => {
     fetch(
@@ -63,7 +80,7 @@ const createQuotesSlice: StateCreator<QuotesSlice> = (set, get) => ({
   favouriteQuotes: [],
   setFavouriteQuotes: (quotes) => {
     if (Array.isArray(quotes)) {
-      set((state) => ({ favouriteQuotes: quotes }));
+      set({ favouriteQuotes: quotes });
     }
     if (typeof quotes === "function") {
       set((state) => ({ favouriteQuotes: quotes(state.favouriteQuotes) }));
