@@ -40,7 +40,7 @@ export const Button = styled("button", {
         },
       },
     },
-    type: {
+    kind: {
       solid: {},
       ghost: {},
       outline: {},
@@ -65,7 +65,7 @@ export const Button = styled("button", {
   compoundVariants: [
     {
       color: "accent",
-      type: "outline",
+      kind: "outline",
       css: {
         backgroundColor: "transparent",
         color: "$accent",
@@ -78,7 +78,7 @@ export const Button = styled("button", {
     },
     {
       color: "bland",
-      type: "outline",
+      kind: "outline",
       css: {
         backgroundColor: "transparent",
         color: "$text",
@@ -91,7 +91,7 @@ export const Button = styled("button", {
     },
     {
       color: "accent",
-      type: "ghost",
+      kind: "ghost",
       css: {
         backgroundColor: "transparent",
         color: "$text",
@@ -103,7 +103,7 @@ export const Button = styled("button", {
     },
     {
       color: "bland",
-      type: "ghost",
+      kind: "ghost",
       css: {
         backgroundColor: "transparent",
         color: "$text",
