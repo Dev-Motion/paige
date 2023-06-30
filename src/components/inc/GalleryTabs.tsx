@@ -129,7 +129,7 @@ const GalleryContent = ({ favoriteTab = false }: { favoriteTab?: boolean }) => {
               }
             };
             const setPhoto = () => {
-              setTodayPhoto({ ...photo, for: new Date() });
+              setTodayPhoto(photo);
               toast({
                 message: "Photo set as today's background",
               });

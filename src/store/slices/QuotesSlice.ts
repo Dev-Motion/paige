@@ -2,10 +2,8 @@ import type { StateCreator } from "..";
 
 export interface QuotesSlice {
   quote: Quote;
-  customQuotes: customQuote[];
-  setCustomQuotes: (
-    quotes: customQuote[] | ((quotes: customQuote[]) => customQuote[])
-  ) => void;
+  customQuotes: Quote[];
+  setCustomQuotes: (quotes: Quote[] | ((quotes: Quote[]) => Quote[])) => void;
   getQuotes: () => void;
   quoteKeywords: string[];
   quoteAuthor: string;
@@ -17,12 +15,6 @@ export interface QuotesSlice {
 }
 
 export interface Quote {
-  id: string;
-  text: string;
-  author: string;
-  for: Date;
-}
-export interface customQuote {
   id: string;
   text: string;
   author: string;
@@ -43,7 +35,6 @@ const createQuotesSlice: StateCreator<QuotesSlice> = (set, get) => ({
     id: "default",
     text: "Think lightly of yourself and deeply of the world.",
     author: "Miyamoto Musashi",
-    for: new Date(),
   },
   customQuotes: [],
   setCustomQuotes: (quotes) => {
@@ -62,20 +53,20 @@ const createQuotesSlice: StateCreator<QuotesSlice> = (set, get) => ({
       .then((response) => response.json())
       .then((json) => {
         const data = json as QuotableReturn;
-        set((state) => ({
+        set({
           quote: {
             id: data._id,
             text: data.content,
             author: data.author,
-            for: new Date(),
           },
-        }));
+        });
+        get().updateLastFetched("quote");
       });
   },
   quoteKeywords: ["inspirational", "motivational"],
   quoteAuthor: "",
   setQuoteKeywords: (keywords) => {
-    set((state) => ({ quoteKeywords: keywords }));
+    set({ quoteKeywords: keywords });
   },
   favouriteQuotes: [],
   setFavouriteQuotes: (quotes) => {

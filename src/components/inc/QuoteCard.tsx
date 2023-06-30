@@ -36,10 +36,7 @@ export function QuoteCard(props: QuoteCardProps) {
         favouriteQuotes.filter((favQuote) => favQuote.id !== quoteId)
       );
     } else {
-      setFavouriteQuotes([
-        ...favouriteQuotes,
-        { ...props.quote, for: new Date() },
-      ]);
+      setFavouriteQuotes([...favouriteQuotes, props.quote]);
     }
   }
   const favorite = isFavorite(id);

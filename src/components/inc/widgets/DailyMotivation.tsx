@@ -4,7 +4,7 @@ import { HeartIcon, SkipIcon, TwitterOutlineIcon } from "@components/icons";
 import { HoverReveal } from "@components/inc";
 import { useCachedEffect } from "@hooks";
 import useStore from "@store";
-import { HOURS, tweetHandler } from "@utils";
+import { HOURS, MINUTES, tweetHandler } from "@utils";
 
 function DailyMotivation() {
   const [
@@ -13,12 +13,14 @@ function DailyMotivation() {
     favouriteQuotes,
     setFavouriteQuotes,
     showDailyMotivation,
+    lastFetched,
   ] = useStore((state) => [
     state.quote,
     state.getQuotes,
     state.favouriteQuotes,
     state.setFavouriteQuotes,
     state.showDailyMotivation,
+    state.lastFetched,
   ]);
   const tweetText = `I love this quote by ${quote.author}!
 “${quote.text}”`;
@@ -30,7 +32,7 @@ function DailyMotivation() {
       if (!isOnline) return;
       getQuotes();
     },
-    quote ? new Date(quote.for).getTime() + 6 * HOURS : 0,
+    quote ? new Date(lastFetched.quote).getTime() + 1 * MINUTES : 0,
     []
   );
   if (!showDailyMotivation) return null;
