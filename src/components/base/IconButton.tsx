@@ -7,9 +7,9 @@ const IconButton = styled("button", {
   jc: "center",
   size: 50,
   br: "$round",
-  transition: "transform 0.2s ease-in-out",
+  transition: "scale 0.2s ease-in-out",
   "&:focus": {
-    transform: "scale(1.05)",
+    scale: 1.05,
     transformOrigin: "center center",
   },
   "&:active": {
