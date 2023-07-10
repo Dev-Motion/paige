@@ -38,9 +38,7 @@ export function GalleryImage({
             }}
             onClick={toggleFavorite}
           >
-            <Text css={{ include: "screenReaderOnly" }}>
-              Add to favourite quotes
-            </Text>
+            <Text srOnly>Add to favourite quotes</Text>
             <HeartIcon />
           </IconButton>
           <Button size="xs" color="accent" onClick={setPhoto}>

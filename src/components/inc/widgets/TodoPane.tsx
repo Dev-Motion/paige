@@ -34,7 +34,7 @@ function TodoPane() {
           <Dropdown.Button asChild>
             <IconButton bg="transparent" size="xs">
               <MoreIcon />
-              <Text css={{ include: "screenReaderOnly" }}>more options</Text>
+              <Text srOnly>more options</Text>
             </IconButton>
           </Dropdown.Button>
           <Dropdown.Menu side="top">

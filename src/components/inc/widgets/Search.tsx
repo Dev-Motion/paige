@@ -47,7 +47,7 @@ function Search() {
             onClick={() => setOpen(!open)}
           >
             <SearchIcon css={{ path: { stroke: "$text !important" } }} />
-            <Text css={{ include: "screenReaderOnly" }}>Search Google</Text>
+            <Text srOnly>Search Google</Text>
           </IconButton>
         </Dialog.Button>
         <Dialog.Content css={{ backdropFilter: "blur(50px)" }} overlay>

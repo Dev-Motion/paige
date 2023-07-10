@@ -48,12 +48,12 @@ const ImageInfo = () => {
       <Flex gap="3" jc="between">
         <Flex ai="center" gap="1">
           <LikeIcon css={{ size: "$3" }} />
-          <Text css={{ include: "screenReaderOnly" }}>image likes</Text>
+          <Text srOnly>image likes</Text>
           <Text fs="xs">{formatter.format(todayAttribution?.likes)}</Text>
         </Flex>
         <Flex ai="center" gap="1">
           <DownloadIcon css={{ size: "$3" }} />
-          <Text css={{ include: "screenReaderOnly" }}>image downloads</Text>
+          <Text srOnly>image downloads</Text>
           <Text fs="xs">{formatter.format(todayAttribution?.downloads)}</Text>
         </Flex>
         <Flex

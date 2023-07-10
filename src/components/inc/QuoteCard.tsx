@@ -58,13 +58,7 @@ export function QuoteCard(props: QuoteCardProps) {
           size="sm"
           css={{ position: "absolute", right: 0, top: 0 }}
         >
-          <Text
-            css={{
-              include: "screenReaderOnly",
-            }}
-          >
-            Edit todo
-          </Text>
+          <Text srOnly>Edit todo</Text>
           <EditIcon />
         </IconButton>
       )}
@@ -98,13 +92,7 @@ export function QuoteCard(props: QuoteCardProps) {
         </Text>
         <Flex ai="center">
           <IconButton size="xs" onClick={() => ToggleFavorite(id)}>
-            <Text
-              css={{
-                include: "screenReaderOnly",
-              }}
-            >
-              Add to favourite quotes
-            </Text>
+            <Text srOnly>Add to favourite quotes</Text>
             <HeartIcon
               css={{
                 size: "$3",
@@ -124,13 +112,7 @@ export function QuoteCard(props: QuoteCardProps) {
             target="_blank"
             rel="noreferrer"
           >
-            <Text
-              css={{
-                include: "screenReaderOnly",
-              }}
-            >
-              Share with a tweet
-            </Text>
+            <Text srOnly>Share with a tweet</Text>
             <TwitterOutlineIcon css={{ size: "$3" }} />
           </IconButton>
         </Flex>

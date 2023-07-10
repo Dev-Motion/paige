@@ -93,9 +93,7 @@ const CommandMenu = () => {
         <Popover>
           <Popover.Button asChild>
             <IconButton size="sm" bg="transparent">
-              <Text css={{ include: "screenReaderOnly" }}>
-                show search providers
-              </Text>
+              <Text srOnly>show search providers</Text>
               <MoreIcon css={{ color: "White" }} />
             </IconButton>
           </Popover.Button>

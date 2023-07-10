@@ -83,9 +83,7 @@ function DailyMotivation() {
                 }
               }}
             >
-              <Text css={{ include: "screenReaderOnly" }}>
-                Add to favourite quotes
-              </Text>
+              <Text srOnly>Add to favourite quotes</Text>
               <HeartIcon />
             </Box>
             <Box
@@ -106,7 +104,7 @@ function DailyMotivation() {
               }}
               onClick={() => getQuotes()}
             >
-              <Text css={{ include: "screenReaderOnly" }}>Skip quote</Text>
+              <Text srOnly>Skip quote</Text>
               <SkipIcon />
             </Box>
             <Box

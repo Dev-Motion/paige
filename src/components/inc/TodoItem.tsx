@@ -177,9 +177,7 @@ function TodoItem({ todo }: { todo: Todo }) {
               <Dropdown.Button asChild>
                 <IconButton size="sm" bg="transparent" css={{}}>
                   <MoreIcon css={{ size: "$3", color: "$text" }} />
-                  <Text css={{ include: "screenReaderOnly" }}>
-                    more options
-                  </Text>
+                  <Text srOnly>more options</Text>
                 </IconButton>
               </Dropdown.Button>
               <Dropdown.Menu>

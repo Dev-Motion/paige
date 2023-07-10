@@ -37,6 +37,11 @@ const Text = styled("p", {
         fontWeight: "$5",
       },
     },
+    srOnly: {
+      true: {
+        include: "screenReaderOnly",
+      },
+    },
   },
   defaultVariants: {
     fs: "md",
