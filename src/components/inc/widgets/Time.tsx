@@ -8,7 +8,7 @@ import {
   Text,
   Card,
 } from "@components/base";
-import { More } from "@components/icons";
+import { MoreIcon } from "@components/icons";
 import { getDaySegment, processTime } from "@utils";
 import { styled } from "stitches.config";
 import useStore from "@store";
@@ -75,7 +75,7 @@ const Time = () => {
             <Popover open={open} onOpenChange={setOpen}>
               <Popover.Button asChild>
                 <MoreButton size="sm" bg="transparent">
-                  <More css={{ circle: { fill: "$text !important" } }} />
+                  <MoreIcon css={{ circle: { fill: "$text !important" } }} />
                 </MoreButton>
               </Popover.Button>
               <Popover.Content>

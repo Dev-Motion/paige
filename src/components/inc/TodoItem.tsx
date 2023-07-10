@@ -12,7 +12,7 @@ import {
   AlarmIcon,
   DeleteIcon,
   EditIcon,
-  More,
+  MoreIcon,
   StarIcon,
 } from "@components/icons";
 import useStore from "@store";
@@ -176,7 +176,7 @@ function TodoItem({ todo }: { todo: Todo }) {
             <Dropdown open={show} onOpenChange={setShow} key={todo.id}>
               <Dropdown.Button asChild>
                 <IconButton size="sm" bg="transparent" css={{}}>
-                  <More css={{ size: "$3", color: "$text" }} />
+                  <MoreIcon css={{ size: "$3", color: "$text" }} />
                   <Text css={{ include: "screenReaderOnly" }}>
                     more options
                   </Text>

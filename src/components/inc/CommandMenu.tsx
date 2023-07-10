@@ -1,5 +1,5 @@
 import { Box, Flex, IconButton, Popover, Text } from "@components/base";
-import { HistoryIcon, More, SearchIcon } from "@components/icons";
+import { HistoryIcon, MoreIcon, SearchIcon } from "@components/icons";
 import { SearchProviders, searchProviders } from "@constants";
 import useStore from "@store";
 import { faviconURL } from "@utils";
@@ -96,7 +96,7 @@ const CommandMenu = () => {
               <Text css={{ include: "screenReaderOnly" }}>
                 show search providers
               </Text>
-              <More css={{ color: "White" }} />
+              <MoreIcon css={{ color: "White" }} />
             </IconButton>
           </Popover.Button>
           <Popover.Content>

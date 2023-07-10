@@ -93,7 +93,7 @@ export const TodoIcon = ({ css = {} }: { css?: CSS }) => {
   );
 };
 
-export const More = ({ css = {} }: { css?: CSS }) => {
+export const MoreIcon = ({ css = {} }: { css?: CSS }) => {
   return (
     <svg
       width="24"

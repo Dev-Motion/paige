@@ -7,7 +7,7 @@ import {
   Popover,
   Text,
 } from "@components/base";
-import { AddIcon, AlarmIcon, More, StarIcon } from "@components/icons";
+import { AddIcon, AlarmIcon, MoreIcon, StarIcon } from "@components/icons";
 import useStore from "@store";
 import * as React from "react";
 import DatePicker from "../DatePicker";
@@ -33,7 +33,7 @@ function TodoPane() {
         <Dropdown>
           <Dropdown.Button asChild>
             <IconButton bg="transparent" size="xs">
-              <More />
+              <MoreIcon />
               <Text css={{ include: "screenReaderOnly" }}>more options</Text>
             </IconButton>
           </Dropdown.Button>
