@@ -32,7 +32,7 @@ function DailyMotivation() {
       if (!isOnline) return;
       getQuotes();
     },
-    quote ? new Date(lastFetched.quote).getTime() + 1 * MINUTES : 0,
+    quote ? new Date(lastFetched.quote).getTime() + 6 * HOURS : 0,
     []
   );
   if (!showDailyMotivation) return null;

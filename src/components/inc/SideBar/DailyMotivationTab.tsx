@@ -59,7 +59,7 @@ const DailyMotivationTab = () => {
           <Grid
             columns={{ "@initial": 1, "@lg": 2 }}
             gap="2"
-            css={{ pt: "$2" }}
+            css={{ pt: "$2", rowGap: "$2", columnGap: "$1" }}
           >
             {favouriteQuotes.map((quote, index) => {
               return <QuoteCard key={index} quote={quote} />;
@@ -117,8 +117,7 @@ function CustomQuotesTab() {
     <Box>
       <Grid
         columns={{ "@initial": 1, "@lg": 2 }}
-        gap="2"
-        css={{ pt: "$2", mb: "$2" }}
+        css={{ pt: "$2", mb: "$2", rowGap: "$2", columnGap: "$1" }}
       >
         {customQuotes.map((quote, index) => {
           return (
@@ -136,7 +135,7 @@ function CustomQuotesTab() {
       ) : (
         <Flex jc="end">
           <Button color="accent" size="xs" onClick={() => setShowInput(true)}>
-            Add new quote
+            Add custom quote
           </Button>
         </Flex>
       )}
