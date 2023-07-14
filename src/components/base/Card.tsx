@@ -9,7 +9,7 @@ const Card = styled(Box, {
   variants: {
     nested: {
       true: {
-        bg: "rgba($bgRGB, 0.9)",
+        bg: "rgba($bgRGB, .95)",
       },
     },
   },
