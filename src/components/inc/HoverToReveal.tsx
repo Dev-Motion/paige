@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Text } from "@components/base";
-import { styled } from "stitches.config";
+import { CSS, styled } from "stitches.config";
 
 const Header = styled(Text, {
   display: "block",
@@ -11,8 +11,10 @@ const FooterText = styled(Text, {
 
 export default function HoverReveal({
   children,
+  css,
 }: {
   children: React.ReactNode;
+  css?: CSS;
 }) {
   return (
     <Box
@@ -34,13 +36,14 @@ export default function HoverReveal({
           transform: "translateY(calc(-1 * calc($$move / 2)))",
           transition: "all 500ms ease-in-out",
         },
-        "&:hover": {
+        "&:is(:hover,:focus-within)": {
           [`${Header}`]: { transform: "translateY(0)", opacity: 1 },
           [`& ${FooterText},${Box}`]: {
             transform: "translateY(0px)",
             opacity: 1,
           },
         },
+        ...css,
       }}
     >
       {children}
