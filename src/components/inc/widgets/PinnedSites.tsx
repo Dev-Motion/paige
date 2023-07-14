@@ -406,7 +406,7 @@ function SiteBlock({
                   opacity: 0,
                 }}
               >
-                <MoreIcon css={{ width: "80%" }} />
+                <MoreIcon css={{ width: "50%" }} />
                 <Text srOnly>card Options</Text>
               </IconButton>
             </Dropdown.Button>
