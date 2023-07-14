@@ -109,56 +109,6 @@ const LayoutSetting = () => {
   return (
     <Box css={{ mt: "$5", pb: "$5", spacey: "$5" }}>
       <Box>
-        <Text as="h1" fs="sm" fw="bold">
-          Layout
-        </Text>
-        <Text as="p" fs={"xs"}>
-          Select your preferred layout
-        </Text>
-        <Flex gap="2" css={{ mt: "$2" }}>
-          <Box
-            onClick={() => {
-              close("left");
-            }}
-            css={{
-              $$tabColor:
-                sideBar === "left"
-                  ? "$colors$accent"
-                  : "rgba($colors$textRGB, 0.5)",
-            }}
-          >
-            <RightLayout
-              css={{
-                $$color: "$$tabColor",
-              }}
-            />
-            <Text fs="sm" css={{ color: "$text" }}>
-              Left Layout
-            </Text>
-          </Box>
-          <Box
-            onClick={() => {
-              close("right");
-            }}
-            css={{
-              $$tabColor:
-                sideBar === "right"
-                  ? "$colors$accent"
-                  : "rgba($colors$textRGB, 0.5)",
-            }}
-          >
-            <LeftLayout
-              css={{
-                $$color: "$$tabColor",
-              }}
-            />
-            <Text fs="sm" css={{ color: "$text" }}>
-              Right Layout
-            </Text>
-          </Box>
-        </Flex>
-      </Box>
-      <Box>
         <Text as="h2" fs="sm" fw="semibold">
           Show
         </Text>
@@ -209,6 +159,56 @@ const LayoutSetting = () => {
               onCheckedChange={(checked) => setShowDailyMotivation(checked)}
             />
           </Flex>
+        </Flex>
+      </Box>
+      <Box>
+        <Text as="h1" fs="sm" fw="bold">
+          Layout
+        </Text>
+        <Text as="p" fs={"xs"}>
+          Select your preferred layout
+        </Text>
+        <Flex gap="2" css={{ mt: "$2" }}>
+          <Box
+            onClick={() => {
+              close("left");
+            }}
+            css={{
+              $$tabColor:
+                sideBar === "left"
+                  ? "$colors$accent"
+                  : "rgba($colors$textRGB, 0.5)",
+            }}
+          >
+            <RightLayout
+              css={{
+                $$color: "$$tabColor",
+              }}
+            />
+            <Text fs="sm" css={{ color: "$text" }}>
+              Left Layout
+            </Text>
+          </Box>
+          <Box
+            onClick={() => {
+              close("right");
+            }}
+            css={{
+              $$tabColor:
+                sideBar === "right"
+                  ? "$colors$accent"
+                  : "rgba($colors$textRGB, 0.5)",
+            }}
+          >
+            <LeftLayout
+              css={{
+                $$color: "$$tabColor",
+              }}
+            />
+            <Text fs="sm" css={{ color: "$text" }}>
+              Right Layout
+            </Text>
+          </Box>
         </Flex>
       </Box>
     </Box>
