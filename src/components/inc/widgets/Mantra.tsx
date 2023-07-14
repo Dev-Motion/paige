@@ -1,7 +1,9 @@
 import React from "react";
 import useStore from "@store";
-import { Box, Text } from "@components/base";
+import { Box, Text, Flex } from "@components/base";
 import { styled } from "stitches.config";
+import { HoverReveal } from "@components/inc";
+import { TodoIcon } from "@components/icons";
 
 const Mantra = () => {
   const [value, setValue, showTodayGoal] = useStore((state) => [
@@ -19,59 +21,70 @@ const Mantra = () => {
       css={{
         color: "$text",
         fontWeight: "$4",
+        include: "accessibleShadow",
+        $$blur: "60px",
+        $$opacity: 0.8,
       }}
     >
-      <Box
-        css={{
-          include: "accessibleShadow",
-          $$blur: "60px",
-          $$opacity: 0.8,
-        }}
-      >
-        <Text ta="center" fs="lg" as="h3">
-          {empty || active ? "What is your Goal for today?" : "Today"}
+      {empty || active ? (
+        <HoverReveal css={{ height: 60, overflow: "hidden", $$lh: "24px" }}>
+          <HoverReveal.Header>
+            <Flex ai="center" jc="center" gap="1" css={{}}>
+              <TodoIcon />
+              <Text ta="center" fs="lg" as="h3">
+                What is your target for today?
+              </Text>
+            </Flex>
+          </HoverReveal.Header>
+          <HoverReveal.Footer>
+            <Box
+              onKeyDown={(e) => {
+                if (e.key === "Escape" || e.key === "Enter") {
+                  setActive(false);
+                }
+              }}
+            >
+              <Input
+                autoFocus
+                value={value.text}
+                onChange={(e) =>
+                  setValue({ text: e.target.value, for: value.for })
+                }
+                onBlur={() => setActive(empty)}
+              />
+            </Box>
+          </HoverReveal.Footer>
+        </HoverReveal>
+      ) : (
+        <Text
+          fs="xl"
+          ta="center"
+          onDoubleClick={() => {
+            setActive(true);
+          }}
+          css={{
+            maxWidth: 540,
+            display: "-webkit-box",
+            "-webkit-line-clamp": 2,
+            "-webkit-box-orient": "vertical",
+            overflow: "hidden",
+          }}
+        >
+          {value.text}
         </Text>
-        {empty || active ? (
-          <Box
-            as="form"
-            onKeyDown={(e) => {
-              if (e.key === "Escape" || e.key === "Enter") {
-                setActive(false);
-              }
-            }}
-          >
-            <Input
-              autoFocus
-              value={value.text}
-              onChange={(e) =>
-                setValue({ text: e.target.value, for: value.for })
-              }
-              onBlur={() => setActive(empty)}
-            />
-          </Box>
-        ) : (
-          <Text
-            fs="xl"
-            ta="center"
-            onDoubleClick={() => {
-              setActive(true);
-            }}
-          >
-            {value.text}
-          </Text>
-        )}
-      </Box>
+      )}
     </Box>
   );
 };
 
 export default Mantra;
 const Input = styled("input", {
-  fontSize: "$xl",
+  all: "unset",
+  fontSize: "$lg",
   ta: "center",
   bg: "transparent",
   appearance: "none",
-  py: "$1",
+  pb: "$1",
   border: "none",
   color: "$text",
   outline: "none",
