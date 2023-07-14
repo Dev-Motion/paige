@@ -47,7 +47,7 @@ const createQuotesSlice: StateCreator<QuotesSlice> = (set, get) => ({
   },
   getQuotes: () => {
     fetch(
-      "https://api.quotable.io/random?minLength=40&maxLength=100&tags=" +
+      "https://api.quotable.io/random?minLength=40&maxLength=60&tags=" +
         get().quoteKeywords.join("|")
     )
       .then((response) => response.json())
