@@ -1,18 +1,20 @@
 import React, { useState } from "react";
 import { Box, Text, Flex, Card, CheckBox, Dialog } from "@components/base";
-import { RepeatIcon } from "@components/icons";
 import { motion } from "framer-motion";
 import useStore from "@store";
 import { analyzeDate } from "@utils";
 
-// TODO: update the orderring of the reminders
 const ReminderItems = () => {
   const todos = useStore((store) => store.todos);
   const toggleTodo = useStore((store) => store.toggleTodo);
   const reminders = todos.flatMap((t) => (t.reminder ? [t] : []));
-  const orderedReminders = reminders
-    .sort((a) => (a.important ? -1 : 1))
-    .sort((a) => (a.completed ? 1 : -2));
+  const completedReminders = reminders.filter((rem) => rem.completed);
+  const activeReminders = reminders.filter((rem) => !rem.completed);
+  const orderedActiveReminders = activeReminders.sort((a) => {
+    if (a.important) return -1;
+    return 0;
+  });
+  const display = [...orderedActiveReminders, ...completedReminders];
   return (
     <Flex
       fd="column"
@@ -24,13 +26,13 @@ const ReminderItems = () => {
         maxWidth: 360,
       }}
     >
-      {orderedReminders.slice(0, 2).map((reminder, index) => {
+      {display.slice(0, 2).map((reminder, index) => {
         const first = index == 0;
         return (
           <Card
-            key={index}
+            key={reminder.id}
             as={motion.div}
-            layoutId={`reminder-item-${index + 1}`}
+            layoutId={`reminder-item-${reminder.id}`}
             initial={false}
             animate={{
               scale: -1 * index * 0.1 + 1,
@@ -113,9 +115,13 @@ const FloatingReminderItems = () => {
   const todos = useStore((store) => store.todos);
   const toggleTodo = useStore((store) => store.toggleTodo);
   const reminders = todos.flatMap((t) => (t.reminder ? [t] : []));
-  const orderedReminders = reminders
-    .sort((a) => (a.important ? -1 : 1))
-    .sort((a) => (a.completed ? 1 : -2));
+  const completedReminders = reminders.filter((rem) => rem.completed);
+  const activeReminders = reminders.filter((rem) => !rem.completed);
+  const orderedActiveReminders = activeReminders.sort((a) => {
+    if (a.important) return -1;
+    return 0;
+  });
+
   return (
     <Flex
       fd="column"
@@ -136,13 +142,54 @@ const FloatingReminderItems = () => {
           Reminder
         </Text>
       </Card>
-      {orderedReminders.map((reminder, index) => {
+      {orderedActiveReminders.map((reminder) => {
         return (
           <Card
             nested
-            key={index}
+            key={reminder.id}
             as={motion.div}
-            layoutId={`reminder-item-${index + 1}`}
+            layoutId={`reminder-item-${reminder.id}`}
+            css={{
+              pd: "$4",
+              spacey: "$2",
+              maxWidth: 480,
+            }}
+          >
+            <Flex gap="1" ai="start">
+              <CheckBox
+                checked={reminder.completed}
+                onCheckedChange={() => toggleTodo(reminder.id)}
+              />
+              <Box css={{ spacey: "$1" }}>
+                <Text fs="sm" fw="medium">
+                  {reminder.text}
+                </Text>
+                <Flex
+                  css={{
+                    border: "0.3px solid $text",
+                    px: "$2",
+                    py: "$1",
+                    br: "$pill",
+                    gap: "$1",
+                    fontSize: "$2xs",
+                    width: "fit-content",
+                    color: "$text",
+                  }}
+                >
+                  {analyzeDate(new Date(reminder.date))}
+                </Flex>
+              </Box>
+            </Flex>
+          </Card>
+        );
+      })}
+      {completedReminders.map((reminder) => {
+        return (
+          <Card
+            nested
+            key={reminder.id}
+            as={motion.div}
+            layoutId={`reminder-item-${reminder.id}`}
             css={{
               pd: "$4",
               spacey: "$2",

@@ -19,7 +19,13 @@ function TodoPane() {
     (state) => [state.todos, state.toggleAll, state.clearCompleted],
     shallow
   );
-  const orderedTodos = todos.sort((a) => (a.important ? -1 : 1));
+  const completedTodos = todos.filter((todo) => todo.completed);
+  const activeTodos = todos.filter((todo) => !todo.completed);
+  const orderedActiveTodos = activeTodos.sort((a) => {
+    if (a.important) return -1;
+    return 0;
+  });
+
   return (
     <Box css={{ width: 330, spacey: "$1" }}>
       <Card
@@ -48,7 +54,10 @@ function TodoPane() {
         </Dropdown>
       </Card>
       <Flex fd="column" gap="1">
-        {orderedTodos.map((todo, i) => (
+        {orderedActiveTodos.map((todo) => (
+          <TodoItem key={todo.id.toString()} todo={todo} />
+        ))}
+        {completedTodos.map((todo) => (
           <TodoItem key={todo.id.toString()} todo={todo} />
         ))}
         <AddTodo />
