@@ -13,6 +13,7 @@ export interface TodoSlice {
   clearCompleted: () => void;
   toggleAll: () => void;
   toggleReminded: (id: number) => void;
+  snoozeTodo: (id: number) => void;
 }
 
 export type TodoOnly = {
@@ -101,6 +102,20 @@ const createTodoSlice: StateCreator<TodoSlice> = (set) => ({
         if (todo.reminder) {
           if (todo.id === id) {
             return { ...todo, reminded: !todo.reminded };
+          }
+        }
+        return todo;
+      }),
+    }));
+  },
+  snoozeTodo(id) {
+    set((state) => ({
+      todos: state.todos.map((todo) => {
+        if (todo.reminder) {
+          if (todo.id === id) {
+            const date = new Date(todo.date);
+            date.setMinutes(todo.date.getMinutes() + 10);
+            return { ...todo, date, reminded: false };
           }
         }
         return todo;

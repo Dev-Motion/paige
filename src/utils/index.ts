@@ -91,8 +91,29 @@ export function requestNotificationPermission(action?: () => void) {
   });
 }
 
-export function spawnNotification(body: string, title: string) {
-  new Notification(title, { body });
+export function spawnTodoNotification(id: number, body: string, title: string) {
+  if (isRunningInExtension) {
+    chrome.notifications.create(`todo-${id}`, {
+      type: "basic",
+      iconUrl: "/pwa-64x64.png",
+      title,
+      message: body,
+      buttons: [
+        {
+          title: "Snooze",
+        },
+        {
+          title: "Completed",
+        },
+      ],
+    });
+    return;
+  }
+  Notification.requestPermission().then((result) => {
+    if (result === "granted") {
+      new Notification(title, { body, icon: "/pwa-64x64.png" });
+    }
+  });
 }
 
 export function getTimeItem<T extends { for: Date }[]>(

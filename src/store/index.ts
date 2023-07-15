@@ -113,3 +113,18 @@ if (isRunningInExtension && api.pinnedSites.length === 0) {
 if (Notification.permission === "default") {
   Notification.requestPermission().then((res) => console.log(res));
 }
+
+if (isRunningInExtension) {
+  chrome.notifications.onButtonClicked.addListener((notificationId, i) => {
+    console.log("hi");
+    const [pre, id] = notificationId.split("-");
+    if (pre === "todo") {
+      if (i === 1) {
+        api.toggleTodo(parseInt(id));
+      }
+      if (i === 0) {
+        api.snoozeTodo(parseInt(id));
+      }
+    }
+  });
+}
