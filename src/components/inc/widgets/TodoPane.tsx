@@ -13,7 +13,8 @@ import * as React from "react";
 import DatePicker from "../DatePicker";
 import TodoItem, { Input } from "../TodoItem";
 import { shallow } from "zustand/shallow";
-
+import { ScrollArea } from "@components/inc";
+import "../../../styles/scrollbar.css";
 function TodoPane() {
   const [todos, toggleAll, clearCompleted] = useStore(
     (state) => [state.todos, state.toggleAll, state.clearCompleted],
@@ -27,7 +28,7 @@ function TodoPane() {
   });
 
   return (
-    <Box css={{ width: 330, spacey: "$1" }}>
+    <Flex fd="column" gap="1" css={{ width: 330, maxHeight: "80vh" }}>
       <Card
         nested
         as={Flex}
@@ -53,16 +54,26 @@ function TodoPane() {
           </Dropdown.Menu>
         </Dropdown>
       </Card>
-      <Flex fd="column" gap="1">
-        {orderedActiveTodos.map((todo) => (
-          <TodoItem key={todo.id.toString()} todo={todo} />
-        ))}
-        {completedTodos.map((todo) => (
-          <TodoItem key={todo.id.toString()} todo={todo} />
-        ))}
-        <AddTodo />
-      </Flex>
-    </Box>
+      <Box
+        css={{
+          flex: 1,
+          overflowY: "scroll",
+          scrollbarWidth: "thin",
+          scrollbarColor: "#6969dd #e0e0e0",
+        }}
+        className="custom-scroll-bar"
+      >
+        <Flex fd="column" gap="1">
+          {orderedActiveTodos.map((todo) => (
+            <TodoItem key={todo.id.toString()} todo={todo} />
+          ))}
+          {completedTodos.map((todo) => (
+            <TodoItem key={todo.id.toString()} todo={todo} />
+          ))}
+        </Flex>
+      </Box>
+      <AddTodo />
+    </Flex>
   );
 }
 
