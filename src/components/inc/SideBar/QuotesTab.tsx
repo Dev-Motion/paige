@@ -9,7 +9,7 @@ import { shallow } from "zustand/shallow";
 import { QuoteCard } from "../QuoteCard";
 import TagInput from "../TagInput";
 
-const DailyMotivationTab = () => {
+const QuotesTab = () => {
   const [currentTab, setCurrentTab] = React.useState("favorite-quotes");
   const [quoteKeywords, setQuoteKeywords, favouriteQuotes] = useStore(
     (state) => [
@@ -351,4 +351,4 @@ const QuoteInput = styled("textarea", {
   },
 });
 
-export default DailyMotivationTab;
+export default QuotesTab;

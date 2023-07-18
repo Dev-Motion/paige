@@ -6,7 +6,7 @@ import { useCachedEffect } from "@hooks";
 import useStore from "@store";
 import { HOURS, MINUTES, tweetHandler } from "@utils";
 
-function DailyMotivation() {
+function Quotes() {
   const [
     quote,
     getQuotes,
@@ -142,4 +142,4 @@ function DailyMotivation() {
   );
 }
 
-export default DailyMotivation;
+export default Quotes;

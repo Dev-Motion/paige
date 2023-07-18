@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { styled } from "stitches.config";
 import GeneralTab from "./GeneralTab";
 import ThemesTab from "./ThemesTab";
-import DailyMotivationTab from "./DailyMotivationTab";
+import QuotesTab from "./QuotesTab";
 import useStore from "@store";
 import { ScrollArea } from "@components/inc";
 import { IconButton, Box, Flex } from "@components/base";
@@ -68,28 +68,23 @@ const SideBar = () => {
                   height: "100%",
                 }}
               >
-                {["General", "Themes", "Daily Motivation", "Weather"].map(
-                  (item) => {
-                    const active = item.toLowerCase() === activeTab;
-                    const gen = item.toLowerCase() === "general";
-                    return (
-                      <TabTrigger
-                        key={item}
-                        value={item.toLowerCase()}
-                        position={sideBarPosition}
-                        ref={gen ? buttonRef : undefined}
-                      >
-                        {item}
-                        {active && (
-                          <MenuBg
-                            position={sideBarPosition}
-                            layoutId="btn-bg"
-                          />
-                        )}
-                      </TabTrigger>
-                    );
-                  }
-                )}
+                {["General", "Themes", "Quotes", "Weather"].map((item) => {
+                  const active = item.toLowerCase() === activeTab;
+                  const gen = item.toLowerCase() === "general";
+                  return (
+                    <TabTrigger
+                      key={item}
+                      value={item.toLowerCase()}
+                      position={sideBarPosition}
+                      ref={gen ? buttonRef : undefined}
+                    >
+                      {item}
+                      {active && (
+                        <MenuBg position={sideBarPosition} layoutId="btn-bg" />
+                      )}
+                    </TabTrigger>
+                  );
+                })}
                 <Flex
                   jc="center"
                   ai="end"
@@ -163,7 +158,7 @@ const SideBar = () => {
                 </ScrollArea>
               </TabContent>
               <TabContent
-                value="daily motivation"
+                value="quotes"
                 css={{
                   zIndex: "calc($max - 2)",
                   height: "100%",
@@ -183,7 +178,7 @@ const SideBar = () => {
                     height: "100%",
                   }}
                 >
-                  <DailyMotivationTab />
+                  <QuotesTab />
                 </ScrollArea>
               </TabContent>
               <TabContent
