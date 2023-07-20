@@ -21,6 +21,7 @@ const WeatherWidget = () => {
     getCurrentLocation,
     getCityName,
     position,
+    unit,
   ] = useStore(
     (state) => [
       state.weather,
@@ -29,6 +30,7 @@ const WeatherWidget = () => {
       state.getCurrentLocation,
       state.getCityName,
       state.sideBarPosition,
+      state.unit,
     ],
     shallow
   );
@@ -46,13 +48,10 @@ const WeatherWidget = () => {
       : [];
   useCachedEffect(
     () => {
-      getCurrentLocation().then(() => {
-        getWeather();
-        getCityName();
-      });
+      getWeather();
     },
     weather ? weather.timestamp + TIME_REFRESH * HOURS : 0,
-    [location?.longitude, location?.latitude]
+    [location?.longitude, location?.latitude, unit]
   );
   // Blank or loading state
   if (!conditions) return <div className="Weather">-</div>;
