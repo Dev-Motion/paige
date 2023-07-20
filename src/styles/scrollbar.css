@@ -1,6 +1,7 @@
 .custom-scroll-bar {
   scrollbar-gutter: stable;
-  padding-right: 4px;
+  padding-right: 2px;
+  overflow-y: auto;
 }
 .custom-scroll-bar::-webkit-scrollbar {
   width: 7px;
