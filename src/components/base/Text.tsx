@@ -46,7 +46,6 @@ const Text = styled("p", {
   defaultVariants: {
     fs: "md",
     fw: "normal",
-    ta: "left",
   },
 });
 

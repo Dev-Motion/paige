@@ -1,4 +1,4 @@
-import { Box, Flex, Grid, Skeleton } from "@components/base";
+import { Box, Flex, Grid, Skeleton, ScrollArea } from "@components/base";
 import { galleryTabs, tempImageQuality } from "@constants";
 import * as Tabs from "@radix-ui/react-tabs";
 import useStore from "@store";
@@ -7,7 +7,6 @@ import { motion } from "framer-motion";
 import React, { useState } from "react";
 import { styled } from "stitches.config";
 import { shallow } from "zustand/shallow";
-import { ScrollArea } from ".";
 import { GalleryImage } from "./GalleryImage";
 import { GalleryTabItems } from "@constants/galleryTabs";
 

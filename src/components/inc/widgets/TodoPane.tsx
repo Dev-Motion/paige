@@ -13,7 +13,6 @@ import * as React from "react";
 import DatePicker from "../DatePicker";
 import TodoItem, { Input } from "../TodoItem";
 import { shallow } from "zustand/shallow";
-import { ScrollArea } from "@components/inc";
 import "../../../styles/scrollbar.css";
 function TodoPane() {
   const [todos, toggleAll, clearCompleted] = useStore(
@@ -57,17 +56,11 @@ function TodoPane() {
       <Box
         css={{
           flex: 1,
-          overflowY: "scroll",
-          scrollbarWidth: "thin",
-          scrollbarColor: "#6969dd #e0e0e0",
         }}
         className="custom-scroll-bar"
       >
         <Flex fd="column" gap="1">
-          {orderedActiveTodos.map((todo) => (
-            <TodoItem key={todo.id.toString()} todo={todo} />
-          ))}
-          {completedTodos.map((todo) => (
+          {[...orderedActiveTodos, ...completedTodos].map((todo) => (
             <TodoItem key={todo.id.toString()} todo={todo} />
           ))}
         </Flex>

@@ -172,7 +172,7 @@ const WeatherWidget = () => {
               {Math.round(conditions.temperature)}˚
             </Text>
           </Flex>
-          <Text color="text" fs="md" fw="medium">
+          <Text color="text" fs="sm" fw="medium">
             {conditionName}
           </Text>
         </Flex>
