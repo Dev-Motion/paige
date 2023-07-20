@@ -6,9 +6,9 @@ import GeneralTab from "./GeneralTab";
 import ThemesTab from "./ThemesTab";
 import QuotesTab from "./QuotesTab";
 import useStore from "@store";
-import { ScrollArea } from "@components/inc";
-import { IconButton, Box, Flex } from "@components/base";
-import { Hamburger } from "@components/icons";
+import { FeedbackModal } from "@components/inc";
+import { IconButton, Box, Flex, ScrollArea } from "@components/base";
+import { Hamburger, Info } from "@components/icons";
 import WeatherTab from "./WeatherTab";
 
 const SideBar = () => {
@@ -86,14 +86,17 @@ const SideBar = () => {
                   );
                 })}
                 <Flex
-                  jc="center"
-                  ai="end"
+                  jc="end"
+                  ai="center"
+                  fd="column"
+                  gap="2"
                   css={{
                     flexGrow: 1,
                     pb: "$4",
                   }}
                   id="nav-links"
                 >
+                  <FeedbackModal />
                   <IconButton
                     onClick={() => setSideBarOpen(false)}
                     size="sm"
