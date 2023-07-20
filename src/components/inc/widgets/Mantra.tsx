@@ -28,7 +28,7 @@ const Mantra = () => {
     >
       {empty || active ? (
         <HoverReveal css={{ height: 60, overflow: "hidden", $$lh: "24px" }}>
-          <HoverReveal.Header>
+          <HoverReveal.Header as="div">
             <Flex ai="center" jc="center" gap="1" css={{}}>
               <TodoIcon />
               <Text ta="center" fs="lg" as="h3">
@@ -36,7 +36,7 @@ const Mantra = () => {
               </Text>
             </Flex>
           </HoverReveal.Header>
-          <HoverReveal.Footer>
+          <HoverReveal.Footer as="div">
             <Box
               onKeyDown={(e) => {
                 if (e.key === "Escape" || e.key === "Enter") {
