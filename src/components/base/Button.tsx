@@ -2,6 +2,7 @@ import { styled } from "stitches.config";
 
 export const Button = styled("button", {
   include: "buttonReset",
+  ta: "center",
   "&:active": {
     transform: "scale(0.95)",
   },
