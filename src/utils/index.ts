@@ -91,8 +91,29 @@ export function requestNotificationPermission(action?: () => void) {
   });
 }
 
-export function spawnNotification(body: string, title: string) {
-  new Notification(title, { body });
+export function spawnTodoNotification(id: number, body: string, title: string) {
+  if (isRunningInExtension) {
+    chrome.notifications.create(`todo-${id}`, {
+      type: "basic",
+      iconUrl: "/pwa-64x64.png",
+      title,
+      message: body,
+      buttons: [
+        {
+          title: "Snooze",
+        },
+        {
+          title: "Completed",
+        },
+      ],
+    });
+    return;
+  }
+  Notification.requestPermission().then((result) => {
+    if (result === "granted") {
+      new Notification(title, { body, icon: "/pwa-64x64.png" });
+    }
+  });
 }
 
 export function getTimeItem<T extends { for: Date }[]>(
@@ -111,6 +132,7 @@ export function getTimeItem<T extends { for: Date }[]>(
 export function handleImages() {
   const todayPhoto = api.todayPhoto;
   const nextPhoto = api.nextPhoto;
+  const lastFetched = api.lastFetched;
   const today = new Date().toDateString();
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
@@ -124,7 +146,7 @@ export function handleImages() {
     if (!todayPhoto && !nextPhoto) {
       api.getPhotos(false);
     } else if (
-      new Date(todayPhoto.for).toDateString() !== today ||
+      new Date(lastFetched.todayPhoto).toDateString() !== today ||
       !nextPhoto
     ) {
       api.getPhotos(true);
@@ -132,6 +154,10 @@ export function handleImages() {
   }
 }
 
+/**
+ * The function `handleGoals` checks if the user is online and if the current goal is stale, and if so,
+ * it sets a new goal and logs a message.
+ */
 export function handleGoals() {
   const todayGoal = api.goal;
   const isOnline = navigator.onLine;
@@ -203,13 +229,11 @@ export function getPicture(photo: RandomPicture): Picture {
     color,
   };
 }
-export function getPictureInfo(photo: PictureWithDate): PictureInfo {
+export function getPictureInfo(photo: Picture): PictureInfo {
   const { blur_hash, urls, color, alt_description } = photo;
   return { blur_hash, urls, color, alt_description };
 }
-export function getPictureAttribution(
-  photo: PictureWithDate
-): PictureAttribution {
+export function getPictureAttribution(photo: Picture): PictureAttribution {
   const {
     id,
     created_at,

@@ -56,17 +56,17 @@ export const {
       9: "80px",
     },
     fontSizes: {
-      "2xs": "9.26px",
-      xs: "11.11px",
-      sm: "13.33px",
+      "2xs": "10px",
+      xs: "12px",
+      sm: "14px",
       md: "16px",
-      lg: "19.2px",
-      xl: "23.04px",
-      "2xl": " 27.65px",
-      "3xl": " 33.2px",
-      "4xl": " 39.81px",
-      "5xl": " 47.78px",
-      "6xl": " 118.88px",
+      lg: "20px",
+      xl: "24px",
+      "2xl": "32px",
+      "3xl": "36px",
+      "4xl": "40px",
+      "5xl": "48px",
+      "6xl": "118.88px",
     },
     radii: {
       1: "4px",
@@ -310,10 +310,44 @@ export const PersianGreenTheme = createTheme("persian-green-theme", {
     accentRGB: "1, 171 ,157",
   },
 });
+
+// new Accents
+export const JellyBeanTheme = createTheme("jelly-bean-theme", {
+  colors: {
+    accent: "rgba(226, 101, 76, 1)",
+    accentRGB: "226, 101, 76",
+  },
+});
+
+export const TigerEyeTheme = createTheme("tiger-eye-theme", {
+  colors: {
+    accent: "rgba(222, 156, 55, 1)",
+    accentRGB: "222, 156, 55",
+  },
+});
+
+export const JonquilTheme = createTheme("jonquil-theme", {
+  colors: {
+    accent: "rgba(249, 204, 21, 1)",
+    accentRGB: "249, 204, 21",
+  },
+});
+export const LimeGreenTheme = createTheme("lime-green-theme", {
+  colors: {
+    accent: "rgba(51, 204, 76, 1)",
+    accentRGB: "51, 204, 76",
+  },
+});
 export const PacificBlueTheme = createTheme("pacific-blue-theme", {
   colors: {
     accent: "rgb(27 158 206)",
     accentRGB: "27, 158, 206",
+  },
+});
+export const SlateBlue = createTheme("slate-blue-theme", {
+  colors: {
+    accent: "rgba(111, 120, 240, 1)",
+    accentRGB: "111, 120, 240",
   },
 });
 export const CeruleanBlueTheme = createTheme("cerulean-blue-theme", {
@@ -326,5 +360,11 @@ export const IrisTheme = createTheme("iris-theme", {
   colors: {
     accent: "rgb(109 51 204)",
     accentRGB: "109, 51, 204",
+  },
+});
+export const SteelPinkTheme = createTheme("steel-pink-theme", {
+  colors: {
+    accent: "rgba(204, 51, 198, 1)",
+    accentRGB: "204, 51, 198",
   },
 });

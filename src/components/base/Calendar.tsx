@@ -4,6 +4,7 @@ import {
   getWeeksInMonth,
 } from "@internationalized/date";
 import {
+  AriaCalendarGridProps,
   useCalendar,
   useCalendarCell,
   useCalendarGrid,
@@ -19,17 +20,9 @@ import { styled } from "stitches.config";
 import Text from "./Text";
 import Flex from "./Flex";
 import Box from "./Box";
+import { ChevronLeftIcon, ChevronRightIcon } from "@components/icons";
+import IconButton from "./IconButton";
 
-const Button = styled("button", {
-  include: "buttonReset",
-  br: "$4",
-  bg: "$text",
-  color: "$bg",
-  size: "$6",
-  ai: "center",
-  jc: "center",
-  ta: "center",
-});
 function Calendar(
   props: Omit<CalendarStateOptions, "locale" | "createCalendar">
 ) {
@@ -53,27 +46,46 @@ function Calendar(
   return (
     <Box {...calendarProps} css={{ minWidth: 200 }}>
       <Flex jc="between" className="header">
-        <Button onClick={(e) => prevButtonProps.onPress?.(e as any)}>
-          &lt;
-        </Button>
-        <Flex fd="column" ai="center">
-          <Text fs="sm">
-            {yearFormatter.format(state.focusedDate.toDate(state.timeZone))}
-          </Text>
-          <Text fs="lg">
+        <IconButton
+          bg="text"
+          size="xs"
+          onClick={(e) => prevButtonProps.onPress?.(e as any)}
+        >
+          <ChevronLeftIcon
+            css={{
+              width: "80%",
+            }}
+          />
+        </IconButton>
+        <Flex ai="center" gap="1">
+          <Text fs="md">
             {monthFormatter.format(state.focusedDate.toDate(state.timeZone))}
           </Text>
+          <Text fs="md">
+            {yearFormatter.format(state.focusedDate.toDate(state.timeZone))}
+          </Text>
         </Flex>
-        <Button onClick={(e) => nextButtonProps.onPress?.(e as any)}>
-          &gt;
-        </Button>
+        <IconButton
+          bg="text"
+          size="xs"
+          onClick={(e) => nextButtonProps.onPress?.(e as any)}
+        >
+          <ChevronRightIcon
+            css={{
+              width: "80%",
+            }}
+          />
+        </IconButton>
       </Flex>
       <CalendarGrid state={state} />
     </Box>
   );
 }
 
-function CalendarGrid({ state, ...props }: { state: CalendarState }) {
+function CalendarGrid({
+  state,
+  ...props
+}: { state: CalendarState } & AriaCalendarGridProps) {
   const { locale } = useLocale();
   const { gridProps, headerProps, weekDays } = useCalendarGrid(props, state);
 
@@ -81,11 +93,11 @@ function CalendarGrid({ state, ...props }: { state: CalendarState }) {
   const weeksInMonth = getWeeksInMonth(state.visibleRange.start, locale);
 
   return (
-    <table {...gridProps}>
+    <Table {...gridProps}>
       <thead {...headerProps}>
         <tr>
           {weekDays.map((day, index) => (
-            <th key={index}>{day}</th>
+            <Th key={index}>{day}</Th>
           ))}
         </tr>
       </thead>
@@ -104,7 +116,7 @@ function CalendarGrid({ state, ...props }: { state: CalendarState }) {
           </tr>
         ))}
       </tbody>
-    </table>
+    </Table>
   );
 }
 
@@ -136,14 +148,16 @@ function CalendarCell({
           ai: "center",
           jc: "center",
           size: 30,
+          fontSize: "$sm",
           opacity: isOutsideVisibleRange ? 0.6 : 1,
           bg: isSelected
             ? "$accent"
             : isOutsideVisibleRange
               ? "transparent"
               : "$text",
-          color: isSelected ? "$text" : "$bg",
+          color: isSelected || isOutsideVisibleRange ? "$text" : "$bg",
           br: "$1",
+          "&:hover": {},
         }}
         {...buttonProps}
         ref={ref}
@@ -157,4 +171,12 @@ function CalendarCell({
   );
 }
 Calendar.displayName = "Calendar";
+
+const Th = styled("th", {
+  fontSize: "$sm",
+});
+const Table = styled("table", {
+  borderCollapse: "separate",
+  borderSpacing: "4px 4px",
+});
 export default Calendar;

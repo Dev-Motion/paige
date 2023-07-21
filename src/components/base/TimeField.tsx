@@ -13,6 +13,7 @@ import {
 import { useLocale } from "@react-aria/i18n";
 import Box from "./Box";
 import Flex from "./Flex";
+import Text from "./Text";
 
 export default function TimeField(
   props: Omit<TimeFieldStateOptions<TimeValue>, "locale">
@@ -28,7 +29,9 @@ export default function TimeField(
 
   return (
     <div className="wrapper">
-      <span {...labelProps}>{props.label}</span>
+      <Text as="span" fs="sm" {...labelProps}>
+        {props.label}
+      </Text>
       <Flex
         {...fieldProps}
         ref={ref}
@@ -38,7 +41,8 @@ export default function TimeField(
           border: "1px solid $$borderColor",
           transiton: "all 500ms ease-in-out",
           br: "$3",
-          pd: "$2",
+          pd: "$1",
+          fontSize: "$sm",
           "&:is(:hover, :focus-within)": {
             $$borderColor: "rgba($colors$textRGB,0.4)",
           },

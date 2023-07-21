@@ -8,7 +8,7 @@ import {
   IconButton,
   HoverCard,
 } from "@components/base";
-import { DailyMotivation, TodoPane, ImageInfo } from "@components/inc/widgets";
+import { Quotes, TodoPane, ImageInfo } from "@components/inc/widgets";
 import { Info, TodoIcon } from "@components/icons";
 import useStore from "@store";
 
@@ -61,7 +61,7 @@ const BottomBar = () => {
           <ImageInfo />
         </HoverCard>
       </Box>
-      <DailyMotivation />
+      <Quotes />
       <Flex ai="center" jc="end" gap={2} className="fixed">
         {showTodo && (
           <Popover>

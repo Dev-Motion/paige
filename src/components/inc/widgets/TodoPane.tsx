@@ -7,22 +7,29 @@ import {
   Popover,
   Text,
 } from "@components/base";
-import { AddIcon, AlarmIcon, More, StarIcon } from "@components/icons";
+import { AddIcon, AlarmIcon, MoreIcon, StarIcon } from "@components/icons";
 import useStore from "@store";
 import * as React from "react";
 import DatePicker from "../DatePicker";
 import TodoItem, { Input } from "../TodoItem";
 import { shallow } from "zustand/shallow";
-
+import "../../../styles/scrollbar.css";
 function TodoPane() {
   const [todos, toggleAll, clearCompleted] = useStore(
     (state) => [state.todos, state.toggleAll, state.clearCompleted],
     shallow
   );
-  const orderedTodos = todos.sort((a) => (a.important ? -1 : 1));
+  const completedTodos = todos.filter((todo) => todo.completed);
+  const activeTodos = todos.filter((todo) => !todo.completed);
+  const orderedActiveTodos = activeTodos.sort((a) => {
+    if (a.important) return -1;
+    return 0;
+  });
+
   return (
-    <Box css={{ width: 330, spacey: "$1" }}>
+    <Flex fd="column" gap="1" css={{ width: 330, maxHeight: "80vh" }}>
       <Card
+        nested
         as={Flex}
         jc="between"
         ai="center"
@@ -32,8 +39,8 @@ function TodoPane() {
         <Dropdown>
           <Dropdown.Button asChild>
             <IconButton bg="transparent" size="xs">
-              <More />
-              <Text css={{ include: "screenReaderOnly" }}>more options</Text>
+              <MoreIcon />
+              <Text srOnly>more options</Text>
             </IconButton>
           </Dropdown.Button>
           <Dropdown.Menu side="top">
@@ -46,13 +53,20 @@ function TodoPane() {
           </Dropdown.Menu>
         </Dropdown>
       </Card>
-      <Flex fd="column" gap="1">
-        {orderedTodos.map((todo, i) => (
-          <TodoItem key={todo.id.toString()} todo={todo} />
-        ))}
-        <AddTodo />
-      </Flex>
-    </Box>
+      <Box
+        css={{
+          flex: 1,
+        }}
+        className="custom-scroll-bar"
+      >
+        <Flex fd="column" gap="1">
+          {[...orderedActiveTodos, ...completedTodos].map((todo) => (
+            <TodoItem key={todo.id.toString()} todo={todo} />
+          ))}
+        </Flex>
+      </Box>
+      <AddTodo />
+    </Flex>
   );
 }
 
@@ -117,7 +131,7 @@ function AddTodo() {
     }
   }, [showInput]);
   return (
-    <Card css={{ py: "$2", px: "$2" }}>
+    <Card nested css={showInput ? { py: "$2", px: "$2" } : {}}>
       {showInput ? (
         <Flex>
           <Input
@@ -167,6 +181,8 @@ function AddTodo() {
             include: "buttonReset",
             color: "$text",
             width: "100%",
+            py: "$2",
+            px: "$2",
           }}
           ai="center"
           gap="2"

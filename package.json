@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@h6s/calendar": "1.1.0-alpha.2",
+    "@headlessui/react": "^1.7.15",
     "@internationalized/date": "^3.2.0",
     "@radix-ui/react-accessible-icon": "^1.0.2",
     "@radix-ui/react-checkbox": "^1.0.3",
@@ -31,6 +32,7 @@
     "@react-aria/datepicker": "^3.4.0",
     "@react-aria/i18n": "^3.7.1",
     "@stitches/react": "^1.2.8",
+    "@tanstack/react-query": "^4.29.25",
     "blurhash": "^2.0.5",
     "cmdk": "^0.2.0",
     "date-fns": "^2.30.0",

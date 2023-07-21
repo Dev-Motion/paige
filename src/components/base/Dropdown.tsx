@@ -40,7 +40,9 @@ function DropdownMenu({
   return (
     <DropdownMenuPrimitive.Portal>
       <AnimatedDropdownContent sideOffset={5} collisionPadding={10} {...others}>
-        <Card css={{ pd: "$1", ...css }}>{children}</Card>
+        <Card nested css={{ pd: "$1", ...css }}>
+          {children}
+        </Card>
         <StyledArrow />
       </AnimatedDropdownContent>
     </DropdownMenuPrimitive.Portal>
@@ -76,7 +78,7 @@ const DropdownMenuItem = styled(DropdownMenuPrimitive.DropdownMenuItem, {
   width: "100%",
   textAlign: "left",
   "&:hover": {
-    bg: "rgba($textRGB, 0.1)",
+    bg: "rgba($textRGB, 0.2)",
   },
 });
 

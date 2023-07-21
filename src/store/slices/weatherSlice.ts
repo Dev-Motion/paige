@@ -2,7 +2,7 @@ import { geocodeToCityName } from "@utils";
 import type { StateCreator } from "..";
 import type { OpenmeteoResponse, Weather, IpapiResponse } from "@types";
 
-type Unit = "celsius" | "fahrenheit" | "kelvin";
+type Unit = "celsius" | "fahrenheit";
 export interface WeatherSlice {
   location?: {
     longitude: number;
@@ -12,6 +12,11 @@ export interface WeatherSlice {
   getCurrentLocation: () => Promise<"success" | "failure">;
   unit: Unit;
   setUnit: (unit: Unit) => void;
+  setLocation: (location: {
+    longitude: number;
+    latitude: number;
+    cityName?: string;
+  }) => void;
   weather?: Weather;
   getWeather: () => void;
   getCityName: () => void;
@@ -100,6 +105,10 @@ const createWeatherSlice: StateCreator<WeatherSlice> = (set, get) => ({
         set({ location: { ...location, cityName } });
       }
     );
+  },
+  setLocation(location) {
+    console.log(location);
+    set({ location });
   },
 });
 

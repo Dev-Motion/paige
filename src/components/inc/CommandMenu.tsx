@@ -1,5 +1,5 @@
 import { Box, Flex, IconButton, Popover, Text } from "@components/base";
-import { HistoryIcon, More, SearchIcon } from "@components/icons";
+import { HistoryIcon, MoreIcon, SearchIcon } from "@components/icons";
 import { SearchProviders, searchProviders } from "@constants";
 import useStore from "@store";
 import { faviconURL } from "@utils";
@@ -93,10 +93,8 @@ const CommandMenu = () => {
         <Popover>
           <Popover.Button asChild>
             <IconButton size="sm" bg="transparent">
-              <Text css={{ include: "screenReaderOnly" }}>
-                show search providers
-              </Text>
-              <More css={{ color: "White" }} />
+              <Text srOnly>show search providers</Text>
+              <MoreIcon css={{ color: "White" }} />
             </IconButton>
           </Popover.Button>
           <Popover.Content>
@@ -268,7 +266,7 @@ export function ProviderItem({ provider }: { provider: SearchProviders }) {
           css={{ objectFit: "contain" }}
           src={image}
         />
-        <Text fs="sm" as="span">
+        <Text fs="sm" fw="semibold" as="span">
           {provider}
         </Text>
       </Flex>
@@ -277,7 +275,7 @@ export function ProviderItem({ provider }: { provider: SearchProviders }) {
           css={{
             size: 10,
             br: "$round",
-            bg: "#4CBF3F",
+            bg: "$accent",
           }}
         />
       )}
@@ -316,7 +314,6 @@ const StyledCommand = styled(Command, {
   overflow: "hidden",
   boxShadow: "0 0 0 1px $$borderColor",
   bg: "rgba(30, 30, 30, 0.5)",
-  backdropFilter: "blur(50px)",
   "& [cmdk-chroma-header]": {
     px: "$4",
     py: "$2",

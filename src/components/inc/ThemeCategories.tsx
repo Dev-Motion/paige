@@ -23,8 +23,10 @@ const ThemeCategories = () => {
   }
 
   return (
-    <Box css={{ pb: "$2", spacey: "$1" }}>
-      <Text>Theme category</Text>
+    <Box css={{ spacey: "$1" }}>
+      <Text fs="sm" fw="semibold">
+        Theme category
+      </Text>
       <Flex
         wrap="wrap"
         gap="1"
@@ -32,17 +34,27 @@ const ThemeCategories = () => {
           px: "$1",
         }}
       >
-        {categories.map((category) => (
-          <Button
-            key={category}
-            size="xs"
-            br="pill"
-            outline={!keywords.includes(category)}
-            onClick={() => onClick(category)}
-          >
-            {category}
-          </Button>
-        ))}
+        {categories.map((category) => {
+          const active = keywords.includes(category);
+          return (
+            <Button
+              key={category}
+              size="xs"
+              br="pill"
+              {...(active
+                ? {
+                  color: "accent",
+                  css: { color: "$text" },
+                }
+                : {
+                  kind: "outline",
+                })}
+              onClick={() => onClick(category)}
+            >
+              {category}
+            </Button>
+          );
+        })}
       </Flex>
     </Box>
   );

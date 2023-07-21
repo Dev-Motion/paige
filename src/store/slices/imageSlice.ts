@@ -1,7 +1,7 @@
 import { getPicture } from "@utils";
 import { createApi } from "unsplash-js";
 import type { StateCreator } from "..";
-import { Picture, PictureWithDate, RandomPicture } from "src/types";
+import { Picture, RandomPicture } from "src/types";
 import { defaultNextPhoto, defaultTodayPhoto } from "@constants";
 
 export interface ImageSlice {
@@ -9,13 +9,12 @@ export interface ImageSlice {
   setKeywords: (keywords: string[]) => void;
   temporaryBackground: { bg: string; blur_hash: string };
   setTemporaryBackground: (tempBg: ImageSlice["temporaryBackground"]) => void;
-  todayPhoto: PictureWithDate;
-  setTodayPhoto: (photo: PictureWithDate) => void;
+  todayPhoto: Picture;
+  setTodayPhoto: (photo: Picture) => void;
   nextPhoto: Picture;
   cloudPhotos: Picture[];
   // create react query like api for getCloudPhotos
   getCloudPhotos: (fetchmore?: boolean) => void;
-  lastFetchCloudPhotos?: Date;
   favoritePhotos: Picture[];
   setFavoritePhotos: (photos: Picture[]) => void;
   // update meaning your are adding a new image(refresh is the opposite)
@@ -29,9 +28,10 @@ const unsplash = createApi({
 
 const createImageSlice: StateCreator<ImageSlice> = (set, get) => ({
   keywords: ["Wallpapers", "Nature"],
-  todayPhoto: { ...defaultTodayPhoto, for: new Date() },
+  todayPhoto: defaultTodayPhoto,
   setTodayPhoto: (photo) => {
     set({ todayPhoto: photo });
+    get().updateLastFetched("todayPhoto");
   },
   temporaryBackground: {
     bg: "",
@@ -57,9 +57,9 @@ const createImageSlice: StateCreator<ImageSlice> = (set, get) => ({
       fetchmore
         ? set((state) => ({
           cloudPhotos: state.cloudPhotos.concat(pictures),
-          lastFetchCloudPhotos: new Date(),
         }))
-        : set({ cloudPhotos: pictures, lastFetchCloudPhotos: new Date() });
+        : set({ cloudPhotos: pictures });
+      get().updateLastFetched("cloudPhotos");
     } catch (err) {
       const mute = err;
     }
@@ -85,18 +85,18 @@ const createImageSlice: StateCreator<ImageSlice> = (set, get) => ({
 
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const response = (await result.response!) as RandomPicture[];
-      const today = new Date();
       if (update) {
         set((state) => ({
-          todayPhoto: { ...state.nextPhoto, for: today },
+          todayPhoto: { ...state.nextPhoto },
           nextPhoto: getPicture(response[0]),
         }));
       } else {
         set(() => ({
-          todayPhoto: { ...getPicture(response[0]), for: today },
+          todayPhoto: getPicture(response[0]),
           nextPhoto: getPicture(response[1]),
         }));
       }
+      get().updateLastFetched("todayPhoto");
     } catch (err) {
       const mute = err;
     }

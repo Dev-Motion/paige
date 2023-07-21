@@ -131,6 +131,10 @@ export default defineConfig({
         find: "@hooks",
         replacement: pathResolve("src/hooks"),
       },
+      {
+        find: "@api",
+        replacement: pathResolve("src/api"),
+      },
     ],
   },
   build: {

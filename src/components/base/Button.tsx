@@ -2,6 +2,7 @@ import { styled } from "stitches.config";
 
 export const Button = styled("button", {
   include: "buttonReset",
+  ta: "center",
   "&:active": {
     transform: "scale(0.95)",
   },
@@ -40,11 +41,10 @@ export const Button = styled("button", {
         },
       },
     },
-    outline: {
-      true: {
-        // backgroundColor: "$transparent",
-        // color: "$text",
-      },
+    kind: {
+      solid: {},
+      ghost: {},
+      outline: {},
     },
     br: {
       sm: {
@@ -66,7 +66,7 @@ export const Button = styled("button", {
   compoundVariants: [
     {
       color: "accent",
-      outline: "true",
+      kind: "outline",
       css: {
         backgroundColor: "transparent",
         color: "$accent",
@@ -79,7 +79,7 @@ export const Button = styled("button", {
     },
     {
       color: "bland",
-      outline: "true",
+      kind: "outline",
       css: {
         backgroundColor: "transparent",
         color: "$text",
@@ -87,6 +87,29 @@ export const Button = styled("button", {
         "&:hover": {
           backgroundColor: "$text",
           color: "$bg",
+        },
+      },
+    },
+    {
+      color: "accent",
+      kind: "ghost",
+      css: {
+        backgroundColor: "transparent",
+        color: "$text",
+        "&:hover": {
+          backgroundColor: "rgba($accentRGB, 0.5)",
+          color: "$text",
+        },
+      },
+    },
+    {
+      color: "bland",
+      kind: "ghost",
+      css: {
+        backgroundColor: "transparent",
+        color: "$text",
+        "&:hover": {
+          backgroundColor: "rgba($bgRGB, 0.5)",
         },
       },
     },

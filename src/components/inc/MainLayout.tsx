@@ -12,7 +12,7 @@ import {
 import { TopBar, BottomBar } from "@components/inc";
 import Portal from "@utils/Portals";
 import useStore from "@store";
-import { spawnNotification } from "@utils";
+import { spawnTodoNotification } from "@utils";
 
 const SideBar = lazy(() => import("./SideBar"));
 
@@ -29,12 +29,12 @@ const MainLayout = () => {
       }
       const time = new Date(r.date);
       if (time.getTime() < Date.now()) {
-        spawnNotification(r.text, "Todo Reminder");
+        spawnTodoNotification(r.id, r.text, "Todo Reminder");
         toggleReminded(r.id);
         return;
       }
       const timeout = setTimeout(() => {
-        spawnNotification(r.text, "Todo Reminder");
+        spawnTodoNotification(r.id, r.text, "Todo Reminder");
         toggleReminded(r.id);
       }, time.getTime() - Date.now());
       timeouts.push(timeout);
@@ -64,10 +64,6 @@ const MainLayout = () => {
           flex: 1,
           overflow: "hidden",
           gridTemplateRows: "2fr 1fr 2fr",
-          // gridTemplateRows: "auto auto 1fr",
-          // "@lg": {
-          //   gridTemplateRows: "1fr auto 1fr",
-          // },
         }}
       >
         <Flex ai="center" jc="center">
@@ -85,9 +81,9 @@ const MainLayout = () => {
               flex: 1,
             },
           }}
-          gap={6}
+          gap={{ "@initial": 3, "@lg": 6 }}
         >
-          {/* <Mantra /> */}
+          <Mantra />
           <Reminder />
         </Flex>
       </Grid>

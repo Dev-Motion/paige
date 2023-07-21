@@ -12,6 +12,7 @@ import createTimeSlice, { TimeSlice } from "./slices/TimeSlice";
 import createPinnedSitesSlice, {
   PinnedSitesSlice,
 } from "./slices/PinnedSitesSlice";
+import createLastFetchedSlice, { LastFetchedSlice } from "./slices/lastFetched";
 import { preloadImage, handleImages, handleGoals } from "@utils";
 import { imageQuality, isRunningInExtension } from "@constants";
 
@@ -30,6 +31,7 @@ export type Slices = LayoutSlice &
   WeatherSlice &
   TimeSlice &
   PinnedSitesSlice &
+  LastFetchedSlice &
   GeneralSlice;
 export type StateCreator<T> = ZStateCreator<Slices, [], [], T>;
 
@@ -50,6 +52,7 @@ const useStore = create<Slices>()(
         ...createWeatherSlice(...a),
         ...createTimeSlice(...a),
         ...createPinnedSitesSlice(...a),
+        ...createLastFetchedSlice(...a),
       })),
       {
         name: "store",
@@ -91,13 +94,11 @@ handleImages();
 handleGoals();
 if (api.cloudPhotos.length === 0) {
   api.getCloudPhotos();
-} else if (api.lastFetchCloudPhotos !== undefined) {
-  if (
-    new Date().getTime() - new Date(api.lastFetchCloudPhotos || "").getTime() >
-    1000 * 60 * 60 * 24
-  ) {
-    api.getCloudPhotos();
-  }
+} else if (
+  new Date().getTime() - new Date(api.lastFetched.cloudPhotos || "").getTime() >
+  1000 * 60 * 60 * 24
+) {
+  api.getCloudPhotos();
 }
 
 api.setTheme();
@@ -111,4 +112,19 @@ if (isRunningInExtension && api.pinnedSites.length === 0) {
 }
 if (Notification.permission === "default") {
   Notification.requestPermission().then((res) => console.log(res));
+}
+
+if (isRunningInExtension) {
+  chrome.notifications.onButtonClicked.addListener((notificationId, i) => {
+    console.log("hi");
+    const [pre, id] = notificationId.split("-");
+    if (pre === "todo") {
+      if (i === 1) {
+        api.toggleTodo(parseInt(id));
+      }
+      if (i === 0) {
+        api.snoozeTodo(parseInt(id));
+      }
+    }
+  });
 }

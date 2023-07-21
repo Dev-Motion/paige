@@ -6,12 +6,13 @@ import {
   IconButton,
   Popover,
   Text,
+  Box,
 } from "@components/base";
 import {
   AlarmIcon,
   DeleteIcon,
   EditIcon,
-  More,
+  MoreIcon,
   StarIcon,
 } from "@components/icons";
 import useStore from "@store";
@@ -60,7 +61,7 @@ function TodoItem({ todo }: { todo: Todo }) {
       dateTime: todo.reminder ? new Date(todo.date) : undefined,
     }
   );
-
+  const [show, setShow] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   const toggleEditing = () => {
@@ -86,9 +87,11 @@ function TodoItem({ todo }: { todo: Todo }) {
   }, [isEditing]);
   return (
     <Card
+      nested={true}
       as={motion.div}
       layoutId={todo.id.toString()}
       // key={todo.id}
+      data-option-open={show}
       css={{
         display: "flex",
         gap: "$2",
@@ -117,13 +120,10 @@ function TodoItem({ todo }: { todo: Todo }) {
             onCheckedChange={() => toggleTodo(todo.id)}
           />
           <Flex fd="column" gap="1" css={{ flex: 1 }}>
-            <Text
-              fs="sm"
-              css={{
-                textDecoration: todo.completed ? "line-through" : "none",
-              }}
-            >
-              {todo.text}
+            <Text fs="sm">
+              <AnimatedText lineThrough={todo.completed}>
+                {todo.text}
+              </AnimatedText>
             </Text>
             {todo.reminder && (
               <Flex
@@ -146,12 +146,18 @@ function TodoItem({ todo }: { todo: Todo }) {
             ai="center"
             className="options"
             css={{
+              pd: "$1",
               position: "absolute",
               overflow: "hidden",
               top: "min(50%,23px)",
               right: 0,
               transform: "translateY(-50%) translateX(50%)",
               transition: "all .3s ease-in-out",
+              br: "$pill",
+              bg: "radial-gradient(circle, rgba($bgRGB,1) 0%, rgba($bgRGB,1) 0%, rgba($bgRGB,0.8) 30%, rgba($bgRGB,0.7) 50%, rgba($bgRGB,0.5) 60%, rgba($bgRGB,0) 100%)",
+              "&:focus-within": {
+                transform: "translateY(-50%) translateX(0)",
+              },
             }}
           >
             <IconButton
@@ -167,13 +173,11 @@ function TodoItem({ todo }: { todo: Todo }) {
                 }}
               />
             </IconButton>
-            <Dropdown key={todo.id}>
+            <Dropdown open={show} onOpenChange={setShow} key={todo.id}>
               <Dropdown.Button asChild>
                 <IconButton size="sm" bg="transparent" css={{}}>
-                  <More css={{ size: "$3", color: "$text" }} />
-                  <Text css={{ include: "screenReaderOnly" }}>
-                    more options
-                  </Text>
+                  <MoreIcon css={{ size: "$3", color: "$text" }} />
+                  <Text srOnly>more options</Text>
                 </IconButton>
               </Dropdown.Button>
               <Dropdown.Menu>
@@ -271,6 +275,24 @@ export const Input = styled("input", {
   color: "$text",
   "&:focus": {
     outline: "none",
+  },
+});
+
+const AnimatedText = styled("span", {
+  textDecoration: "none",
+  backgroundImage: "linear-gradient($text, $text)",
+  backgroundRepeat: "no-repeat",
+  backgroundPosition: "center left",
+  backgroundSize: "0% 1px",
+  transition: "background-size 500ms ease-in-out",
+  variants: {
+    lineThrough: {
+      true: {
+        backgroundSize: "100% 1px",
+        textDecoration: "line-through",
+        textDecorationColor: "transparent",
+      },
+    },
   },
 });
 export default TodoItem;

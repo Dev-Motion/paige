@@ -41,7 +41,7 @@ const TopBar = () => {
             path: { stroke: "$text !important" },
           }}
         />
-        <Text css={{ include: "screenReaderOnly" }}>Open side bar</Text>
+        <Text srOnly>Open side bar</Text>
       </IconButton>
       <WeatherWidget />
     </Flex>

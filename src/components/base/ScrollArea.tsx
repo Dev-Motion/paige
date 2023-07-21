@@ -49,35 +49,35 @@ const ScrollAreaCorner = styled(RadixScrollArea.Corner, {
   background: "black",
 });
 const ScrollAreaRoot = styled(RadixScrollArea.Root, {});
-const ScrollArea = ({
-  children,
-  css,
-  orientation = "vertical",
-  asChild,
-}: {
+interface ScrollProps {
   children: React.ReactNode;
   css?: CSS;
   orientation?: "vertical" | "horizontal" | "both";
   asChild?: boolean;
-}) => {
-  const vertical = ["vertical", "both"].includes(orientation);
-  const horizontal = ["horizontal", "both"].includes(orientation);
-  return (
-    <ScrollAreaRoot css={css}>
-      <ScrollAreaViewport asChild={asChild}>{children}</ScrollAreaViewport>
-      {vertical ? (
-        <ScrollAreaScrollbar orientation="vertical">
-          <ScrollAreaThumb />
-        </ScrollAreaScrollbar>
-      ) : null}
-      {horizontal ? (
-        <ScrollAreaScrollbar orientation="horizontal">
-          <ScrollAreaThumb />
-        </ScrollAreaScrollbar>
-      ) : null}
-      <ScrollAreaCorner />
-    </ScrollAreaRoot>
-  );
-};
-
+}
+const ScrollArea = React.forwardRef<HTMLDivElement, ScrollProps>(
+  function ScrollArea(
+    { children, css, orientation = "vertical", asChild },
+    forwardedRef
+  ) {
+    const vertical = ["vertical", "both"].includes(orientation);
+    const horizontal = ["horizontal", "both"].includes(orientation);
+    return (
+      <ScrollAreaRoot ref={forwardedRef} css={css}>
+        <ScrollAreaViewport asChild={asChild}>{children}</ScrollAreaViewport>
+        {vertical ? (
+          <ScrollAreaScrollbar orientation="vertical">
+            <ScrollAreaThumb />
+          </ScrollAreaScrollbar>
+        ) : null}
+        {horizontal ? (
+          <ScrollAreaScrollbar orientation="horizontal">
+            <ScrollAreaThumb />
+          </ScrollAreaScrollbar>
+        ) : null}
+        <ScrollAreaCorner />
+      </ScrollAreaRoot>
+    );
+  }
+);
 export default ScrollArea;

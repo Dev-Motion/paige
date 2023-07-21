@@ -1,4 +1,4 @@
-export { default as DailyMotivation } from "./DailyMotivation";
+export { default as Quotes } from "./Quotes";
 export { default as Weather } from "./Weather";
 export { default as Mantra } from "./Mantra";
 export { default as Reminder } from "./Reminder";

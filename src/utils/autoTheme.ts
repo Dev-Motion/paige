@@ -1,4 +1,4 @@
-import { availableAccents, baseTheme } from "@store/slices/themeSlice";
+import { availableAccents, baseTheme } from "@constants/themes";
 import { colorPerception } from "./colorDistance";
 export function autoGetAccent(currentColor: string) {
   const distances = availableAccents.map((theme) => {

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Card, Box, Calendar, TimeField } from "@components/base";
 import { getLocalTimeZone, CalendarDateTime } from "@internationalized/date";
+import { Button } from "@components/base/Button";
 function DatePicker({
   date,
   onChange,
@@ -21,7 +22,7 @@ function DatePicker({
   );
 
   return (
-    <Card css={{ pd: "$1", spacey: "$2" }}>
+    <Card css={{ pd: "$2", spacey: "$2" }} nested>
       <Calendar
         value={value}
         onChange={(t) => setValue((v) => v.set(t))}
@@ -35,23 +36,17 @@ function DatePicker({
           }
           setValue((v) => v.set(t));
         }}
-        label="time"
+        label="Time"
       />
-      <Box
-        as="button"
-        css={{
-          include: "buttonReset",
-          br: "$4",
-          bg: "$text",
-          color: "$bg",
-          pd: "$1 $2",
-        }}
+      <Button
+        size="xs"
         onClick={() => {
           onChange(value.toDate(getLocalTimeZone()));
         }}
+        color="accent"
       >
-        set
-      </Box>
+        Set
+      </Button>
     </Card>
   );
 }
