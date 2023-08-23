@@ -1,14 +1,23 @@
-import { Box, Flex, Grid, Skeleton, ScrollArea } from "@components/base";
+import {
+  Box,
+  Flex,
+  Grid,
+  Skeleton,
+  ScrollArea,
+  Button,
+} from "@components/base";
 import { galleryTabs, tempImageQuality } from "@constants";
 import * as Tabs from "@radix-ui/react-tabs";
 import useStore from "@store";
-import { Picture } from "@types";
+import { Picture, RandomPicture } from "@types";
 import { motion } from "framer-motion";
 import React, { useState } from "react";
 import { styled } from "stitches.config";
 import { shallow } from "zustand/shallow";
 import { GalleryImage } from "./GalleryImage";
 import { GalleryTabItems } from "@constants/galleryTabs";
+import { useQueryClient } from "@tanstack/react-query";
+import { useCloudPhotos, usePhotos } from "@api/hooks";
 
 const TabRoot = styled(Tabs.Root, {});
 const TabList = styled(Tabs.List, {
@@ -35,7 +44,6 @@ const TabUnderline = styled(motion.div, {
 
 const GalleryTabs = () => {
   const [activeTab, setActiveTab] = useState<GalleryTabItems>("cloud");
-
   return (
     <TabRoot
       value={activeTab}
@@ -69,104 +77,100 @@ const GalleryTabs = () => {
 };
 
 const GalleryContent = ({ favoriteTab = false }: { favoriteTab?: boolean }) => {
-  const [
-    cloudPhotos,
-    setTempBg,
-    setTodayPhoto,
-    favoritePhotos,
-    setFavoritePhotos,
-    getCloudPhotos,
-    toast,
-  ] = useStore(
-    (state) => [
-      state.cloudPhotos,
-      state.setTemporaryBackground,
-      state.setTodayPhoto,
-      state.favoritePhotos,
-      state.setFavoritePhotos,
-      state.getCloudPhotos,
-      state.addToast,
-    ],
-    shallow
-  );
+  const [cursor, setTempBg, favoritePhotos, setFavoritePhotos, toast] =
+    useStore(
+      (state) => [
+        state.cursor,
+        state.setTemporaryBackground,
+        state.favoritePhotos,
+        state.setFavoritePhotos,
+        state.addToast,
+      ],
+      shallow
+    );
+  const queryClient = useQueryClient();
+  const {
+    data: cloudPhotos,
+    isLoading,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useCloudPhotos();
   const isFavorite = (photo: Picture) => {
     return favoritePhotos.some((p) => p.id === photo.id);
   };
-  const empty = cloudPhotos.length === 0;
-  const photos = favoriteTab ? favoritePhotos : cloudPhotos;
-  const fetchedmore = cloudPhotos.length === 10;
+  if (isLoading) {
+    return (
+      <Grid columns={{ "@initial": 1, "@lg": 2 }} gap="2" css={{ pt: "$2" }}>
+        {Array.from({ length: 6 }).map((_, i) => {
+          return <Skeleton width="100%" aspectRatio={"16/9"} br="$3" key={i} />;
+        })}
+      </Grid>
+    );
+  }
+  const photos = favoriteTab ? favoritePhotos : cloudPhotos?.pages.flat() || [];
+  const fetchedmore = !hasNextPage;
   return (
     <Box>
-      {empty ? (
-        <Grid columns={{ "@initial": 1, "@lg": 2 }} gap="2" css={{ pt: "$2" }}>
-          {Array.from({ length: 6 }).map((_, i) => {
+      <Grid columns={{ "@initial": 1, "@lg": 2 }} gap="2" css={{ pt: "$2" }}>
+        {photos.map((photo, i) => {
+          const favorite = isFavorite(photo);
+          const onMouseEnter = () => {
+            setTempBg({
+              bg: photo.urls.raw + tempImageQuality,
+              blur_hash: photo.blur_hash || "",
+            });
+          };
+          const onMouseLeave = () => {
+            setTempBg({ bg: "", blur_hash: "" });
+          };
+          const toggleFavorite = () => {
+            if (!favorite) {
+              setFavoritePhotos([...favoritePhotos, photo]);
+            } else {
+              setFavoritePhotos(
+                favoritePhotos.filter((p) => p.id !== photo.id)
+              );
+            }
+          };
+          const setPhoto = () => {
+            const data = queryClient.getQueryData(
+              usePhotos.getKey()
+            ) as RandomPicture[];
+            const newData = data.slice();
+            newData.splice(cursor, 1, photo);
+            queryClient.setQueryData(usePhotos.getKey(), newData);
+            toast({
+              message: "Photo set as today's background",
+            });
+          };
+          return (
+            <GalleryImage
+              key={i}
+              {...{
+                onMouseEnter,
+                onMouseLeave,
+                toggleFavorite,
+                setPhoto,
+                favorite,
+                photo,
+              }}
+            />
+          );
+        })}
+        {isFetchingNextPage &&
+          Array.from({ length: 4 }).map((_, i) => {
             return (
               <Skeleton width="100%" aspectRatio={"16/9"} br="$3" key={i} />
             );
           })}
-        </Grid>
-      ) : (
-        <Grid columns={{ "@initial": 1, "@lg": 2 }} gap="2" css={{ pt: "$2" }}>
-          {photos.map((photo, i) => {
-            const favorite = isFavorite(photo);
-            const onMouseEnter = () => {
-              setTempBg({
-                bg: photo.urls.raw + tempImageQuality,
-                blur_hash: photo.blur_hash || "",
-              });
-            };
-            const onMouseLeave = () => {
-              setTempBg({ bg: "", blur_hash: "" });
-            };
-            const toggleFavorite = () => {
-              if (!favorite) {
-                setFavoritePhotos([...favoritePhotos, photo]);
-              } else {
-                setFavoritePhotos(
-                  favoritePhotos.filter((p) => p.id !== photo.id)
-                );
-              }
-            };
-            const setPhoto = () => {
-              setTodayPhoto(photo);
-              toast({
-                message: "Photo set as today's background",
-              });
-            };
-            return (
-              <GalleryImage
-                key={i}
-                {...{
-                  onMouseEnter,
-                  onMouseLeave,
-                  toggleFavorite,
-                  setPhoto,
-                  favorite,
-                  photo,
-                }}
-              />
-            );
-          })}
-        </Grid>
-      )}
+      </Grid>
+
       {!favoriteTab && !fetchedmore && (
         <Flex jc="center" css={{ py: "$4" }}>
-          <Box
-            as="button"
-            css={{
-              padding: "4px 8px",
-              fontSize: "$xs",
-              br: "$2",
-              bg: "$text",
-              color: "$bg",
-              border: "none",
-            }}
-            onClick={() => {
-              getCloudPhotos(true);
-            }}
-          >
+          <Button size={"xs"} onClick={() => fetchNextPage()}>
             Load more
-          </Box>
+          </Button>
         </Flex>
       )}
     </Box>

@@ -1,16 +1,18 @@
+import { useCloudPhotos } from "@api/hooks";
 import { Box, Flex, Text } from "@components/base";
 import { Button } from "@components/base/Button";
 import useStore from "@store";
+import { useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import { styled } from "stitches.config";
 import { shallow } from "zustand/shallow";
 
 const ThemeCategories = () => {
-  const [keywords, setKeywords, getCloudPhotos] = useStore(
-    (state) => [state.keywords, state.setKeywords, state.getCloudPhotos],
+  const [keywords, setKeywords] = useStore(
+    (state) => [state.keywords, state.setKeywords],
     shallow
   );
-
+  const queryClient = useQueryClient();
   function onClick(keyword: string) {
     if (keywords.includes(keyword)) {
       // remove keyword
@@ -19,7 +21,7 @@ const ThemeCategories = () => {
       // add keyword
       setKeywords([...keywords, keyword]);
     }
-    getCloudPhotos();
+    queryClient.invalidateQueries(useCloudPhotos.getKey());
   }
 
   return (

@@ -1,7 +1,14 @@
-import { createQuery } from "react-query-kit";
-import { GetQuoteResponse } from "../types";
+import { createQuery, createInfiniteQuery } from "react-query-kit";
 import { AxiosError } from "axios";
-import { getCityName, getCurrentLocation, getQuotes, getWeather } from "@api";
+import {
+  getCityName,
+  getCurrentLocation,
+  getQuotes,
+  getWeather,
+  getPhotos,
+  getCloudPhotos,
+} from "@api";
+import { defaultTodayPhoto } from "@constants";
 
 export const useQuotes = createQuery({
   primaryKey: "quote",
@@ -52,4 +59,29 @@ export const useWeather = createQuery<
     return getWeather(queryKey[1]);
   },
   staleTime: 1000 * 60 * 60 * 24, // 24 hours
+});
+
+export const usePhotos = createQuery({
+  primaryKey: "photos",
+  initialData: [defaultTodayPhoto],
+  initialDataUpdatedAt: Date.now() + 1000 * 60 * 30, // 30 minutes
+  queryFn: () => {
+    return getPhotos();
+  },
+  staleTime: 1000 * 60 * 60 * 24, // 24 hours
+});
+
+export const useCloudPhotos = createInfiniteQuery({
+  primaryKey: "cloud-photos",
+  queryFn: ({ pageParam = 0 }) => {
+    // if variable.fetchmore is true, append the result to the already existing photos
+    return getCloudPhotos({ fetchmore: pageParam > 0 });
+  },
+  staleTime: 1000 * 60 * 60 * 24, // 24 hours
+  getNextPageParam: (lastPage, pages) => {
+    if (lastPage.length === 4) {
+      return undefined;
+    }
+    return pages.length + 1;
+  },
 });

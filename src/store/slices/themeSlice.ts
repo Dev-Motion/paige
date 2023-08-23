@@ -1,3 +1,4 @@
+import { usePhotos } from "@api/hooks";
 import type { StateCreator } from "..";
 
 import {
@@ -7,6 +8,9 @@ import {
   baseTheme,
 } from "@constants/themes";
 import autoGetTheme, { autoGetAccent } from "@utils/autoTheme";
+import { queryClient } from "src/main";
+import { AxiosError } from "axios";
+import { RandomPicture } from "@types";
 
 export interface ThemeSlice {
   autoTheme: boolean;
@@ -40,7 +44,9 @@ const createThemeSlice: StateCreator<ThemeSlice> = (set, get) => ({
   theme: "dark",
   setTheme: (accent, base) => {
     set((state) => {
-      const todayImage = state.todayPhoto;
+      const todayImage = (
+        queryClient.getQueryData(usePhotos.getKey()) as RandomPicture[]
+      )[state.cursor];
 
       if (state.autoTheme) {
         if (accent || base) {

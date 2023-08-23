@@ -1,13 +1,11 @@
+import { isRunningInExtension } from "@constants";
 import { api } from "@store";
-import { cacheName, isRunningInExtension } from "@constants";
 import {
-  Picture,
-  RandomPicture,
-  PictureInfo,
-  PictureAttribution,
-  PictureWithDate,
   Condition,
-  NominatimResponse,
+  Picture,
+  PictureAttribution,
+  PictureInfo,
+  RandomPicture,
 } from "@types";
 export { default as animation } from "./animations";
 export { default as analyzeDate } from "./date";
@@ -50,34 +48,6 @@ export function faviconURL(u: string) {
   url.searchParams.set("pageUrl", u);
   url.searchParams.set("size", "32");
   return url.toString();
-}
-// Caching and Preloading Images
-export function preloadImage(image: string, priority?: boolean) {
-  const link = document.createElement("link");
-  link.rel = "preload";
-  link.href = image;
-  link.as = "image";
-  // set fetpriority
-  if (priority) {
-    link.setAttribute("fetchpriority", "high");
-  } else {
-    link.setAttribute("fetchpriority", "low");
-  }
-  document.head.appendChild(link);
-}
-
-export function cacheImages(images: string[]) {
-  caches.open(cacheName).then((cache) => {
-    images.forEach((image) => {
-      //check the image is already in the cache
-      cache.match(image).then((response) => {
-        if (!response) {
-          //if not, add it to the cache
-          cache.add(image);
-        }
-      });
-    });
-  });
 }
 
 export function requestNotificationPermission(action?: () => void) {
@@ -129,31 +99,6 @@ export function getTimeItem<T extends { for: Date }[]>(
   return item.find((item) => new Date(item.for).toDateString() === time);
 }
 
-export function handleImages() {
-  const todayPhoto = api.todayPhoto;
-  const nextPhoto = api.nextPhoto;
-  const lastFetched = api.lastFetched;
-  const today = new Date().toDateString();
-  const tomorrow = new Date(today);
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  const isOnline = navigator.onLine;
-  // if online and no images or today's image is available
-  // get new images
-  // if online and tomorrow's image is not available
-  // get tomorrow's image
-  // write the code
-  if (isOnline) {
-    if (!todayPhoto && !nextPhoto) {
-      api.getPhotos(false);
-    } else if (
-      new Date(lastFetched.todayPhoto).toDateString() !== today ||
-      !nextPhoto
-    ) {
-      api.getPhotos(true);
-    }
-  }
-}
-
 /**
  * The function `handleGoals` checks if the user is online and if the current goal is stale, and if so,
  * it sets a new goal and logs a message.
@@ -171,26 +116,12 @@ export function handleGoals() {
   }
 }
 
-export function getData() {
-  handleGoals();
-  handleImages();
-}
-
 export function tweetHandler(text: string, hashtags: string[], via: string) {
   const baseUrl = "https://twitter.com/intent/tweet";
   const url = `${baseUrl}?text=${encodeURI(
     text
   )}&via=${via}&hashtags=${hashtags.join(",")}`;
   return url;
-}
-export function geocodeToCityName(long: number, lat: number) {
-  const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${long}`;
-  return fetch(url)
-    .then((res) => res.json())
-    .then((json) => {
-      const data = json as NominatimResponse;
-      return data.address.state.replace(" state", "");
-    });
 }
 
 export function getPicture(photo: RandomPicture): Picture {

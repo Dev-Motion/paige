@@ -6,7 +6,8 @@ import {
   OpenmeteoResponse,
 } from "./types";
 import useStore from "@store";
-import { IpapiResponse } from "@types";
+import { IpapiResponse, RandomPicture } from "@types";
+import { createApi } from "unsplash-js";
 
 export async function getLocation(query: string): Promise<Coordinates[]> {
   const url = `https://geocoding-api.open-meteo.com/v1/search?name=${query}&count=5`;
@@ -109,4 +110,35 @@ export async function getWeather({
     })),
   };
   return formattedData;
+}
+
+const unsplash = createApi({
+  accessKey: import.meta.env.VITE_UNSPLASH_KEY,
+  //...other fetch options
+});
+
+export async function getPhotos() {
+  const today = new Date();
+  const tomorrow = new Date(today);
+  const { keywords } = useStore.getState();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const result = await unsplash.photos.getRandom({
+    topicIds: keywords,
+    orientation: "landscape",
+    count: 24,
+    featured: true,
+  });
+  return (result?.response ?? []) as RandomPicture[];
+}
+export async function getCloudPhotos({ fetchmore }: { fetchmore: boolean }) {
+  const { keywords } = useStore.getState();
+  const count = fetchmore ? 4 : 6;
+  const result = await unsplash.photos.getRandom({
+    topicIds: keywords,
+    orientation: "landscape",
+    count,
+    featured: true,
+  });
+
+  return (result?.response ?? []) as RandomPicture[];
 }
