@@ -2,39 +2,35 @@ import React from "react";
 import { Box, Flex, Text } from "@components/base";
 import { HeartIcon, SkipIcon, TwitterOutlineIcon } from "@components/icons";
 import { HoverReveal } from "@components/inc";
-import { useCachedEffect } from "@hooks";
 import useStore from "@store";
-import { HOURS, MINUTES, tweetHandler } from "@utils";
+import { useQuotes } from "@api/hooks";
+import { Quote } from "@store/slices/QuotesSlice";
+import { tweetHandler } from "@utils";
+import { shallow } from "zustand/shallow";
 
 function Quotes() {
-  const [
-    quote,
-    getQuotes,
-    favouriteQuotes,
-    setFavouriteQuotes,
-    showDailyMotivation,
-    lastFetched,
-  ] = useStore((state) => [
-    state.quote,
-    state.getQuotes,
-    state.favouriteQuotes,
-    state.setFavouriteQuotes,
-    state.showDailyMotivation,
-    state.lastFetched,
-  ]);
+  const {
+    data: quote,
+    isLoading,
+    isError,
+    refetch: getQuotes,
+  } = useQuotes({
+    select: (d) => ({ id: d._id, text: d.content, author: d.author } as Quote),
+  });
+
+  const [favouriteQuotes, setFavouriteQuotes, showDailyMotivation] = useStore(
+    (state) => [
+      state.favouriteQuotes,
+      state.setFavouriteQuotes,
+      state.showDailyMotivation,
+    ],
+    shallow
+  );
+  if (isLoading || isError) return null;
   const tweetText = `I love this quote by ${quote.author}!
 “${quote.text}”`;
   const favourite = favouriteQuotes.includes(quote);
-
-  useCachedEffect(
-    () => {
-      const isOnline = navigator.onLine;
-      if (!isOnline) return;
-      getQuotes();
-    },
-    quote ? new Date(lastFetched.quote).getTime() + 6 * HOURS : 0,
-    []
-  );
+  // console.log({ quotes, isLoading, isError });
   if (!showDailyMotivation) return null;
   return (
     <Box

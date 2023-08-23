@@ -1,10 +1,8 @@
 import type { StateCreator } from "..";
 
 export interface QuotesSlice {
-  quote: Quote;
   customQuotes: Quote[];
   setCustomQuotes: (quotes: Quote[] | ((quotes: Quote[]) => Quote[])) => void;
-  getQuotes: () => void;
   quoteKeywords: string[];
   quoteAuthor: string;
   setQuoteKeywords: (keywords: string[]) => void;
@@ -19,23 +17,7 @@ export interface Quote {
   text: string;
   author: string;
 }
-interface QuotableReturn {
-  _id: string;
-  content: string;
-  author: string;
-  tags: string[];
-  authorSlug: string;
-  length: number;
-  dateAdded: string;
-  dateModified: string;
-}
-
 const createQuotesSlice: StateCreator<QuotesSlice> = (set, get) => ({
-  quote: {
-    id: "default",
-    text: "Think lightly of yourself and deeply of the world.",
-    author: "Miyamoto Musashi",
-  },
   customQuotes: [],
   setCustomQuotes: (quotes) => {
     if (Array.isArray(quotes)) {
@@ -44,24 +26,6 @@ const createQuotesSlice: StateCreator<QuotesSlice> = (set, get) => ({
     if (typeof quotes === "function") {
       set((state) => ({ customQuotes: quotes(state.customQuotes) }));
     }
-  },
-  getQuotes: () => {
-    fetch(
-      "https://api.quotable.io/random?minLength=40&maxLength=60&tags=" +
-        get().quoteKeywords.join("|")
-    )
-      .then((response) => response.json())
-      .then((json) => {
-        const data = json as QuotableReturn;
-        set({
-          quote: {
-            id: data._id,
-            text: data.content,
-            author: data.author,
-          },
-        });
-        get().updateLastFetched("quote");
-      });
   },
   quoteKeywords: ["inspirational", "motivational"],
   quoteAuthor: "",

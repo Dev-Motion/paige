@@ -4,7 +4,8 @@ import { styled } from "stitches.config";
 import { SearchIcon } from "@components/icons";
 import { Combobox } from "@headlessui/react";
 import { useQuery } from "@tanstack/react-query";
-import { Coordinates, getLocation } from "@api";
+import { getLocation } from "@api";
+import { Coordinates } from "@api/types";
 import useStore from "@store";
 import { shallow } from "zustand/shallow";
 

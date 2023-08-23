@@ -1,3 +1,7 @@
+import axios from "axios";
+import { Coordinates, GetQuoteResponse } from "./types";
+import useStore from "@store";
+
 export async function getLocation(query: string): Promise<Coordinates[]> {
   const url = `https://geocoding-api.open-meteo.com/v1/search?name=${query}&count=5`;
   const res = await fetch(url);
@@ -14,10 +18,10 @@ export async function getLocation(query: string): Promise<Coordinates[]> {
   );
 }
 
-export type Coordinates = {
-  latitude: number;
-  longitude: number;
-  name: string;
-  country: string;
-  id: string;
-};
+export async function getQuotes() {
+  const response = await axios.get<GetQuoteResponse>(
+    "https://api.quotable.io/random?minLength=40&maxLength=60&tags=" +
+      useStore.getState().quoteKeywords.join("|")
+  );
+  return response.data;
+}
