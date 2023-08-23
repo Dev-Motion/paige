@@ -1,6 +1,12 @@
 import axios from "axios";
-import { Coordinates, GetQuoteResponse } from "./types";
+import {
+  Coordinates,
+  GetCityNameResponse,
+  GetQuoteResponse,
+  OpenmeteoResponse,
+} from "./types";
 import useStore from "@store";
+import { IpapiResponse } from "@types";
 
 export async function getLocation(query: string): Promise<Coordinates[]> {
   const url = `https://geocoding-api.open-meteo.com/v1/search?name=${query}&count=5`;
@@ -24,4 +30,83 @@ export async function getQuotes() {
       useStore.getState().quoteKeywords.join("|")
   );
   return response.data;
+}
+export async function getCurrentLocation() {
+  const response = await new Promise<{
+    longitude: number;
+    latitude: number;
+    name?: string;
+  }>((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const location = {
+          longitude: position.coords.longitude,
+          latitude: position.coords.latitude,
+        };
+        resolve(location);
+      },
+      (error) => {
+        fetch("https://ipapi.co/json/")
+          .then((res) => res.json())
+          .then((json) => {
+            const data = json as IpapiResponse;
+            const location = {
+              longitude: data.longitude,
+              latitude: data.latitude,
+            };
+            resolve(location);
+          })
+          .catch((e) => {
+            const mute = e;
+            reject(new Error("failure"));
+          });
+      }
+    );
+  });
+  return response;
+}
+
+export async function getCityName({
+  longitude,
+  latitude,
+}: {
+  longitude: number;
+  latitude: number;
+}) {
+  const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+  const response = await axios.get<GetCityNameResponse>(url);
+  return response.data.address.state.replace(" state", "");
+}
+
+export async function getWeather({
+  longitude,
+  latitude,
+}: {
+  longitude: number;
+  latitude: number;
+}) {
+  const { unit } = useStore.getState();
+  const url = new URL("https://api.open-meteo.com/v1/forecast");
+  url.searchParams.set("latitude", latitude.toString());
+  url.searchParams.set("longitude", longitude.toString());
+  url.searchParams.set(
+    "hourly",
+    "temperature_2m,apparent_temperature,weathercode"
+  );
+  url.searchParams.set("timeformat", "unixtime");
+  url.searchParams.set("temperature_unit", "celsius");
+  if (unit === "fahrenheit") {
+    url.searchParams.set("temperature_unit", "fahrenheit");
+  }
+  url.searchParams.set("current_weather", "true");
+  const response = await axios.get<OpenmeteoResponse>(url.toString());
+  const formattedData = {
+    conditions: response.data.hourly.time.map((time: number, i: number) => ({
+      timestamp: time * 1000, // convert to ms
+      temperature: response.data.hourly.temperature_2m[i],
+      apparentTemperature: response.data.hourly.apparent_temperature[i],
+      weatherCode: response.data.hourly.weathercode[i],
+    })),
+  };
+  return formattedData;
 }
