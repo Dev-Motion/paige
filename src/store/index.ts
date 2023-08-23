@@ -8,7 +8,6 @@ import createQuotesSlice, { QuotesSlice } from "./slices/QuotesSlice";
 import createSearchSlice, { SearchSlice } from "./slices/searchSlice";
 import createToastSlice, { ToastSlice } from "./slices/ToastSlice";
 import createWeatherSlice, { WeatherSlice } from "./slices/weatherSlice";
-import createTimeSlice, { TimeSlice } from "./slices/TimeSlice";
 import createPinnedSitesSlice, {
   PinnedSitesSlice,
 } from "./slices/PinnedSitesSlice";
@@ -29,7 +28,6 @@ export type Slices = LayoutSlice &
   SearchSlice &
   ToastSlice &
   WeatherSlice &
-  TimeSlice &
   PinnedSitesSlice &
   LastFetchedSlice &
   GeneralSlice;
@@ -50,7 +48,6 @@ const useStore = create<Slices>()(
         ...createSearchSlice(...a),
         ...createToastSlice(...a),
         ...createWeatherSlice(...a),
-        ...createTimeSlice(...a),
         ...createPinnedSitesSlice(...a),
         ...createLastFetchedSlice(...a),
       })),
@@ -73,10 +70,7 @@ export default useStore;
 
 export const api = useStore.getState();
 
-// regular updates the time
-setInterval(() => api.setTime(), 1000);
 // Actions
-
 useStore.subscribe(
   (state) => state.todayPhoto,
   (photo) => {
