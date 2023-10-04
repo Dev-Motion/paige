@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@h6s/calendar':
     specifier: 1.1.0-alpha.2
@@ -92,8 +96,8 @@ dependencies:
     specifier: ^2.0.2
     version: 2.0.2
   react-query-kit:
-    specifier: ^1.4.8
-    version: 1.4.8(@tanstack/react-query@4.29.25)
+    specifier: ^2.0.0
+    version: 2.0.2(@tanstack/react-query@4.29.25)
   react-stately:
     specifier: ^3.22.0
     version: 3.26.0(react@18.2.0)
@@ -167,7 +171,7 @@ devDependencies:
     version: 4.4.9(@types/node@18.17.15)
   vite-plugin-pwa:
     specifier: ^0.16.0
-    version: 0.16.5(vite@4.4.9)(workbox-window@7.0.0)
+    version: 0.16.5(vite@4.4.9)(workbox-build@7.0.0)(workbox-window@7.0.0)
   workbox-window:
     specifier: ^7.0.0
     version: 7.0.0
@@ -1466,7 +1470,7 @@ packages:
       lodash.merge: 4.6.2
       lodash.uniq: 4.5.0
       resolve-from: 5.0.0
-      ts-node: 10.9.1(@types/node@20.4.7)(typescript@5.2.2)
+      ts-node: 10.9.1(@types/node@18.17.15)(typescript@5.2.2)
       typescript: 5.2.2
     transitivePeerDependencies:
       - '@swc/core'
@@ -3778,7 +3782,7 @@ packages:
   /@types/resolve@1.17.1:
     resolution: {integrity: sha512-yy7HuzQhj0dhGpD8RLXSZWEkLsV9ibvxvi6EiJ3bkqLAO1RGo0WbkWQiwpRlSFymTJRz0d3k5LM3kkx8ArDbLw==}
     dependencies:
-      '@types/node': 20.4.7
+      '@types/node': 18.17.15
     dev: true
 
   /@types/scheduler@0.16.3:
@@ -4438,7 +4442,7 @@ packages:
     dependencies:
       '@types/node': 20.4.7
       cosmiconfig: 8.3.6(typescript@5.2.2)
-      ts-node: 10.9.1(@types/node@20.4.7)(typescript@5.2.2)
+      ts-node: 10.9.1(@types/node@18.17.15)(typescript@5.2.2)
       typescript: 5.2.2
     dev: true
 
@@ -5599,7 +5603,7 @@ packages:
     resolution: {integrity: sha512-KWYVV1c4i+jbMpaBC+U++4Va0cp8OisU185o73T1vo99hqi7w8tSJfUXYswwqqrjzwxa6KpRK54WhPvwf5w6PQ==}
     engines: {node: '>= 10.13.0'}
     dependencies:
-      '@types/node': 20.4.7
+      '@types/node': 18.17.15
       merge-stream: 2.0.0
       supports-color: 7.2.0
     dev: true
@@ -6290,13 +6294,10 @@ packages:
     resolution: {integrity: sha512-V5BGTwGa2r+/t0A/BZMS6L7VPXY0CU8xtAhkT3XUoI1WJJhhtvulvoiZkJ5Jt9YAW23m4xFWmhQ+C5HwjtTFhQ==}
     dev: false
 
-  /react-query-kit@1.4.8(@tanstack/react-query@4.29.25):
-    resolution: {integrity: sha512-33As333DZWZUi3SvNEjTN9ex5ykiWU0mPGawsMWTm59tLI4tfeoldtsXK8UGaINguKYm4D7qq3P/ltd3ldyr8Q==}
+  /react-query-kit@2.0.2(@tanstack/react-query@4.29.25):
+    resolution: {integrity: sha512-xf/cqglvQVjtsa+OwjX74efLbdrZbrMZdcPC0iHQ5LPk5HnXJAd7qhXvWMP9BlB0IxDqInppxxZ4hcOf+O7Z2A==}
     peerDependencies:
-      '@tanstack/react-query': '*'
-    peerDependenciesMeta:
-      '@tanstack/react-query':
-        optional: true
+      '@tanstack/react-query': ^4 || ^5
     dependencies:
       '@tanstack/react-query': 4.29.25(react-dom@18.2.0)(react@18.2.0)
     dev: false
@@ -7008,7 +7009,7 @@ packages:
       typescript: 5.2.2
     dev: true
 
-  /ts-node@10.9.1(@types/node@20.4.7)(typescript@5.2.2):
+  /ts-node@10.9.1(@types/node@18.17.15)(typescript@5.2.2):
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     peerDependencies:
@@ -7027,7 +7028,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
-      '@types/node': 20.4.7
+      '@types/node': 18.17.15
       acorn: 8.10.0
       acorn-walk: 8.2.0
       arg: 4.1.3
@@ -7252,11 +7253,12 @@ packages:
       spdx-expression-parse: 3.0.1
     dev: true
 
-  /vite-plugin-pwa@0.16.5(vite@4.4.9)(workbox-window@7.0.0):
+  /vite-plugin-pwa@0.16.5(vite@4.4.9)(workbox-build@7.0.0)(workbox-window@7.0.0):
     resolution: {integrity: sha512-Ahol4dwhMP2UHPQXkllSlXbihOaDFnvBIDPmAxoSZ1EObBUJGP4CMRyCyAVkIHjd6/H+//vH0DM2ON+XxHr81g==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       vite: ^3.1.0 || ^4.0.0
+      workbox-build: ^7.0.0
       workbox-window: ^7.0.0
     dependencies:
       debug: 4.3.4
@@ -7266,7 +7268,6 @@ packages:
       workbox-build: 7.0.0
       workbox-window: 7.0.0
     transitivePeerDependencies:
-      - '@types/babel__core'
       - supports-color
     dev: true
 
@@ -7612,7 +7613,3 @@ packages:
       react: 18.2.0
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false

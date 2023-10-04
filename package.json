@@ -45,7 +45,7 @@
     "react-dom": "^18.2.0",
     "react-error-boundary": "^4.0.8",
     "react-merge-refs": "^2.0.2",
-    "react-query-kit": "^1.4.8",
+    "react-query-kit": "^2.0.0",
     "react-stately": "^3.22.0",
     "react-use-measure": "^2.1.1",
     "stitches-mixins": "^1.0.0",
