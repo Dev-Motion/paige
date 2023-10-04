@@ -8,13 +8,12 @@ import createQuotesSlice, { QuotesSlice } from "./slices/QuotesSlice";
 import createSearchSlice, { SearchSlice } from "./slices/searchSlice";
 import createToastSlice, { ToastSlice } from "./slices/ToastSlice";
 import createWeatherSlice, { WeatherSlice } from "./slices/weatherSlice";
-import createTimeSlice, { TimeSlice } from "./slices/TimeSlice";
 import createPinnedSitesSlice, {
   PinnedSitesSlice,
 } from "./slices/PinnedSitesSlice";
 import createLastFetchedSlice, { LastFetchedSlice } from "./slices/lastFetched";
-import { preloadImage, handleImages, handleGoals } from "@utils";
-import { imageQuality, isRunningInExtension } from "@constants";
+import { handleGoals } from "@utils";
+import { isRunningInExtension } from "@constants";
 
 interface GeneralSlice {
   name?: string;
@@ -29,7 +28,6 @@ export type Slices = LayoutSlice &
   SearchSlice &
   ToastSlice &
   WeatherSlice &
-  TimeSlice &
   PinnedSitesSlice &
   LastFetchedSlice &
   GeneralSlice;
@@ -50,7 +48,6 @@ const useStore = create<Slices>()(
         ...createSearchSlice(...a),
         ...createToastSlice(...a),
         ...createWeatherSlice(...a),
-        ...createTimeSlice(...a),
         ...createPinnedSitesSlice(...a),
         ...createLastFetchedSlice(...a),
       })),
@@ -72,34 +69,6 @@ const useStore = create<Slices>()(
 export default useStore;
 
 export const api = useStore.getState();
-
-// regular updates the time
-setInterval(() => api.setTime(), 1000);
-// Actions
-
-useStore.subscribe(
-  (state) => state.todayPhoto,
-  (photo) => {
-    preloadImage(photo.urls.raw + imageQuality);
-    api.setTheme();
-  }
-);
-
-// add image to link tag in head
-preloadImage(api.todayPhoto.urls.raw + imageQuality, true);
-preloadImage(api.nextPhoto.urls.raw + imageQuality);
-// fetches images when stale
-handleImages();
-// fetches goals when stale
-handleGoals();
-if (api.cloudPhotos.length === 0) {
-  api.getCloudPhotos();
-} else if (
-  new Date().getTime() - new Date(api.lastFetched.cloudPhotos || "").getTime() >
-  1000 * 60 * 60 * 24
-) {
-  api.getCloudPhotos();
-}
 
 api.setTheme();
 

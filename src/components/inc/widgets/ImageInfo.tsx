@@ -1,3 +1,4 @@
+import { usePhotos } from "@api/hooks";
 import { Box, Flex, IconButton, Text } from "@components/base";
 import {
   DownloadIcon,
@@ -13,15 +14,14 @@ import React from "react";
 import { shallow } from "zustand/shallow";
 
 const ImageInfo = () => {
-  const [todayPhoto, favoritePhotos, setFavoritePhotos] = useStore(
+  const { data: photos, isSuccess } = usePhotos();
+  const [cursor, favoritePhotos, setFavoritePhotos] = useStore(
     (state) =>
-      [
-        state.todayPhoto,
-        state.favoritePhotos,
-        state.setFavoritePhotos,
-      ] as const,
+      [state.cursor, state.favoritePhotos, state.setFavoritePhotos] as const,
     shallow
   );
+  if (!isSuccess) return null;
+  const todayPhoto = photos[cursor];
   const todayAttribution = getPictureAttribution(todayPhoto);
   const isFavorite = favoritePhotos.some((photo) => photo.id === todayPhoto.id);
   function ToggleFavorite() {

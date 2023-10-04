@@ -3,10 +3,12 @@ import { Box, Text, Flex } from "@components/base";
 import { styled } from "stitches.config";
 import { SearchIcon } from "@components/icons";
 import { Combobox } from "@headlessui/react";
-import { useQuery } from "@tanstack/react-query";
-import { Coordinates, getLocation } from "@api";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { getLocation } from "@api";
+import { Coordinates } from "@api/types";
 import useStore from "@store";
 import { shallow } from "zustand/shallow";
+import { useCityName, useCurrentLocation } from "@api/hooks";
 
 const WeatherTab = () => {
   return (
@@ -66,7 +68,7 @@ function WeatherUnitSelect() {
 function LocationFinder() {
   const [value, setValue] = useState("");
   const deferredValue = useDeferredValue(value);
-  const setLocation = useStore((state) => state.setLocation);
+  const queryClient = useQueryClient();
   const { isError, isLoading, data } = useQuery(
     ["location", deferredValue],
     () => getLocation(value),
@@ -77,6 +79,17 @@ function LocationFinder() {
   const [selectedLocation, setSelectedLocation] = useState<null | Coordinates>(
     null
   );
+  function setLocation({
+    cityName,
+    ...position
+  }: {
+    longitude: number;
+    latitude: number;
+    cityName: string;
+  }) {
+    queryClient.setQueryData(useCurrentLocation.getKey(), position);
+    queryClient.setQueryData(useCityName.getKey(position), cityName);
+  }
   return (
     <Combobox
       value={selectedLocation}

@@ -1,3 +1,4 @@
+import { usePhotos } from "@api/hooks";
 import type { StateCreator } from "..";
 
 import {
@@ -7,6 +8,8 @@ import {
   baseTheme,
 } from "@constants/themes";
 import autoGetTheme, { autoGetAccent } from "@utils/autoTheme";
+import { queryClient } from "@/main";
+import { RandomPicture } from "@types";
 
 export interface ThemeSlice {
   autoTheme: boolean;
@@ -20,7 +23,7 @@ export function changeTheme(
   base: {
     name: BaseTheme;
     className: string;
-  }
+  },
 ) {
   const HTML = document.getElementsByTagName("html")[0];
   HTML.setAttribute("data-theme", `${base.name}-${accent.name}`);
@@ -40,7 +43,9 @@ const createThemeSlice: StateCreator<ThemeSlice> = (set, get) => ({
   theme: "dark",
   setTheme: (accent, base) => {
     set((state) => {
-      const todayImage = state.todayPhoto;
+      const todayImage = (
+        queryClient.getQueryData(usePhotos.getKey()) as RandomPicture[]
+      )[state.cursor];
 
       if (state.autoTheme) {
         if (accent || base) {
@@ -52,7 +57,7 @@ const createThemeSlice: StateCreator<ThemeSlice> = (set, get) => ({
         const newTheme = autoGetTheme(todayImage?.color ?? "#000000");
         changeTheme(
           { name: newAccent, className: accents[newAccent] },
-          { name: newTheme, className: baseTheme[newTheme].className }
+          { name: newTheme, className: baseTheme[newTheme].className },
         );
         return { accent: newAccent, theme: newTheme };
       }
@@ -61,7 +66,7 @@ const createThemeSlice: StateCreator<ThemeSlice> = (set, get) => ({
 
       changeTheme(
         { name: accent, className: accents[accent] },
-        { name: base, className: baseTheme[base].className }
+        { name: base, className: baseTheme[base].className },
       );
       return { theme: base, accent };
     });

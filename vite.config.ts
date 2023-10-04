@@ -135,6 +135,10 @@ export default defineConfig({
         find: "@api",
         replacement: pathResolve("src/api"),
       },
+      {
+        find: "@/",
+        replacement: pathResolve("src/"),
+      },
     ],
   },
   build: {

@@ -1,58 +1,37 @@
+import { useCityName, useCurrentLocation, useWeather } from "@api/hooks";
 import { Box, Card, Flex, Text } from "@components/base";
-import React, { useState } from "react";
 import useStore from "@store";
-import { findCurrent, HOURS } from "@utils";
-import { useCachedEffect } from "@hooks";
+import { findCurrent } from "@utils";
 import {
-  weatherCodes,
   icon,
+  weatherCodes,
   weatherConditions,
 } from "@utils/weatherConditions";
-import { shallow } from "zustand/shallow";
-import { AnimatePresence, motion } from "framer-motion";
 import { isToday } from "date-fns";
+import { AnimatePresence, motion } from "framer-motion";
+import React, { useState } from "react";
 const TIME_REFRESH = 1;
 
 const WeatherWidget = () => {
-  const [
-    weather,
-    location,
-    getWeather,
-    getCurrentLocation,
-    getCityName,
-    position,
-    unit,
-  ] = useStore(
-    (state) => [
-      state.weather,
-      state.location,
-      state.getWeather,
-      state.getCurrentLocation,
-      state.getCityName,
-      state.sideBarPosition,
-      state.unit,
-    ],
-    shallow
-  );
+  const position = useStore((state) => state.sideBarPosition);
   const pos = position === "left" ? "right" : "left";
   const [hovered, setHovered] = useState(false);
-  const conditions =
-    weather && weather.conditions
-      ? findCurrent(weather.conditions, Date.now())
-      : null;
-  const todayCondition =
-    weather && weather.conditions
-      ? weather.conditions.flatMap((c) =>
-        isToday(new Date(c.timestamp)) ? c.temperature : []
-      )
-      : [];
-  useCachedEffect(
-    () => {
-      getWeather();
-    },
-    weather ? weather.timestamp + TIME_REFRESH * HOURS : 0,
-    [location?.longitude, location?.latitude, unit]
+  const { data: location } = useCurrentLocation();
+  const { data: cityName } = useCityName({
+    variables: location!,
+    enabled: !!location,
+  });
+  const { data: weather, isSuccess: weatherAvailable } = useWeather({
+    variables: location!,
+    enabled: !!location,
+  });
+  if (!weatherAvailable) return null;
+  const conditions = findCurrent(weather.conditions, Date.now());
+
+  const todayCondition = weather.conditions.flatMap((c) =>
+    isToday(new Date(c.timestamp)) ? c.temperature : []
   );
+
   // Blank or loading state
   if (!conditions) return <div className="Weather">-</div>;
   const iconName = weatherCodes[conditions.weatherCode];
@@ -88,7 +67,7 @@ const WeatherWidget = () => {
         >
           <Flex fd="column" gap="1">
             <Text fs="md" fw="medium">
-              {location?.cityName}
+              {cityName}
             </Text>
             <Text fs="xs">{conditionName}</Text>
           </Flex>

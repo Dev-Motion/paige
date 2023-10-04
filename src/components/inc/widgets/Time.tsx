@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Flex,
@@ -16,9 +16,9 @@ import { shallow } from "zustand/shallow";
 
 const Time = () => {
   const [open, setOpen] = useState(false);
-  const [time, name, is24Hour, setIs24Hour, showTime, showGreeting] = useStore(
+  const [time, setTime] = useState(Date.now());
+  const [name, is24Hour, setIs24Hour, showTime, showGreeting] = useStore(
     (state) => [
-      state.time,
       state.name,
       state.is24Hour,
       state.setIs24Hour,
@@ -28,8 +28,12 @@ const Time = () => {
     shallow
   );
   const timeDate = new Date(time);
-  const dayofWeek = useRef(timeDate.getDay());
-
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTime(Date.now());
+    }, 1000);
+    return () => clearInterval(interval);
+  });
   const { timeString, isAM } = processTime(timeDate, is24Hour);
   const onChecked = (checked: boolean) => setIs24Hour(checked);
   return (
