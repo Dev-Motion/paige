@@ -66,7 +66,7 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
     orientation: "landscape",
   },
   devOptions: {
-    enabled: true,
+    enabled: false,
   },
   workbox: {
     globPatterns: ["**/*.{js,css,html,ico,png,svg,tff}"],

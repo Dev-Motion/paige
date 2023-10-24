@@ -8,7 +8,7 @@ import {
   baseTheme,
 } from "@constants/themes";
 import autoGetTheme, { autoGetAccent } from "@utils/autoTheme";
-import { queryClient } from "@/main";
+import { queryClient } from "../../main";
 import { RandomPicture } from "@types";
 
 export interface ThemeSlice {
@@ -28,11 +28,10 @@ export function changeTheme(
   const HTML = document.getElementsByTagName("html")[0];
   HTML.setAttribute("data-theme", `${base.name}-${accent.name}`);
   HTML.setAttribute("class", `${base.className} ${accent.className}`);
-  console.log("set theme");
 }
 
 const createThemeSlice: StateCreator<ThemeSlice> = (set, get) => ({
-  autoTheme: false,
+  autoTheme: true,
   setAutoTheme: (autoTheme) => {
     set({ autoTheme });
     if (autoTheme) {
@@ -55,6 +54,7 @@ const createThemeSlice: StateCreator<ThemeSlice> = (set, get) => ({
         }
         const newAccent = autoGetAccent(todayImage?.color ?? "#000000");
         const newTheme = autoGetTheme(todayImage?.color ?? "#000000");
+        console.log({ todayImage, newAccent, newTheme });
         changeTheme(
           { name: newAccent, className: accents[newAccent] },
           { name: newTheme, className: baseTheme[newTheme].className },

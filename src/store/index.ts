@@ -12,7 +12,6 @@ import createPinnedSitesSlice, {
   PinnedSitesSlice,
 } from "./slices/PinnedSitesSlice";
 import createLastFetchedSlice, { LastFetchedSlice } from "./slices/lastFetched";
-import { handleGoals } from "@utils";
 import { isRunningInExtension } from "@constants";
 
 interface GeneralSlice {
@@ -58,19 +57,17 @@ const useStore = create<Slices>()(
             Object.entries(state).filter(
               ([key]) =>
                 !["searchOpen", "time", "sideBarOpen", "activeToasts"].includes(
-                  key
-                )
-            )
+                  key,
+                ),
+            ),
           ),
-      }
-    )
-  )
+      },
+    ),
+  ),
 );
 export default useStore;
 
 export const api = useStore.getState();
-
-api.setTheme();
 
 if (isRunningInExtension && api.pinnedSites.length === 0) {
   chrome.topSites.get((data) => {
