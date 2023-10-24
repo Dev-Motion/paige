@@ -7,8 +7,8 @@ import ThemesTab from "./ThemesTab";
 import QuotesTab from "./QuotesTab";
 import useStore from "@store";
 import { FeedbackModal } from "@components/inc";
-import { IconButton, Box, Flex, ScrollArea } from "@components/base";
-import { Hamburger, Info } from "@components/icons";
+import { IconButton, Flex, ScrollArea } from "@components/base";
+import { Hamburger } from "@components/icons";
 import WeatherTab from "./WeatherTab";
 
 const SideBar = () => {
@@ -258,7 +258,6 @@ const TabContent = styled(Tabs.Content, {
 
 const MotionContainer = styled(motion.div, {
   height: "100vh",
-  width: "50vw",
   maxWidth: 550,
   minWidth: "200px",
   display: "grid",
