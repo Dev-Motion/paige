@@ -54,7 +54,6 @@ const createThemeSlice: StateCreator<ThemeSlice> = (set, get) => ({
         }
         const newAccent = autoGetAccent(todayImage?.color ?? "#000000");
         const newTheme = autoGetTheme(todayImage?.color ?? "#000000");
-        console.log({ todayImage, newAccent, newTheme });
         changeTheme(
           { name: newAccent, className: accents[newAccent] },
           { name: newTheme, className: baseTheme[newTheme].className },

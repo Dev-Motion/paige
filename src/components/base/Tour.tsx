@@ -227,29 +227,29 @@ export const Trigger = React.forwardRef<HTMLButtonElement, TriggerProps>(
         onClick={(e) => {
           onClick?.(e);
           beginTour();
-          console.log("started");
         }}
         ref={forwardedRef}
         {...buttonProps}
       />
     );
-  }
+  },
 );
 
 export function withTour<T extends object>(
   component: React.ComponentType<T>,
-  tourProps: Omit<TourStepProps, "children">
+  tourProps: Omit<TourStepProps, "children">,
 ): React.ForwardRefExoticComponent<
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   React.PropsWithoutRef<T> & React.RefAttributes<any>
 > {
   const Wrapped = React.forwardRef<React.ComponentType<T>, T>(function withTour(
     props,
-    ref: React.ForwardedRef<React.ComponentType<T>>
+    ref: React.ForwardedRef<React.ComponentType<T>>,
   ) {
     return React.createElement(
       Step,
       tourProps as TourStepProps,
-      React.createElement(component, { ...props, ref })
+      React.createElement(component, { ...props, ref }),
     );
   });
   // Format for display in DevTools

@@ -1,4 +1,4 @@
-import React, { useState, useDeferredValue, useEffect } from "react";
+import React, { useState, useDeferredValue } from "react";
 import { Box, Text, Flex } from "@components/base";
 import { styled } from "stitches.config";
 import { SearchIcon } from "@components/icons";
@@ -46,7 +46,7 @@ export default WeatherTab;
 function WeatherUnitSelect() {
   const [unit, setUnit] = useStore(
     (store) => [store.unit, store.setUnit],
-    shallow
+    shallow,
   );
   return (
     <Flex gap={2}>
@@ -74,10 +74,10 @@ function LocationFinder() {
     () => getLocation(value),
     {
       keepPreviousData: true,
-    }
+    },
   );
   const [selectedLocation, setSelectedLocation] = useState<null | Coordinates>(
-    null
+    null,
   );
   function setLocation({
     cityName,
@@ -108,7 +108,7 @@ function LocationFinder() {
           }
           onChange={(event) => setValue(event.target.value)}
         />
-        <RightIcon onClick={() => console.log("clicked")}>
+        <RightIcon>
           <SearchIcon css={{ size: "$3" }} />
         </RightIcon>
       </InputContainer>
@@ -133,7 +133,7 @@ function LocationFinder() {
             </EmptyState>
           )}
           {/* Data found */}
-          {data?.map((location, i) => {
+          {data?.map((location) => {
             return (
               <ComboboxOption
                 key={`${location.name} ${location.longitude} ${location.latitude}`}

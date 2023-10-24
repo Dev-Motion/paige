@@ -1,7 +1,6 @@
 function hexToRGB(hex: string) {
   if (hex.length === 4) {
     hex = hex.replace(/([0-9a-f])/gi, "$1$1");
-    console.log("hex", hex);
   }
   const r = parseInt(hex.slice(1, 3), 16);
   const g = parseInt(hex.slice(3, 5), 16);
@@ -19,7 +18,7 @@ export function colorPerception(hex1: string, hex2: string) {
   return Math.sqrt(
     (2 + meanR / MAX_COLOR_RANGE) * deltaR ** 2 +
       4 * deltaG ** 2 +
-      (2 + (MAX_COLOR_RANGE - 1 - meanR) / MAX_COLOR_RANGE) * deltaB ** 2
+      (2 + (MAX_COLOR_RANGE - 1 - meanR) / MAX_COLOR_RANGE) * deltaB ** 2,
   );
 }
 

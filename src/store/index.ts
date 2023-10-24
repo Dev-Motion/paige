@@ -82,7 +82,6 @@ if (Notification.permission === "default") {
 
 if (isRunningInExtension) {
   chrome.notifications.onButtonClicked.addListener((notificationId, i) => {
-    console.log("hi");
     const [pre, id] = notificationId.split("-");
     if (pre === "todo") {
       if (i === 1) {

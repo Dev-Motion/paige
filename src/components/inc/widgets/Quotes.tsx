@@ -15,7 +15,7 @@ function Quotes() {
     isError,
     refetch: getQuotes,
   } = useQuotes({
-    select: (d) => ({ id: d._id, text: d.content, author: d.author } as Quote),
+    select: (d) => ({ id: d._id, text: d.content, author: d.author }) as Quote,
   });
 
   const [favouriteQuotes, setFavouriteQuotes, showDailyMotivation] = useStore(
@@ -24,13 +24,12 @@ function Quotes() {
       state.setFavouriteQuotes,
       state.showDailyMotivation,
     ],
-    shallow
+    shallow,
   );
   if (isLoading || isError) return null;
   const tweetText = `I love this quote by ${quote.author}!
 “${quote.text}”`;
   const favourite = favouriteQuotes.includes(quote);
-  // console.log({ quotes, isLoading, isError });
   if (!showDailyMotivation) return null;
   return (
     <Box
@@ -74,7 +73,7 @@ function Quotes() {
                   setFavouriteQuotes((quotes) => [...quotes, quote]);
                 } else {
                   setFavouriteQuotes((quotes) =>
-                    quotes.filter((q) => q.id !== quote.id)
+                    quotes.filter((q) => q.id !== quote.id),
                   );
                 }
               }}
@@ -124,7 +123,7 @@ function Quotes() {
               href={tweetHandler(
                 tweetText,
                 ["chroma", "inspring", "inspirational"],
-                "chroma"
+                "chroma",
               )}
               target="_blank"
               rel="noreferrer"
