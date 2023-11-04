@@ -4,6 +4,11 @@ import { Flex, IconButton, Text, Dialog } from "@components/base";
 import useStore from "@store";
 import CommandMenu from "../CommandMenu";
 import { isRunningInExtension } from "@constants";
+import { styled } from "stitches.config";
+import { animation } from "@utils";
+import * as RadixDialog from "@radix-ui/react-dialog";
+
+const { fadeIn } = animation;
 
 function Search() {
   const open = useStore((state) => state.searchOpen);
@@ -50,12 +55,37 @@ function Search() {
             <Text srOnly>Search Google</Text>
           </IconButton>
         </Dialog.Button>
-        <Dialog.Content css={{ backdropFilter: "blur(50px)" }} overlay>
-          <CommandMenu />
-        </Dialog.Content>
+
+        <RadixDialog.Portal>
+          <DialogContent onClick={() => setOpen(false)}>
+            <CommandMenu />
+          </DialogContent>
+        </RadixDialog.Portal>
       </Dialog>
     </Flex>
   );
 }
 
 export default Search;
+
+const DialogContent = styled(RadixDialog.Content, {
+  height: "100vh",
+  width: "100vw",
+  position: "fixed",
+  display: "flex",
+  flexDirection: "column",
+  top: 0,
+  left: 0,
+  backdropFilter: "blur(4px)",
+  animation: `${fadeIn} .5s ease-in-out`,
+  animationFillMode: "forwards",
+  "@sm": {
+    pd: "1.5rem",
+  },
+  "@md": {
+    pd: "10vh",
+  },
+  "@lg": {
+    pd: "12vh",
+  },
+});

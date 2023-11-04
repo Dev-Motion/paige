@@ -5,9 +5,8 @@ import useStore from "@store";
 import { faviconURL } from "@utils";
 import search from "@utils/Search";
 import { Command } from "cmdk";
-import { AnimatePresence, motion } from "framer-motion";
 import React from "react";
-import { styled } from "stitches.config";
+import { keyframes, styled } from "stitches.config";
 interface Link {
   id: string;
   url: string;
@@ -24,9 +23,9 @@ const CommandMenu = () => {
   const deferedInputValue = React.useDeferredValue(inputValue);
   const [bookmarks, setBookmarks] = React.useState<Link[]>([]);
   const [chromeHist, setChromeHist] = React.useState<Link[]>([]);
-  const providerLogo = searchProviders.find(
-    (p) => p.name === searchProvider
-  )!.image;
+  const providerLogo =
+    searchProviders.find((p) => p.name === searchProvider)?.image ??
+    searchProviders[0].image;
   function tabAction(url: string) {
     window.open(url, "_self");
   }
@@ -81,8 +80,11 @@ const CommandMenu = () => {
   }, [deferedInputValue]);
 
   return (
-    <StyledCommand label="Chroma web search">
-      <Flex cmdk-chroma-header="">
+    <StyledCommand
+      label="Chroma web search"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <Flex as="header" cmdk-chroma-header="">
         <SearchIcon />
         <Command.Input
           value={inputValue}
@@ -107,83 +109,34 @@ const CommandMenu = () => {
           </Popover.Content>
         </Popover>
       </Flex>
-      <Command.List>
-        <Box cmdk-chroma-items="">
-          {inputValue && (
-            <Command.Group heading="Recent">
-              {history.slice(0, 3).map((h) => {
+      <Flex fd="column" css={{ flex: "1 1 auto", overflow: "auto" }}>
+        <Command.List>
+          <Box cmdk-chroma-items="">
+            {inputValue && (
+              <Command.Group heading="Recent">
+                {history.slice(0, 3).map((h) => {
+                  return (
+                    <Command.Item
+                      key={"recent: " + h}
+                      value={h}
+                      onSelect={() => searchAction(h)}
+                    >
+                      <Flex ai="center" gap="2">
+                        <HistoryIcon />
+                        <Text fs="sm">{h}</Text>
+                      </Flex>
+                    </Command.Item>
+                  );
+                })}
+              </Command.Group>
+            )}
+            <Command.Group heading="History">
+              {chromeHist.map((h) => {
                 return (
                   <Command.Item
-                    key={"recent: " + h}
-                    value={h}
-                    onSelect={() => searchAction(h)}
-                  >
-                    <Flex ai="center" gap="2">
-                      <HistoryIcon />
-                      <Text fs="sm">{h}</Text>
-                    </Flex>
-                  </Command.Item>
-                );
-              })}
-            </Command.Group>
-          )}
-          <Command.Group heading="History">
-            {chromeHist.map((h) => {
-              return (
-                <Command.Item
-                  key={"hist: " + h.id}
-                  value={"hist: " + h.title}
-                  onSelect={() => tabAction(h.url)}
-                >
-                  <Flex ai="center" gap="2">
-                    <Box
-                      as="img"
-                      css={{
-                        size: "$5",
-                        br: "50%",
-                      }}
-                      src={faviconURL(h.url)}
-                    />
-                    <Text fs="sm">{h.title}</Text>
-                  </Flex>
-                </Command.Item>
-              );
-            })}
-          </Command.Group>
-          {inputValue && (
-            <Command.Group heading="Search">
-              <Command.Item
-                value={`"${inputValue}"`}
-                onSelect={() => searchAction(inputValue)}
-              >
-                <Flex ai="center" gap="2">
-                  <Box
-                    as="img"
-                    src={providerLogo}
-                    height="25"
-                    width="25"
-                    css={{
-                      objectFit: "cover",
-                    }}
-                  />
-                  <Text fs="sm">
-                    {inputValue}{" "}
-                    <Text as="span" css={{ color: "Gray" }}>
-                      - {searchProvider} Search
-                    </Text>
-                  </Text>
-                </Flex>
-              </Command.Item>
-            </Command.Group>
-          )}
-          {bookmarks.length !== 0 && (
-            <Command.Group heading={"Bookmarks"}>
-              {bookmarks.map((bookmark) => {
-                return (
-                  <Command.Item
-                    key={"bookmark: " + bookmark.id}
-                    value={"bookmark: " + bookmark.title}
-                    onSelect={() => tabAction(bookmark.url)}
+                    key={"hist: " + h.id}
+                    value={"hist: " + h.title}
+                    onSelect={() => tabAction(h.url)}
                   >
                     <Flex ai="center" gap="2">
                       <Box
@@ -192,26 +145,70 @@ const CommandMenu = () => {
                           size: "$5",
                           br: "50%",
                         }}
-                        src={faviconURL(bookmark.url)}
+                        src={faviconURL(h.url)}
                       />
-                      <Text fs="sm">{bookmark.title}</Text>
+                      <Text fs="sm">{h.title}</Text>
                     </Flex>
                   </Command.Item>
                 );
               })}
-              {/* <Command.Separator /> */}
             </Command.Group>
-          )}
-        </Box>
-      </Command.List>
-      <Flex
-        jc="between"
-        ai="center"
-        cmdk-chroma-footer=""
-        css={{
-          pd: "$4",
-        }}
-      >
+            {inputValue && (
+              <Command.Group heading="Search">
+                <Command.Item
+                  value={`"${inputValue}"`}
+                  onSelect={() => searchAction(inputValue)}
+                >
+                  <Flex ai="center" gap="2">
+                    <Box
+                      as="img"
+                      src={providerLogo}
+                      height="25"
+                      width="25"
+                      css={{
+                        objectFit: "cover",
+                      }}
+                    />
+                    <Text fs="sm">
+                      {inputValue}{" "}
+                      <Text as="span" css={{ color: "Gray" }}>
+                        - {searchProvider} Search
+                      </Text>
+                    </Text>
+                  </Flex>
+                </Command.Item>
+              </Command.Group>
+            )}
+            {bookmarks.length !== 0 && (
+              <Command.Group heading={"Bookmarks"}>
+                {bookmarks.map((bookmark) => {
+                  return (
+                    <Command.Item
+                      key={"bookmark: " + bookmark.id}
+                      value={"bookmark: " + bookmark.title}
+                      onSelect={() => tabAction(bookmark.url)}
+                    >
+                      <Flex ai="center" gap="2">
+                        <Box
+                          as="img"
+                          css={{
+                            size: "$5",
+                            br: "50%",
+                          }}
+                          src={faviconURL(bookmark.url)}
+                        />
+                        <Text fs="sm">{bookmark.title}</Text>
+                      </Flex>
+                    </Command.Item>
+                  );
+                })}
+                {/* <Command.Separator /> */}
+              </Command.Group>
+            )}
+          </Box>
+        </Command.List>
+      </Flex>
+      <Flex jc="between" ai="center" cmdk-chroma-footer="" css={{ pd: "$4" }}>
         <Box as="img" src="/logo/64x64.png" css={{ size: 24 }} />
 
         <Flex
@@ -283,35 +280,24 @@ export function ProviderItem({ provider }: { provider: SearchProviders }) {
   );
 }
 
-const Overlay = styled(motion.div, {
-  display: "grid",
-  placeItems: "center",
-  position: "fixed",
-  inset: 0,
-  bg: "rgba(0,0,0,0.5)",
-  transition: "opacity 0.2s ease",
-  variants: {
-    open: {
-      true: {
-        opacity: 1,
-        pointerEvents: "all",
-      },
-      false: {
-        opacity: 0,
-        pointerEvents: "none",
-      },
-    },
-  },
-});
 export default CommandMenu;
+
+const slideIn = keyframes({
+  "0%": { transform: "translateY(50%)" },
+  "100%": { transform: "translateY(0%)" },
+});
 
 const StyledCommand = styled(Command, {
   $$borderColor: "#707070",
-  width: "80vw",
-  maxWidth: 540,
+  display: "flex",
+  fd: "column",
+  width: "100%",
+  maxWidth: 758,
+  minHeight: 0,
+  m: "0 auto",
+  animation: `${slideIn} .5s ease-in-out`,
   color: "white",
-  br: 25,
-  overflow: "hidden",
+  br: 8,
   boxShadow: "0 0 0 1px $$borderColor",
   bg: "rgba(30, 30, 30, 0.5)",
   "& [cmdk-chroma-header]": {
@@ -345,7 +331,7 @@ const StyledCommand = styled(Command, {
       "& p": {
         textOverflow: "ellipsis",
 
-        /* Needed to make it work */
+        /* Needed to make the overflow work */
         overflow: "hidden",
         whiteSpace: "nowrap",
       },
