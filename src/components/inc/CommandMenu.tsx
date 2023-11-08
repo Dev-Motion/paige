@@ -1,9 +1,10 @@
-import { Box, Flex, IconButton, Popover, Text } from "@components/base";
-import { HistoryIcon, MoreIcon, SearchIcon } from "@components/icons";
+import { Box, Card, Flex, IconButton, Popover, Text } from "@components/base";
+import { MoreIcon, SearchIcon } from "@components/icons";
 import { SearchProviders, searchProviders } from "@constants";
 import useStore from "@store";
 import { faviconURL } from "@utils";
 import search from "@utils/Search";
+import { getPrefix, searchEngine, searchPrefixes } from "@utils/searchEngine";
 import { Command } from "cmdk";
 import React from "react";
 import { keyframes, styled } from "stitches.config";
@@ -13,69 +14,46 @@ interface Link {
   title: string;
 }
 
+type Links = {
+  history: Link[];
+  bookmarks: Link[];
+  tabs: Link[];
+};
+const defaultLinks: Links = {
+  history: [],
+  bookmarks: [],
+  tabs: [],
+};
+
 const CommandMenu = () => {
-  const [history, setHistory, searchProvider] = useStore((state) => [
-    state.history,
-    state.setHistory,
-    state.searchProvider,
-  ]);
+  const searchProvider = useStore((state) => state.searchProvider);
   const [inputValue, setInputValue] = React.useState("");
   const deferedInputValue = React.useDeferredValue(inputValue);
-  const [bookmarks, setBookmarks] = React.useState<Link[]>([]);
-  const [chromeHist, setChromeHist] = React.useState<Link[]>([]);
+  const [links, setLinks] = React.useState(defaultLinks);
+
+  const prefix = getPrefix(inputValue);
   const providerLogo =
     searchProviders.find((p) => p.name === searchProvider)?.image ??
     searchProviders[0].image;
-  function tabAction(url: string) {
+  function tabAction(
+    url: string,
+    tab?: {
+      id: string;
+    },
+  ) {
+    if (tab) {
+      chrome.tabs.update(parseInt(tab.id), { active: true });
+      return;
+    }
     window.open(url, "_self");
   }
   function searchAction(query: string) {
-    if (inputValue.trim()) {
-      setHistory([...history, inputValue]);
-    }
     search(query, searchProvider);
   }
 
   React.useEffect(() => {
-    chrome.bookmarks.search(deferedInputValue, (results) => {
-      const bookmarks: Link[] = results
-        .map(({ id, title, url }) => {
-          const complete = id && title && url;
-          if (complete) {
-            return {
-              id,
-              title,
-              url,
-            };
-          }
-        })
-        .filter(Boolean);
-
-      setBookmarks(bookmarks.slice(0, 3));
-    });
-    chrome.history.search({ text: deferedInputValue }, (results) => {
-      const histRes: Link[] = results
-        .map(({ id, title, url }) => {
-          const complete = id && title && url;
-          if (complete) {
-            return {
-              id,
-              title,
-              url,
-            };
-          }
-        })
-        .filter(Boolean);
-      const titleSet = new Set<string>();
-      histRes.forEach((hist) => {
-        titleSet.add(hist.title);
-      });
-      const uniqueHist = Array.from(titleSet)
-        .map((title) => {
-          return histRes.find((hist) => hist.title === title);
-        })
-        .filter(Boolean);
-      setChromeHist(uniqueHist.slice(0, 5));
+    searchEngine(deferedInputValue).then((links) => {
+      setLinks(links);
     });
   }, [deferedInputValue]);
 
@@ -83,6 +61,7 @@ const CommandMenu = () => {
     <StyledCommand
       label="Chroma web search"
       onClick={(e) => e.stopPropagation()}
+      shouldFilter={false}
     >
       <Flex as="header" cmdk-chroma-header="">
         <SearchIcon />
@@ -100,11 +79,11 @@ const CommandMenu = () => {
             </IconButton>
           </Popover.Button>
           <Popover.Content>
-            <Box css={{ width: 150 }}>
+            <Card css={{ width: 150, overflow: "hidden" }}>
               {searchProviders.map(({ name }) => (
                 <ProviderItem key={name} provider={name} />
               ))}
-            </Box>
+            </Card>
             <Popover.Arrow />
           </Popover.Content>
         </Popover>
@@ -112,48 +91,7 @@ const CommandMenu = () => {
       <Flex fd="column" css={{ flex: "1 1 auto", overflow: "auto" }}>
         <Command.List>
           <Box cmdk-chroma-items="">
-            {inputValue && (
-              <Command.Group heading="Recent">
-                {history.slice(0, 3).map((h) => {
-                  return (
-                    <Command.Item
-                      key={"recent: " + h}
-                      value={h}
-                      onSelect={() => searchAction(h)}
-                    >
-                      <Flex ai="center" gap="2">
-                        <HistoryIcon />
-                        <Text fs="sm">{h}</Text>
-                      </Flex>
-                    </Command.Item>
-                  );
-                })}
-              </Command.Group>
-            )}
-            <Command.Group heading="History">
-              {chromeHist.map((h) => {
-                return (
-                  <Command.Item
-                    key={"hist: " + h.id}
-                    value={"hist: " + h.title}
-                    onSelect={() => tabAction(h.url)}
-                  >
-                    <Flex ai="center" gap="2">
-                      <Box
-                        as="img"
-                        css={{
-                          size: "$5",
-                          br: "50%",
-                        }}
-                        src={faviconURL(h.url)}
-                      />
-                      <Text fs="sm">{h.title}</Text>
-                    </Flex>
-                  </Command.Item>
-                );
-              })}
-            </Command.Group>
-            {inputValue && (
+            {inputValue && !prefix && (
               <Command.Group heading="Search">
                 <Command.Item
                   value={`"${inputValue}"`}
@@ -179,38 +117,84 @@ const CommandMenu = () => {
                 </Command.Item>
               </Command.Group>
             )}
-            {bookmarks.length !== 0 && (
-              <Command.Group heading={"Bookmarks"}>
-                {bookmarks.map((bookmark) => {
-                  return (
-                    <Command.Item
-                      key={"bookmark: " + bookmark.id}
-                      value={"bookmark: " + bookmark.title}
-                      onSelect={() => tabAction(bookmark.url)}
-                    >
-                      <Flex ai="center" gap="2">
-                        <Box
-                          as="img"
-                          css={{
-                            size: "$5",
-                            br: "50%",
-                          }}
-                          src={faviconURL(bookmark.url)}
-                        />
-                        <Text fs="sm">{bookmark.title}</Text>
-                      </Flex>
-                    </Command.Item>
-                  );
-                })}
-                {/* <Command.Separator /> */}
-              </Command.Group>
-            )}
+            {Object.keys(links).map((key) => {
+              const group = key as keyof Links;
+              const groupLinks = links[group];
+              if (groupLinks.length === 0) return null;
+              return (
+                <Command.Group key={group} heading={group}>
+                  {groupLinks.slice(0, 5).map((link) => {
+                    return (
+                      <Command.Item
+                        key={group + link.id}
+                        value={group + link.title}
+                        onSelect={() =>
+                          group === "tabs"
+                            ? tabAction(link.url, {
+                              id: link.id,
+                            })
+                            : tabAction(link.url)
+                        }
+                      >
+                        <Flex ai="center" gap="2">
+                          <Box
+                            as="img"
+                            css={{
+                              size: "$5",
+                              br: "50%",
+                            }}
+                            src={faviconURL(link.url)}
+                          />
+                          <Text fs="sm">{link.title}</Text>
+                        </Flex>
+                      </Command.Item>
+                    );
+                  })}
+                </Command.Group>
+              );
+            })}
           </Box>
         </Command.List>
       </Flex>
-      <Flex jc="between" ai="center" cmdk-chroma-footer="" css={{ pd: "$4" }}>
+      <Flex gap="2" jc="between" ai="center" cmdk-chroma-footer="">
         <Box as="img" src="/logo/64x64.png" css={{ size: 24 }} />
-
+        <Box css={{ width: 1, height: "80%", bg: "$$borderColor" }} />
+        <Flex
+          gap="2"
+          ai="center"
+          css={{
+            flex: 1,
+          }}
+        >
+          <Text fs="sm">Filter by:</Text>
+          <Flex gap="1">
+            {Object.keys(searchPrefixes).map((key) => {
+              const prefixKey = key as keyof typeof searchPrefixes;
+              const inputPrefix = prefix?.prefix;
+              const active = inputPrefix ? inputPrefix === prefixKey : false;
+              return (
+                <FilterTag
+                  key={prefixKey}
+                  active={active}
+                  onClick={() => {
+                    if (inputPrefix) {
+                      const newInputValue = inputValue.replace(
+                        searchPrefixes[inputPrefix],
+                        "",
+                      );
+                      setInputValue(searchPrefixes[prefixKey] + newInputValue);
+                    } else {
+                      setInputValue(searchPrefixes[prefixKey] + inputValue);
+                    }
+                  }}
+                >
+                  {key}
+                </FilterTag>
+              );
+            })}
+          </Flex>
+        </Flex>
+        <Box css={{ width: 1, height: "80%", bg: "$$borderColor" }} />
         <Flex
           gap="2"
           ai="center"
@@ -286,7 +270,24 @@ const slideIn = keyframes({
   "0%": { transform: "translateY(50%)" },
   "100%": { transform: "translateY(0%)" },
 });
-
+const FilterTag = styled("button", {
+  include: "buttonReset",
+  fontSize: "$sm",
+  color: "white",
+  br: "$1",
+  pd: "$1 $2",
+  bg: "rgba(0,0,0,0.4)",
+  display: "flex",
+  textTransform: "capitalize",
+  variants: {
+    active: {
+      true: {
+        bg: "$accent",
+        color: "white",
+      },
+    },
+  },
+});
 const StyledCommand = styled(Command, {
   $$borderColor: "#707070",
   display: "flex",
@@ -345,6 +346,12 @@ const StyledCommand = styled(Command, {
     "& [cmdk-group-heading]": {
       opacity: 0.8,
       mb: "$2",
+      textTransform: "capitalize",
     },
+  },
+  "& [cmdk-chroma-footer]": {
+    borderTop: "1px solid $$borderColor",
+    px: "$4",
+    py: "$2",
   },
 });
