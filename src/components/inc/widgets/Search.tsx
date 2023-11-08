@@ -3,7 +3,6 @@ import { SearchIcon } from "@components/icons";
 import { Flex, IconButton, Text, Dialog } from "@components/base";
 import useStore from "@store";
 import CommandMenu from "../CommandMenu";
-import { isRunningInExtension } from "@constants";
 import { styled } from "stitches.config";
 import { animation } from "@utils";
 import * as RadixDialog from "@radix-ui/react-dialog";
@@ -14,11 +13,7 @@ function Search() {
   const open = useStore((state) => state.searchOpen);
   const setOpen = useStore((state) => state.setSearchOpen);
   function openChange(open: boolean) {
-    if (isRunningInExtension) {
-      setOpen(open);
-      return;
-    }
-    setOpen(false);
+    setOpen(open);
   }
 
   React.useEffect(() => {
