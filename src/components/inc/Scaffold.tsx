@@ -24,13 +24,15 @@ const Scaffold = () => {
     ],
     shallow,
   );
-  const { data: photos, refetch, isSuccess } = usePhotos();
+  const { data: photos, refetch, isLoading, isPaused } = usePhotos();
   React.useEffect(() => {
     if (photos) {
       const interval = setInterval(() => {
         if (cursor < photos.length - 1) {
+          // Increase the cursor if there are still items unshown photos
           setCursor(cursor + 1);
         } else {
+          // When there are no unshown photos, refecth and when successful set the cursor to 0
           refetch().then(() => setCursor(0));
         }
       }, 3600000);
@@ -54,9 +56,12 @@ const Scaffold = () => {
     }
   }, [photos]);
 
-  if (!isSuccess) return null;
+  if (isLoading && !isPaused) {
+    return null;
+  }
 
-  const currentPhoto = photos[cursor] ?? defaultTodayPhoto;
+  // if it is loading return null, else if it error default to today's photo
+  const currentPhoto = photos ? photos[cursor] : defaultTodayPhoto;
   const todayImage = getPictureInfo(currentPhoto);
   return (
     <>
