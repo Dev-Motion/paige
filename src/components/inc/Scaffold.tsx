@@ -1,7 +1,7 @@
 import React from "react";
 import useStore from "@store";
 import { Box } from "@components/base";
-import { imageQuality } from "@constants";
+import { defaultTodayPhoto, imageQuality } from "@constants";
 import { BlurhashCanvas } from "react-blurhash";
 import { css } from "stitches.config";
 import { getPictureInfo } from "@utils";
@@ -22,7 +22,7 @@ const Scaffold = () => {
       state.cursor,
       state.setCursor,
     ],
-    shallow
+    shallow,
   );
   const { data: photos, refetch, isSuccess } = usePhotos();
   React.useEffect(() => {
@@ -56,7 +56,7 @@ const Scaffold = () => {
 
   if (!isSuccess) return null;
 
-  const currentPhoto = photos[cursor];
+  const currentPhoto = photos[cursor] ?? defaultTodayPhoto;
   const todayImage = getPictureInfo(currentPhoto);
   return (
     <>
