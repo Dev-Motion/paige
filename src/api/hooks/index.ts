@@ -8,7 +8,6 @@ import {
   getPhotos,
   getCloudPhotos,
 } from "@api";
-import { defaultTodayPhoto } from "@constants";
 
 export const useQuotes = createQuery({
   primaryKey: "quote",
@@ -63,11 +62,8 @@ export const useWeather = createQuery<
 
 export const usePhotos = createQuery({
   primaryKey: "photos",
-  initialData: [defaultTodayPhoto],
-  initialDataUpdatedAt: Date.now() + 1000 * 60 * 30, // 30 minutes
-  queryFn: () => {
-    return getPhotos();
-  },
+  queryFn: getPhotos,
+
   staleTime: 1000 * 60 * 60 * 24, // 24 hours
 });
 
