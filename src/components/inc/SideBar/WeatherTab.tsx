@@ -8,7 +8,7 @@ import { getLocation } from "@api";
 import { Coordinates } from "@api/types";
 import useStore from "@store";
 import { shallow } from "zustand/shallow";
-import { useCityName, useCurrentLocation } from "@api/hooks";
+import { useCityName, useCurrentLocation, useWeather } from "@api/hooks";
 
 const WeatherTab = () => {
   return (
@@ -48,17 +48,22 @@ function WeatherUnitSelect() {
     (store) => [store.unit, store.setUnit],
     shallow,
   );
+  const queryClient = useQueryClient();
+  function setUnitAndRefetch(unit: "fahrenheit" | "celsius") {
+    setUnit(unit);
+    queryClient.invalidateQueries(useWeather.getKey());
+  }
   return (
     <Flex gap={2}>
       <WeatherUnitCard
         active={unit === "fahrenheit"}
-        onClick={() => setUnit("fahrenheit")}
+        onClick={() => setUnitAndRefetch("fahrenheit")}
       >
         <Text fs="sm">Fahrenheit (&lrm;°F)</Text>
       </WeatherUnitCard>
       <WeatherUnitCard
         active={unit === "celsius"}
-        onClick={() => setUnit("celsius")}
+        onClick={() => setUnitAndRefetch("celsius")}
       >
         <Text fs="sm">Celsius (&lrm;°C)</Text>
       </WeatherUnitCard>
