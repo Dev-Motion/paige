@@ -23,6 +23,7 @@ const DialogOverlay = styled(RadixDialog.Overlay, {
   position: "fixed",
   inset: 0,
   animation: `${fadeIn} .3s ease-in-out`,
+  zIndex: 1,
 });
 
 const DialogContent = styled(RadixDialog.Content, {
@@ -31,6 +32,7 @@ const DialogContent = styled(RadixDialog.Content, {
   left: "50%",
   animation: `${fadeIn} .5s ease-in-out, ${slideIn} .5s ease-in-out`,
   animationFillMode: "forwards",
+  zIndex: 10,
 });
 
 function OverlayContent({
@@ -41,8 +43,8 @@ function OverlayContent({
 } & ComponentProps<typeof DialogContent>) {
   return (
     <RadixDialog.Portal>
-      {overlay && <DialogOverlay />}
       <DialogContent {...others} />
+      {overlay && <DialogOverlay />}
     </RadixDialog.Portal>
   );
 }

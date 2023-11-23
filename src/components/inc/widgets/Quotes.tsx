@@ -7,6 +7,7 @@ import { useQuotes } from "@api/hooks";
 import { Quote } from "@store/slices/QuotesSlice";
 import { tweetHandler } from "@utils";
 import { shallow } from "zustand/shallow";
+import { withTour } from "@components/base/Tour";
 
 function Quotes() {
   const {
@@ -137,4 +138,8 @@ function Quotes() {
   );
 }
 
-export default Quotes;
+export default withTour(Quotes, {
+  name: "quotes",
+  title: "Quotes",
+  description: "Get inspired by daily quotes",
+});

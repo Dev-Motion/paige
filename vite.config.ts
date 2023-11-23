@@ -100,6 +100,10 @@ export default defineConfig({
   resolve: {
     alias: [
       {
+        find: "@/",
+        replacement: pathResolve("src/"),
+      },
+      {
         find: "stitches.config",
         replacement: pathResolve("stitches.config.ts"),
       },
@@ -134,10 +138,6 @@ export default defineConfig({
       {
         find: "@api",
         replacement: pathResolve("src/api"),
-      },
-      {
-        find: "@/",
-        replacement: pathResolve("src/"),
       },
     ],
   },

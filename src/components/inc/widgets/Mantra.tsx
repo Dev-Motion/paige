@@ -4,6 +4,7 @@ import { Box, Text, Flex } from "@components/base";
 import { styled } from "stitches.config";
 import { HoverReveal } from "@components/inc";
 import { TodoIcon } from "@components/icons";
+import { withTour } from "@components/base/Tour";
 
 const Mantra = () => {
   const [value, setValue, showTodayGoal] = useStore((state) => [
@@ -77,7 +78,12 @@ const Mantra = () => {
   );
 };
 
-export default Mantra;
+export default withTour(Mantra, {
+  name: "mantra",
+  title: "Mantra",
+  description:
+    "This is your mantra. It's a reminder of what you want to achieve today. Hover to input a mantra and Double click to edit.",
+});
 const Input = styled("input", {
   all: "unset",
   fontSize: "$lg",
