@@ -1,5 +1,4 @@
 import { createQuery, createInfiniteQuery } from "react-query-kit";
-import { AxiosError } from "axios";
 import {
   getCityName,
   getCurrentLocation,
@@ -7,6 +6,7 @@ import {
   getWeather,
   getPhotos,
   getCloudPhotos,
+  getLocation,
 } from "@api";
 
 export const useQuotes = createQuery({
@@ -27,7 +27,6 @@ export const useQuotes = createQuery({
   },
   initialDataUpdatedAt: Date.now() + 1000 * 60 * 60 * 4,
   staleTime: 1000 * 60 * 60 * 4, // 4 hours
-  suspense: true,
 });
 
 export const useCurrentLocation = createQuery({
@@ -50,7 +49,7 @@ export const useCityName = createQuery<
 });
 
 export const useWeather = createQuery<
-  ReturnType<typeof getWeather> extends Promise<infer T> ? T : AxiosError,
+  Awaited<ReturnType<typeof getWeather>>,
   { longitude: number; latitude: number }
 >({
   primaryKey: "weather",
@@ -68,6 +67,7 @@ export const usePhotos = createQuery({
 });
 
 export const useCloudPhotos = createInfiniteQuery({
+  initialPageParam: 0,
   primaryKey: "cloud-photos",
   queryFn: ({ pageParam = 0 }) => {
     // if variable.fetchmore is true, append the result to the already existing photos
@@ -80,4 +80,15 @@ export const useCloudPhotos = createInfiniteQuery({
     }
     return pages.length + 1;
   },
+});
+
+export const useLocation = createQuery<
+  Awaited<ReturnType<typeof getLocation>>,
+  { query: string }
+>({
+  primaryKey: "location",
+  queryFn: ({ queryKey }) => {
+    return getLocation(queryKey[1].query);
+  },
+  staleTime: 1000 * 60 * 60 * 24, // 24 hours
 });

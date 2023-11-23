@@ -12,8 +12,7 @@ import { withTour } from "@components/base/Tour";
 function Quotes() {
   const {
     data: quote,
-    isLoading,
-    isError,
+    isSuccess,
     refetch: getQuotes,
   } = useQuotes({
     select: (d) => ({ id: d._id, text: d.content, author: d.author }) as Quote,
@@ -27,7 +26,7 @@ function Quotes() {
     ],
     shallow,
   );
-  if (isLoading || isError) return null;
+  if (!isSuccess) return null;
   const tweetText = `I love this quote by ${quote.author}!
 “${quote.text}”`;
   const favourite = favouriteQuotes.includes(quote);

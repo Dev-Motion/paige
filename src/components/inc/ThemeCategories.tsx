@@ -4,13 +4,12 @@ import { Button } from "@components/base/Button";
 import useStore from "@store";
 import { useQueryClient } from "@tanstack/react-query";
 import React from "react";
-import { styled } from "stitches.config";
 import { shallow } from "zustand/shallow";
 
 const ThemeCategories = () => {
   const [keywords, setKeywords] = useStore(
     (state) => [state.keywords, state.setKeywords],
-    shallow
+    shallow,
   );
   const queryClient = useQueryClient();
   function onClick(keyword: string) {
@@ -21,7 +20,7 @@ const ThemeCategories = () => {
       // add keyword
       setKeywords([...keywords, keyword]);
     }
-    queryClient.invalidateQueries(useCloudPhotos.getKey());
+    queryClient.invalidateQueries({ queryKey: useCloudPhotos.getKey() });
   }
 
   return (

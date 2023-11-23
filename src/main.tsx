@@ -13,7 +13,7 @@ import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persist
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      cacheTime: 1000 * 60 * 60 * 24, // 24 hours
+      gcTime: 1000 * 60 * 60 * 24, // 24 hours
     },
   },
 });
@@ -38,5 +38,5 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         <Router />
       </ErrorBoundary>
     </PersistQueryClientProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

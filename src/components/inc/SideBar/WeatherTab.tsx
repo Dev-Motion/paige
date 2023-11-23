@@ -3,12 +3,16 @@ import { Box, Text, Flex } from "@components/base";
 import { styled } from "stitches.config";
 import { SearchIcon } from "@components/icons";
 import { Combobox } from "@headlessui/react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getLocation } from "@api";
+import { useQueryClient } from "@tanstack/react-query";
 import { Coordinates } from "@api/types";
 import useStore from "@store";
 import { shallow } from "zustand/shallow";
-import { useCityName, useCurrentLocation, useWeather } from "@api/hooks";
+import {
+  useCityName,
+  useCurrentLocation,
+  useLocation,
+  useWeather,
+} from "@api/hooks";
 
 const WeatherTab = () => {
   return (
@@ -51,7 +55,9 @@ function WeatherUnitSelect() {
   const queryClient = useQueryClient();
   function setUnitAndRefetch(unit: "fahrenheit" | "celsius") {
     setUnit(unit);
-    queryClient.invalidateQueries(useWeather.getKey());
+    queryClient.invalidateQueries({
+      queryKey: useWeather.getKey(),
+    });
   }
   return (
     <Flex gap={2}>
@@ -74,13 +80,10 @@ function LocationFinder() {
   const [value, setValue] = useState("");
   const deferredValue = useDeferredValue(value);
   const queryClient = useQueryClient();
-  const { isError, isLoading, data } = useQuery(
-    ["location", deferredValue],
-    () => getLocation(value),
-    {
-      keepPreviousData: true,
-    },
-  );
+
+  const { isError, isLoading, data } = useLocation({
+    variables: { query: deferredValue },
+  });
   const [selectedLocation, setSelectedLocation] = useState<null | Coordinates>(
     null,
   );
