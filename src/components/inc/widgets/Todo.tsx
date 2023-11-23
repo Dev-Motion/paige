@@ -6,6 +6,8 @@ import {
   IconButton,
   Popover,
   Text,
+  Badge,
+  Button,
 } from "@components/base";
 import { AddIcon, AlarmIcon, MoreIcon, StarIcon } from "@components/icons";
 import useStore from "@store";
@@ -13,11 +15,13 @@ import * as React from "react";
 import DatePicker from "../DatePicker";
 import TodoItem, { Input } from "../TodoItem";
 import { shallow } from "zustand/shallow";
+import { TodoIcon } from "@components/icons";
 import "../../../styles/scrollbar.css";
+import { withTour } from "@components/base/Tour";
 function TodoPane() {
   const [todos, toggleAll, clearCompleted] = useStore(
     (state) => [state.todos, state.toggleAll, state.clearCompleted],
-    shallow
+    shallow,
   );
   const completedTodos = todos.filter((todo) => todo.completed);
   const activeTodos = todos.filter((todo) => !todo.completed);
@@ -78,7 +82,7 @@ interface addTodoState {
 }
 function addTodoReducer(
   state: addTodoState,
-  action: Partial<addTodoState> | ((state: addTodoState) => addTodoState)
+  action: Partial<addTodoState> | ((state: addTodoState) => addTodoState),
 ): addTodoState {
   if (typeof action === "function") {
     return { ...state, ...action(state) };
@@ -94,7 +98,7 @@ function AddTodo() {
       showInput: false,
       important: false,
       dateTime: null,
-    }
+    },
   );
   const addTodo = useStore((state) => state.addTodo);
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -199,4 +203,51 @@ function AddTodo() {
     </Card>
   );
 }
-export default TodoPane;
+
+function Todo() {
+  const todos = useStore((state) => state.todos);
+  const unCompletedTodos = todos.filter((todo) => !todo.completed);
+  return (
+    <Popover>
+      <Popover.Button asChild>
+        <Button
+          size="sm"
+          kind="ghost"
+          css={{
+            display: "flex",
+            ai: "center",
+            position: "relative",
+          }}
+        >
+          <TodoIcon />
+          <Text>Todo</Text>
+          <Badge
+            ping
+            color="accent"
+            hidden={unCompletedTodos.length === 0}
+            css={{
+              position: "absolute",
+              top: 0,
+              right: 0,
+              transform: "translate(50%, -50%)",
+            }}
+          >
+            {unCompletedTodos.length}
+          </Badge>
+        </Button>
+      </Popover.Button>
+      <Popover.Content>
+        <TodoPane />
+        <Popover.Close />
+        <Popover.Arrow />
+      </Popover.Content>
+    </Popover>
+  );
+}
+
+export default withTour(Todo, {
+  name: "todo",
+  title: "Todo",
+  description:
+    "Create your To-Dos by clicking on this icon here. Set reminders for your To-Dos to keep you focused",
+});

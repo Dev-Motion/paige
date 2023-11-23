@@ -17,6 +17,8 @@ import { isRunningInExtension } from "@constants";
 interface GeneralSlice {
   name?: string;
   setName: (name: string) => void;
+  tour: boolean;
+  completeTour: () => void;
 }
 
 export type Slices = LayoutSlice &
@@ -38,6 +40,10 @@ const useStore = create<Slices>()(
       devtools((...a) => ({
         setName: (name) => {
           a[0]({ name });
+        },
+        tour: false,
+        completeTour: () => {
+          a[0]({ tour: true });
         },
         ...createLayoutSlice(...a),
         ...createThemeSlice(...a),

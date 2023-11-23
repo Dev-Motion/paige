@@ -13,6 +13,7 @@ import { getDaySegment, processTime } from "@utils";
 import { styled } from "stitches.config";
 import useStore from "@store";
 import { shallow } from "zustand/shallow";
+import { withTour } from "@components/base/Tour";
 
 const Time = () => {
   const [open, setOpen] = useState(false);
@@ -159,4 +160,8 @@ const Menu = ({
   );
 };
 
-export default Time;
+export default withTour(Time, {
+  name: "time",
+  title: "Time",
+  description: "See the time and change the time format easily.",
+});

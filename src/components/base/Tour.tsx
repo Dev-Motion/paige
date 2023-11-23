@@ -7,6 +7,8 @@ import Box from "./Box";
 import Flex from "./Flex";
 import useMeasure, { RectReadOnly } from "react-use-measure";
 import { mergeRefs } from "react-merge-refs";
+import { WelcomeDialog } from "@components/inc/widgets";
+import Button from "./Button";
 
 const PADDING = 10;
 interface TourContext {
@@ -26,40 +28,33 @@ const TourContext = React.createContext<TourContext | null>(null);
 export function Root({
   children,
   order,
+  onEnd,
 }: {
   children: React.ReactNode;
   order: string[];
+  onEnd: () => void;
 }) {
   const [index, setIndex] = React.useState(0);
   const [start, setStart] = React.useState(false);
-  const [steps, setSteps] = React.useState(new Set<string>());
-  const currentStep = order[index];
-
-  React.useEffect(() => {
-    if (start) {
-      order.forEach((step) => {
-        // Checks if all steps are registered
-        if (!steps.has(step)) {
-          throw new Error(`Error: Step "${step}" is not registered`);
-        }
-      });
-    }
-  }, [start]);
-
-  const beginTour = () => {
+  const [steps, setSteps] = React.useState(new Set<string>(["welcome"]));
+  const orderWithWelcome = ["welcome", ...order];
+  const currentStep = orderWithWelcome[index];
+  steps;
+  const beginTour = React.useCallback(() => {
     setStart(true);
-  };
+  }, []);
   const endTour = () => {
     setStart(false);
     setIndex(0);
+    onEnd();
   };
 
-  const goToNextStep = () => setIndex((t) => t + 1);
+  const goToNextStep = React.useCallback(() => setIndex((t) => t + 1), []);
 
   const goToPreviousStep = () => setIndex((t) => t - 1);
 
-  const goToStep = (step: number) => setIndex(step);
-  const register = (key: string) => {
+  const goToStep = React.useCallback((step: number) => setIndex(step), []);
+  const register = React.useCallback((key: string) => {
     setSteps((steps) => {
       steps.add(key);
       return steps;
@@ -70,7 +65,7 @@ export function Root({
         return steps;
       });
     };
-  };
+  }, []);
 
   return (
     <TourContext.Provider
@@ -83,14 +78,16 @@ export function Root({
         register,
         beginTour,
         endTour,
-        order,
+        order: orderWithWelcome,
       }}
     >
       {children}
+      <WelcomeDialog />
     </TourContext.Provider>
   );
 }
-function useTour() {
+
+export function useTour() {
   const context = React.useContext(TourContext);
   if (!context) {
     throw new Error("useTour must be used within a Root");
@@ -119,18 +116,10 @@ export function Step({ children, name, title, description }: TourStepProps) {
   const [measureRef, bounds] = useMeasure();
   const boundsWithPadding = boundsPadding(bounds, PADDING);
 
-  const {
-    currentStep,
-    goToNextStep,
-    goToPreviousStep,
-    register,
-    start,
-    endTour,
-    order,
-  } = useTour();
+  const { currentStep, goToNextStep, register, start, endTour, order } =
+    useTour();
   const display = currentStep === name;
   const isEnd = order.slice(-1)[0] === name;
-  const isBeginning = order[0] === name;
   const ref = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
     const unregister = register(name);
@@ -187,10 +176,10 @@ export function Step({ children, name, title, description }: TourStepProps) {
       </Popover.Anchor>
 
       <Popover.Content style={{ position: "relative", zIndex: 10 }}>
-        <Card css={{ maxWidth: 330, pd: "$3", spacey: "$2" }}>
+        <Card css={{ minWidth: 240, maxWidth: 330, pd: "$3", spacey: "$2" }}>
           <Popover.Arrow />
           {title && (
-            <Text as="h1" fw="bold" fs="lg">
+            <Text as="h1" fw="bold" fs="md">
               {title}
             </Text>
           )}
@@ -201,12 +190,19 @@ export function Step({ children, name, title, description }: TourStepProps) {
           )}
         </Card>
         <Flex jc="between" css={{ mt: "$2" }}>
-          <Box as="button" disabled={isBeginning} onClick={goToPreviousStep}>
-            Previous
-          </Box>
-          <Box as="button" onClick={isEnd ? endTour : goToNextStep}>
-            {isEnd ? "End" : "Next"}
-          </Box>
+          <Button kind="outline" size="sm" onClick={endTour}>
+            Skip tour
+          </Button>
+          <Button
+            color="accent"
+            size="sm"
+            css={{
+              color: "$text",
+            }}
+            onClick={isEnd ? endTour : goToNextStep}
+          >
+            {isEnd ? "End tour" : "Next step"}
+          </Button>
         </Flex>
       </Popover.Content>
     </Popover>

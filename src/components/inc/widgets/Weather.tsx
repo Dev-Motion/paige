@@ -1,5 +1,6 @@
 import { useCityName, useCurrentLocation, useWeather } from "@api/hooks";
 import { Box, Card, Flex, Text } from "@components/base";
+import { withTour } from "@components/base/Tour";
 import useStore from "@store";
 import { findCurrent } from "@utils";
 import {
@@ -186,4 +187,9 @@ const WeatherWidget = () => {
   );
 };
 
-export default WeatherWidget;
+export default withTour(WeatherWidget, {
+  name: "weather",
+  title: "Weather Widget",
+  description:
+    "Get weather updates and forcasts for free with easy customization",
+});

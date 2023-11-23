@@ -15,15 +15,24 @@ import useStore from "@store";
 import { spawnTodoNotification } from "@utils";
 import { usePhotos } from "@api/hooks";
 import { AnimatePresence, motion } from "framer-motion";
+import { useTour } from "@components/base/Tour";
 
 const SideBar = lazy(() => import("./SideBar"));
 
 const MainLayout = () => {
   const todos = useStore((store) => store.todos);
+  const tour = useStore((store) => store.tour);
   const toggleReminded = useStore((store) => store.toggleReminded);
   const reminders = todos.flatMap((t) => (t.reminder ? [t] : []));
   const { isLoading, isPaused } = usePhotos();
-
+  const tourContext = useTour();
+  useEffect(() => {
+    console.log(tour);
+    if (!tour) {
+      console.log("begin tour");
+      tourContext.beginTour();
+    }
+  }, [tour]);
   useEffect(() => {
     const timeouts: NodeJS.Timeout[] = [];
     reminders.forEach((r) => {
