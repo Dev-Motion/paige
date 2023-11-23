@@ -10,11 +10,12 @@ import {
 import { isToday } from "date-fns";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useState } from "react";
-const TIME_REFRESH = 1;
 
 const WeatherWidget = () => {
-  const position = useStore((state) => state.sideBarPosition);
-  const pos = position === "left" ? "right" : "left";
+  const sideBarPosition = useStore((state) => state.sideBarPosition);
+  const temperatureUnit = useStore((state) => state.unit);
+  const temperatureSymbol = temperatureUnit === "celsius" ? "˚C" : "˚F";
+  const weatherWidgetPosition = sideBarPosition === "left" ? "right" : "left";
   const [hovered, setHovered] = useState(false);
   const { data: location } = useCurrentLocation();
   const { data: cityName } = useCityName({
@@ -29,7 +30,7 @@ const WeatherWidget = () => {
   const conditions = findCurrent(weather.conditions, Date.now());
 
   const todayCondition = weather.conditions.flatMap((c) =>
-    isToday(new Date(c.timestamp)) ? c.temperature : []
+    isToday(new Date(c.timestamp)) ? c.temperature : [],
   );
 
   // Blank or loading state
@@ -58,7 +59,7 @@ const WeatherWidget = () => {
             minWidth: 300,
             position: "absolute",
             top: 10,
-            [pos]: 10,
+            [weatherWidgetPosition]: 10,
             pd: "$3",
             display: "flex",
             flexDirection: "column",
@@ -95,21 +96,31 @@ const WeatherWidget = () => {
                     duration: 0.4,
                   },
                 }}
-                fs={"3xl"}
-                fw="semibold"
+                css={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                }}
               >
-                {Math.round(conditions.temperature)}˚
+                <Text as="span" fs={"3xl"} fw="semibold">
+                  {Math.round(conditions.temperature)}
+                </Text>
+                <Text as="span" css={{ pt: "$1" }} fs={"md"} fw="medium">
+                  {temperatureSymbol}
+                </Text>
               </Text>
             </Flex>
             <Flex fd="column" gap="1">
               <Text as="p" fs="sm">
-                Feels like {Math.round(conditions.apparentTemperature)}˚
+                Feels like {Math.round(conditions.apparentTemperature)}
+                {temperatureSymbol}
               </Text>
               <Text as="p" fs="sm">
-                High {Math.round(Math.max(...todayCondition))}˚
+                High {Math.round(Math.max(...todayCondition))}
+                {temperatureSymbol}
               </Text>
               <Text as="p" fs="sm">
-                Low {Math.round(Math.min(...todayCondition))}˚
+                Low {Math.round(Math.min(...todayCondition))}
+                {temperatureSymbol}
               </Text>
             </Flex>
           </Flex>
@@ -121,7 +132,15 @@ const WeatherWidget = () => {
           </Flex>
         </Card>
       ) : (
-        <Flex fd="column" onMouseEnter={() => setHovered(true)}>
+        <Flex
+          fd="column"
+          css={{
+            include: "accessibleShadow",
+            $$blur: "60px",
+            $$opacity: 0.8,
+          }}
+          onMouseEnter={() => setHovered(true)}
+        >
           <Flex ai="center" css={{ color: "$text" }}>
             <Box css={{ position: "relative" }}>
               <Box
@@ -145,10 +164,17 @@ const WeatherWidget = () => {
                   duration: 0.4,
                 },
               }}
-              fs={"2xl"}
-              fw="semibold"
+              css={{
+                display: "flex",
+                alignItems: "flex-start",
+              }}
             >
-              {Math.round(conditions.temperature)}˚
+              <Text as="span" fs={"2xl"} fw="semibold">
+                {Math.round(conditions.temperature)}
+              </Text>
+              <Text as="span" css={{ pt: "$1" }} fs={"md"} fw="medium">
+                {temperatureSymbol}
+              </Text>
             </Text>
           </Flex>
           <Text color="text" fs="sm" fw="medium">
