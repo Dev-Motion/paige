@@ -77,17 +77,24 @@ const GalleryTabs = () => {
 };
 
 const GalleryContent = ({ favoriteTab = false }: { favoriteTab?: boolean }) => {
-  const [cursor, setTempBg, favoritePhotos, setFavoritePhotos, toast] =
-    useStore(
-      (state) => [
-        state.cursor,
-        state.setTemporaryBackground,
-        state.favoritePhotos,
-        state.setFavoritePhotos,
-        state.addToast,
-      ],
-      shallow
-    );
+  const [
+    cursor,
+    setTempBg,
+    favoritePhotos,
+    setFavoritePhotos,
+    toast,
+    setTheme,
+  ] = useStore(
+    (state) => [
+      state.cursor,
+      state.setTemporaryBackground,
+      state.favoritePhotos,
+      state.setFavoritePhotos,
+      state.addToast,
+      state.setTheme,
+    ],
+    shallow,
+  );
   const queryClient = useQueryClient();
   const {
     data: cloudPhotos,
@@ -129,17 +136,18 @@ const GalleryContent = ({ favoriteTab = false }: { favoriteTab?: boolean }) => {
               setFavoritePhotos([...favoritePhotos, photo]);
             } else {
               setFavoritePhotos(
-                favoritePhotos.filter((p) => p.id !== photo.id)
+                favoritePhotos.filter((p) => p.id !== photo.id),
               );
             }
           };
           const setPhoto = () => {
             const data = queryClient.getQueryData(
-              usePhotos.getKey()
+              usePhotos.getKey(),
             ) as RandomPicture[];
             const newData = data.slice();
             newData.splice(cursor, 1, photo);
             queryClient.setQueryData(usePhotos.getKey(), newData);
+            setTheme();
             toast({
               message: "Photo set as today's background",
             });

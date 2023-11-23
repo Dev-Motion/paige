@@ -2,7 +2,7 @@
   <img src="./public/logo/128x128.png" width="100" height="100" alt="Paige Icon" />
 </p>
 
-<h1 align="center">Paige Browser Extension</h1>
+<h1 align="center">Paige Chrome Extension</h1>
 
 <h3 align="center">
   An open source browser extension , made by Devmotion.

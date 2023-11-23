@@ -21,7 +21,9 @@
     "search",
     "favicon",
     "topSites",
-    "notifications"
+    "notifications",
+    "tabs",
+    "activeTab"
   ],
   "web_accessible_resources": [
     {
@@ -29,5 +31,6 @@
       "matches": ["<all_urls>"],
       "extension_ids": ["*"]
     }
-  ]
+  ],
+  "host_permissions": ["http://*/*", "https://*/*"]
 }

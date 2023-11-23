@@ -16,6 +16,7 @@ const createImageSlice: StateCreator<ImageSlice> = (set, get) => ({
   cursor: 0,
   setCursor: (cursor) => {
     set({ cursor });
+    get().setTheme();
   },
   keywords: ["Wallpapers", "Nature"],
   setKeywords: (keywords) => {

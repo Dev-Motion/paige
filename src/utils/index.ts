@@ -37,7 +37,7 @@ export function processTime(time: Date, is24Hour: boolean) {
   const isAM = tHour < 12;
   const timeString = `${Hours.toString().padStart(
     2,
-    "0"
+    "0",
   )}:${Minutes.toString().padStart(2, "0")}`;
   return { timeString, isAM };
 }
@@ -88,7 +88,7 @@ export function spawnTodoNotification(id: number, body: string, title: string) {
 
 export function getTimeItem<T extends { for: Date }[]>(
   item: T,
-  day?: "tomorrow" | "today"
+  day?: "tomorrow" | "today",
 ): T[number] | undefined {
   day = day || "today";
   const today = new Date();
@@ -111,7 +111,6 @@ export function handleGoals() {
   if (isOnline) {
     if (!todayGoal || isStale) {
       api.setGoal({ text: "", for: new Date() });
-      console.log("checkeddddd");
     }
   }
 }
@@ -119,7 +118,7 @@ export function handleGoals() {
 export function tweetHandler(text: string, hashtags: string[], via: string) {
   const baseUrl = "https://twitter.com/intent/tweet";
   const url = `${baseUrl}?text=${encodeURI(
-    text
+    text,
   )}&via=${via}&hashtags=${hashtags.join(",")}`;
   return url;
 }
@@ -197,7 +196,7 @@ export function getPictureAttribution(photo: Picture): PictureAttribution {
 
 export const findCurrent = (
   conditions: Condition[],
-  now: number
+  now: number,
 ): Condition | null =>
   conditions
     .slice()

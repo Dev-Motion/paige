@@ -7,6 +7,7 @@ import { useQuotes } from "@api/hooks";
 import { Quote } from "@store/slices/QuotesSlice";
 import { tweetHandler } from "@utils";
 import { shallow } from "zustand/shallow";
+import { withTour } from "@components/base/Tour";
 
 function Quotes() {
   const {
@@ -15,7 +16,7 @@ function Quotes() {
     isError,
     refetch: getQuotes,
   } = useQuotes({
-    select: (d) => ({ id: d._id, text: d.content, author: d.author } as Quote),
+    select: (d) => ({ id: d._id, text: d.content, author: d.author }) as Quote,
   });
 
   const [favouriteQuotes, setFavouriteQuotes, showDailyMotivation] = useStore(
@@ -24,13 +25,12 @@ function Quotes() {
       state.setFavouriteQuotes,
       state.showDailyMotivation,
     ],
-    shallow
+    shallow,
   );
   if (isLoading || isError) return null;
   const tweetText = `I love this quote by ${quote.author}!
 “${quote.text}”`;
   const favourite = favouriteQuotes.includes(quote);
-  // console.log({ quotes, isLoading, isError });
   if (!showDailyMotivation) return null;
   return (
     <Box
@@ -74,7 +74,7 @@ function Quotes() {
                   setFavouriteQuotes((quotes) => [...quotes, quote]);
                 } else {
                   setFavouriteQuotes((quotes) =>
-                    quotes.filter((q) => q.id !== quote.id)
+                    quotes.filter((q) => q.id !== quote.id),
                   );
                 }
               }}
@@ -124,7 +124,7 @@ function Quotes() {
               href={tweetHandler(
                 tweetText,
                 ["chroma", "inspring", "inspirational"],
-                "chroma"
+                "chroma",
               )}
               target="_blank"
               rel="noreferrer"
@@ -138,4 +138,8 @@ function Quotes() {
   );
 }
 
-export default Quotes;
+export default withTour(Quotes, {
+  name: "quotes",
+  title: "Quotes",
+  description: "Get inspired by daily quotes",
+});

@@ -77,6 +77,12 @@ dependencies:
   date-fns:
     specifier: ^2.30.0
     version: 2.30.0
+  embla-carousel-autoplay:
+    specifier: 8.0.0-rc14
+    version: 8.0.0-rc14(embla-carousel@8.0.0-rc14)
+  embla-carousel-react:
+    specifier: 8.0.0-rc14
+    version: 8.0.0-rc14(react@18.2.0)
   framer-motion:
     specifier: ^10.12.11
     version: 10.12.11(react-dom@18.2.0)(react@18.2.0)
@@ -170,8 +176,8 @@ devDependencies:
     specifier: ^4.3.6
     version: 4.4.9(@types/node@18.17.15)
   vite-plugin-pwa:
-    specifier: ^0.16.0
-    version: 0.16.5(vite@4.4.9)(workbox-build@7.0.0)(workbox-window@7.0.0)
+    specifier: ^0.17.0
+    version: 0.17.0(vite@4.4.9)(workbox-build@7.0.0)(workbox-window@7.0.0)
   workbox-window:
     specifier: ^7.0.0
     version: 7.0.0
@@ -4617,6 +4623,36 @@ packages:
     resolution: {integrity: sha512-Frfus2VpYADsrh1lB3v/ft/WVFlVzOIm+Q0p7U7VqHI6qr7NWHYKe+Wif3W50n7JAFoBsWVsoU0+qDks6WQ60g==}
     dev: true
 
+  /embla-carousel-autoplay@8.0.0-rc14(embla-carousel@8.0.0-rc14):
+    resolution: {integrity: sha512-ey3MFD6Lti8sAO/bHLvdl+LO19U77SpYVIZP5rsPqFpnRac7bjZt9cSZ5udw9adniN0ckeRe+0y5wy+AYmzQsw==}
+    peerDependencies:
+      embla-carousel: 8.0.0-rc14
+    dependencies:
+      embla-carousel: 8.0.0-rc14
+    dev: false
+
+  /embla-carousel-react@8.0.0-rc14(react@18.2.0):
+    resolution: {integrity: sha512-2b9vXACEcn0qja4QyaFMfCgFbFhumV3krOCGr9+jlQiuXt5z/EyfiYYziDsm70DhTtxtg/uKEGflIqZSfWRYKg==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.1 || ^18.0.0
+    dependencies:
+      embla-carousel: 8.0.0-rc14
+      embla-carousel-reactive-utils: 8.0.0-rc14(embla-carousel@8.0.0-rc14)
+      react: 18.2.0
+    dev: false
+
+  /embla-carousel-reactive-utils@8.0.0-rc14(embla-carousel@8.0.0-rc14):
+    resolution: {integrity: sha512-r153bynAo9eTBuWWggPWLYnE9xqVOYmkkeMbAuGX8pkUisJN8aTLMW9b7CYOzjURRB7z85EmYRbeBg+axQzc9g==}
+    peerDependencies:
+      embla-carousel: 8.0.0-rc14
+    dependencies:
+      embla-carousel: 8.0.0-rc14
+    dev: false
+
+  /embla-carousel@8.0.0-rc14:
+    resolution: {integrity: sha512-/NLkMFZ7xKryRVYeUjmhbfV63Vr07saPBDwAX2TPMbcaiWwfQfU5Xsc2AiCMZANtwmzsjRK6gSBa7hOy/VXu6g==}
+    dev: false
+
   /emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
     dev: true
@@ -4925,6 +4961,17 @@ packages:
 
   /fast-glob@3.3.1:
     resolution: {integrity: sha512-kNFPyjhh5cKjrUltxs+wFx+ZkbRaxxmZ+X0ZU31SOsxCEtP9VPgtq2teZw1DebupL5GmDaNQ6yKMMVcM41iqDg==}
+    engines: {node: '>=8.6.0'}
+    dependencies:
+      '@nodelib/fs.stat': 2.0.5
+      '@nodelib/fs.walk': 1.2.8
+      glob-parent: 5.1.2
+      merge2: 1.4.1
+      micromatch: 4.0.5
+    dev: true
+
+  /fast-glob@3.3.2:
+    resolution: {integrity: sha512-oX2ruAFQwf/Orj8m737Y5adxDQO0LAB7/S5MnxCdTNDd4p6BsyIVsv9JQsATbTSq8KHRpLwIHbVlUNatxd+1Ow==}
     engines: {node: '>=8.6.0'}
     dependencies:
       '@nodelib/fs.stat': 2.0.5
@@ -7253,16 +7300,16 @@ packages:
       spdx-expression-parse: 3.0.1
     dev: true
 
-  /vite-plugin-pwa@0.16.5(vite@4.4.9)(workbox-build@7.0.0)(workbox-window@7.0.0):
-    resolution: {integrity: sha512-Ahol4dwhMP2UHPQXkllSlXbihOaDFnvBIDPmAxoSZ1EObBUJGP4CMRyCyAVkIHjd6/H+//vH0DM2ON+XxHr81g==}
+  /vite-plugin-pwa@0.17.0(vite@4.4.9)(workbox-build@7.0.0)(workbox-window@7.0.0):
+    resolution: {integrity: sha512-cOyEG8EEc7JHmyMapTnjK2j0g2BIC3ErlmOHyGzVu8hqjyF9Jt6yWMmVNFtpA6v/NNyzP28ARf3vwzIAzR1kaw==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
-      vite: ^3.1.0 || ^4.0.0
+      vite: ^3.1.0 || ^4.0.0 || ^5.0.0
       workbox-build: ^7.0.0
       workbox-window: ^7.0.0
     dependencies:
       debug: 4.3.4
-      fast-glob: 3.3.1
+      fast-glob: 3.3.2
       pretty-bytes: 6.1.1
       vite: 4.4.9(@types/node@18.17.15)
       workbox-build: 7.0.0

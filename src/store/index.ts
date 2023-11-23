@@ -12,12 +12,13 @@ import createPinnedSitesSlice, {
   PinnedSitesSlice,
 } from "./slices/PinnedSitesSlice";
 import createLastFetchedSlice, { LastFetchedSlice } from "./slices/lastFetched";
-import { handleGoals } from "@utils";
 import { isRunningInExtension } from "@constants";
 
 interface GeneralSlice {
   name?: string;
   setName: (name: string) => void;
+  tour: boolean;
+  completeTour: () => void;
 }
 
 export type Slices = LayoutSlice &
@@ -40,6 +41,10 @@ const useStore = create<Slices>()(
         setName: (name) => {
           a[0]({ name });
         },
+        tour: false,
+        completeTour: () => {
+          a[0]({ tour: true });
+        },
         ...createLayoutSlice(...a),
         ...createThemeSlice(...a),
         ...createImageSlice(...a),
@@ -58,19 +63,17 @@ const useStore = create<Slices>()(
             Object.entries(state).filter(
               ([key]) =>
                 !["searchOpen", "time", "sideBarOpen", "activeToasts"].includes(
-                  key
-                )
-            )
+                  key,
+                ),
+            ),
           ),
-      }
-    )
-  )
+      },
+    ),
+  ),
 );
 export default useStore;
 
 export const api = useStore.getState();
-
-api.setTheme();
 
 if (isRunningInExtension && api.pinnedSites.length === 0) {
   chrome.topSites.get((data) => {
@@ -85,7 +88,6 @@ if (Notification.permission === "default") {
 
 if (isRunningInExtension) {
   chrome.notifications.onButtonClicked.addListener((notificationId, i) => {
-    console.log("hi");
     const [pre, id] = notificationId.split("-");
     if (pre === "todo") {
       if (i === 1) {

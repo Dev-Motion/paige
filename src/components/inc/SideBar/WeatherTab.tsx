@@ -1,4 +1,4 @@
-import React, { useState, useDeferredValue, useEffect } from "react";
+import React, { useState, useDeferredValue } from "react";
 import { Box, Text, Flex } from "@components/base";
 import { styled } from "stitches.config";
 import { SearchIcon } from "@components/icons";
@@ -8,7 +8,7 @@ import { getLocation } from "@api";
 import { Coordinates } from "@api/types";
 import useStore from "@store";
 import { shallow } from "zustand/shallow";
-import { useCityName, useCurrentLocation } from "@api/hooks";
+import { useCityName, useCurrentLocation, useWeather } from "@api/hooks";
 
 const WeatherTab = () => {
   return (
@@ -46,19 +46,24 @@ export default WeatherTab;
 function WeatherUnitSelect() {
   const [unit, setUnit] = useStore(
     (store) => [store.unit, store.setUnit],
-    shallow
+    shallow,
   );
+  const queryClient = useQueryClient();
+  function setUnitAndRefetch(unit: "fahrenheit" | "celsius") {
+    setUnit(unit);
+    queryClient.invalidateQueries(useWeather.getKey());
+  }
   return (
     <Flex gap={2}>
       <WeatherUnitCard
         active={unit === "fahrenheit"}
-        onClick={() => setUnit("fahrenheit")}
+        onClick={() => setUnitAndRefetch("fahrenheit")}
       >
         <Text fs="sm">Fahrenheit (&lrm;°F)</Text>
       </WeatherUnitCard>
       <WeatherUnitCard
         active={unit === "celsius"}
-        onClick={() => setUnit("celsius")}
+        onClick={() => setUnitAndRefetch("celsius")}
       >
         <Text fs="sm">Celsius (&lrm;°C)</Text>
       </WeatherUnitCard>
@@ -74,10 +79,10 @@ function LocationFinder() {
     () => getLocation(value),
     {
       keepPreviousData: true,
-    }
+    },
   );
   const [selectedLocation, setSelectedLocation] = useState<null | Coordinates>(
-    null
+    null,
   );
   function setLocation({
     cityName,
@@ -108,7 +113,7 @@ function LocationFinder() {
           }
           onChange={(event) => setValue(event.target.value)}
         />
-        <RightIcon onClick={() => console.log("clicked")}>
+        <RightIcon>
           <SearchIcon css={{ size: "$3" }} />
         </RightIcon>
       </InputContainer>
@@ -133,7 +138,7 @@ function LocationFinder() {
             </EmptyState>
           )}
           {/* Data found */}
-          {data?.map((location, i) => {
+          {data?.map((location) => {
             return (
               <ComboboxOption
                 key={`${location.name} ${location.longitude} ${location.latitude}`}

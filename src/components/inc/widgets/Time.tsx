@@ -13,6 +13,7 @@ import { getDaySegment, processTime } from "@utils";
 import { styled } from "stitches.config";
 import useStore from "@store";
 import { shallow } from "zustand/shallow";
+import { withTour } from "@components/base/Tour";
 
 const Time = () => {
   const [open, setOpen] = useState(false);
@@ -25,7 +26,7 @@ const Time = () => {
       state.showTime,
       state.showGreeting,
     ],
-    shallow
+    shallow,
   );
   const timeDate = new Date(time);
   useEffect(() => {
@@ -61,7 +62,12 @@ const Time = () => {
       }}
     >
       {showTime && (
-        <Box css={{}}>
+        <Box
+          css={{
+            mx: "auto",
+            width: "min-content",
+          }}
+        >
           <Box
             css={{
               position: "relative",
@@ -70,8 +76,10 @@ const Time = () => {
             <Text
               as="h1"
               fs="6xl"
+              // ta="center"
               css={{
                 fontWeight: 700,
+                width: "min-content",
               }}
             >
               {timeString}
@@ -104,7 +112,11 @@ const Time = () => {
         </Box>
       )}
       {showGreeting && (
-        <Text fs="2xl" ta="center" css={{ mt: "$2", fontWeight: 600 }}>
+        <Text
+          fs="2xl"
+          ta="center"
+          css={{ mt: "$2", fontWeight: 600, maxWidth: 480, mx: "auto" }}
+        >
           Good {getDaySegment(timeDate)}, {name}
         </Text>
       )}
@@ -148,4 +160,8 @@ const Menu = ({
   );
 };
 
-export default Time;
+export default withTour(Time, {
+  name: "time",
+  title: "Time",
+  description: "See the time and change the time format easily.",
+});

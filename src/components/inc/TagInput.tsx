@@ -3,7 +3,6 @@ import * as AccessibleIcon from "@radix-ui/react-accessible-icon";
 import { Flex } from "@components/base";
 import { CancelIcon } from "@components/icons";
 import { styled } from "stitches.config";
-import useStore from "@store";
 
 const Tag = styled("div", {
   br: "$pill",
@@ -54,7 +53,6 @@ const TagInput = ({
 }) => {
   const onEnterPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === " " && e.currentTarget.value.trim()) {
-      console.log("Enter key pressed");
       setTags([...tags, e.currentTarget.value.trim()]);
       e.currentTarget.value = "";
     }

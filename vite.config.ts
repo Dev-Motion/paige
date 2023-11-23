@@ -66,7 +66,7 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
     orientation: "landscape",
   },
   devOptions: {
-    enabled: true,
+    enabled: false,
   },
   workbox: {
     globPatterns: ["**/*.{js,css,html,ico,png,svg,tff}"],
@@ -99,6 +99,10 @@ export default defineConfig({
   plugins,
   resolve: {
     alias: [
+      {
+        find: "@/",
+        replacement: pathResolve("src/"),
+      },
       {
         find: "stitches.config",
         replacement: pathResolve("stitches.config.ts"),
@@ -134,10 +138,6 @@ export default defineConfig({
       {
         find: "@api",
         replacement: pathResolve("src/api"),
-      },
-      {
-        find: "@/",
-        replacement: pathResolve("src/"),
       },
     ],
   },
