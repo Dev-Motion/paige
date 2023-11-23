@@ -5,9 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  '@h6s/calendar':
-    specifier: 1.1.0-alpha.2
-    version: 1.1.0-alpha.2(date-fns@2.30.0)(react-dom@18.2.0)(react@18.2.0)
   '@headlessui/react':
     specifier: ^1.7.15
     version: 1.7.17(react-dom@18.2.0)(react@18.2.0)
@@ -1855,24 +1852,6 @@ packages:
     resolution: {integrity: sha512-BGdtJFmaNJy5An/Zan4OId/yR9Ih1OojFjcduX/xOvq798OgWSyDtd6Qd5jqJXwJs1ipe4Fxu9+cshic5Ox2tA==}
     dependencies:
       tslib: 2.6.2
-    dev: false
-
-  /@h6s/calendar@1.1.0-alpha.2(date-fns@2.30.0)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-sNZz+Yg31yAfGwwoABfCq3G2DIKwFKEwfNG52yzyxRtq5iBiCXhTxjDqhMYreHj9jmlvi2onL+iWJ+H2vDUJuQ==}
-    peerDependencies:
-      date-fns: '>= 2'
-      react: ^16.8 || ^17.0 || ^18.0
-      react-dom: '*'
-      react-native: '*'
-    peerDependenciesMeta:
-      react-dom:
-        optional: true
-      react-native:
-        optional: true
-    dependencies:
-      date-fns: 2.30.0
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /@headlessui/react@1.7.17(react-dom@18.2.0)(react@18.2.0):

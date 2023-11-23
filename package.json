@@ -15,7 +15,6 @@
     "generate-pwa-assets": "pwa-assets-generator"
   },
   "dependencies": {
-    "@h6s/calendar": "1.1.0-alpha.2",
     "@headlessui/react": "^1.7.15",
     "@internationalized/date": "^3.2.0",
     "@radix-ui/react-accessible-icon": "^1.0.2",
