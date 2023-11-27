@@ -20,6 +20,7 @@ const TopBar = () => {
         width: "100%",
         px: "$6",
         flexDirection: left ? "row" : "row-reverse",
+        gridArea: "center",
       }}
     >
       <Tour.Step

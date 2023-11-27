@@ -76,7 +76,7 @@ const MainLayout = () => {
           }}
           css={{
             height: "100vh",
-            gridTemplateRows: "1fr auto",
+            // gridTemplateRows: "1fr auto",
             overflow: "hidden",
           }}
         >
@@ -85,38 +85,51 @@ const MainLayout = () => {
               <SideBar />
             </Suspense>
           </Portal>
-          <TopBar />
-          <Grid
-            ai="center"
-            as="main"
+          <Box
             css={{
-              flex: 1,
-              overflow: "hidden",
-              gridTemplateRows: "2fr 1fr 2fr",
+              display: "grid",
+              gridTemplateAreas: "'center'",
             }}
           >
-            <Flex ai="center" jc="center">
-              <Time />
-            </Flex>
-            <Search />
-            <PinnedSites />
-            <Flex
-              ai="center"
-              fd="column"
+            <TopBar />
+            <Box
               css={{
-                pt: "$4",
-                height: "100%",
-                "&>*": {
-                  flex: 1,
-                },
+                gridArea: "center",
               }}
-              gap={{ "@initial": 3, "@lg": 6 }}
             >
-              <Mantra />
-              <Reminder />
-            </Flex>
-          </Grid>
-          <BottomBar />
+              <Grid
+                ai="center"
+                as="main"
+                css={{
+                  flex: 1,
+                  overflow: "hidden",
+                  gridTemplateRows: "2fr 1fr 2fr",
+                }}
+              >
+                <Flex ai="center" jc="center">
+                  <Time />
+                </Flex>
+                <Search />
+                <PinnedSites />
+                <Flex
+                  ai="center"
+                  fd="column"
+                  css={{
+                    pt: "$4",
+                    height: "100%",
+                    "&>*": {
+                      flex: 1,
+                    },
+                  }}
+                  gap={{ "@initial": 3, "@lg": 6 }}
+                >
+                  <Mantra />
+                  <Reminder />
+                </Flex>
+              </Grid>
+              <BottomBar />
+            </Box>
+          </Box>
         </Grid>
       )}
     </AnimatePresence>
