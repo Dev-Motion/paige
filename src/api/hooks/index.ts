@@ -62,7 +62,6 @@ export const useWeather = createQuery<
 export const usePhotos = createQuery({
   primaryKey: "photos",
   queryFn: getPhotos,
-
   staleTime: 1000 * 60 * 60 * 24, // 24 hours
 });
 
