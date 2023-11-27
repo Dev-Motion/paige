@@ -141,12 +141,14 @@ const GalleryContent = ({ favoriteTab = false }: { favoriteTab?: boolean }) => {
             }
           };
           const setPhoto = () => {
-            const data = queryClient.getQueryData(
+            queryClient.setQueryData(
               usePhotos.getKey(),
-            ) as RandomPicture[];
-            const newData = data.slice();
-            newData.splice(cursor, 1, photo);
-            queryClient.setQueryData(usePhotos.getKey(), newData);
+              (oldData: RandomPicture[]) => {
+                const newData = [...oldData];
+                newData.splice(cursor, 1, photo);
+                return [...newData];
+              },
+            );
             setTheme();
             toast({
               message: "Photo set as today's background",
