@@ -24,8 +24,9 @@ const MainLayout = () => {
   const tour = useStore((store) => store.tour);
   const toggleReminded = useStore((store) => store.toggleReminded);
   const reminders = todos.flatMap((t) => (t.reminder ? [t] : []));
-  const { isLoading, isPaused } = usePhotos();
+  const { isSuccess } = usePhotos();
   const tourContext = useTour();
+
   useEffect(() => {
     console.log(tour);
     if (!tour) {
@@ -57,7 +58,7 @@ const MainLayout = () => {
   }, [reminders]);
   return (
     <AnimatePresence>
-      {(!isLoading || isPaused) && (
+      {isSuccess && (
         <Grid
           as={motion.div}
           initial={{

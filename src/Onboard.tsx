@@ -7,16 +7,17 @@ import { AnimatePresence, motion } from "framer-motion";
 
 const Onboard = () => {
   const [value, setValue] = React.useState("");
-  const { isLoading, isPaused } = usePhotos();
+  const { isSuccess } = usePhotos();
   const id = useId();
   const setName = useStore((state) => state.setName);
+
   function handelSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setName(value);
   }
   return (
     <AnimatePresence>
-      {(!isLoading || isPaused) && (
+      {isSuccess && (
         <Flex
           as={motion.div}
           initial={{

@@ -1,7 +1,7 @@
 import React from "react";
 import useStore from "@store";
 import { Box } from "@components/base";
-import { defaultTodayPhoto, imageQuality } from "@constants";
+import { imageQuality } from "@constants";
 import { BlurhashCanvas } from "react-blurhash";
 import { css } from "stitches.config";
 import { getPictureInfo } from "@utils";
@@ -15,16 +15,10 @@ const scaffoldCSS = css({
 });
 const Scaffold = () => {
   const [temporaryBackground, cursor, setCursor] = useStore(
-    (state) => [
-      // state.todayPhoto,
-      // state.nextPhoto,
-      state.temporaryBackground,
-      state.cursor,
-      state.setCursor,
-    ],
+    (state) => [state.temporaryBackground, state.cursor, state.setCursor],
     shallow,
   );
-  const { data: photos, refetch, isLoading, isPaused } = usePhotos();
+  const { data: photos, refetch, isSuccess } = usePhotos();
   React.useEffect(() => {
     if (photos) {
       const interval = setInterval(() => {
@@ -56,12 +50,9 @@ const Scaffold = () => {
     }
   }, [photos]);
 
-  if (isLoading && !isPaused) {
-    return null;
-  }
+  if (!isSuccess) return null;
 
-  // if it is loading return null, else if it error default to today's photo
-  const currentPhoto = photos ? photos[cursor] : defaultTodayPhoto;
+  const currentPhoto = photos[cursor];
   const todayImage = getPictureInfo(currentPhoto);
   return (
     <>
