@@ -32,7 +32,7 @@ const Scaffold = () => {
       }, 3600000);
       return () => clearInterval(interval);
     }
-  }, [cursor]);
+  }, [cursor, photos]);
 
   React.useEffect(() => {
     if (photos) {
