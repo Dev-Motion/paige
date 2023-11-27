@@ -8,6 +8,7 @@ import { getPrefix, searchEngine, searchPrefixes } from "@utils/searchEngine";
 import { Command } from "cmdk";
 import React from "react";
 import { keyframes, styled } from "stitches.config";
+import { motion } from "framer-motion";
 interface Link {
   id: string;
   url: string;
@@ -136,7 +137,12 @@ const CommandMenu = () => {
                             : tabAction(link.url)
                         }
                       >
-                        <Flex ai="center" gap="2">
+                        <Flex
+                          layoutId={group + link.id}
+                          as={motion.div}
+                          ai="center"
+                          gap="2"
+                        >
                           <Box
                             as="img"
                             css={{
