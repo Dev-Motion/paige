@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
+import * as Dialog from "@radix-ui/react-dialog";
 import { AnimatePresence, motion } from "framer-motion";
 import { styled } from "stitches.config";
 import GeneralTab from "./GeneralTab";
@@ -40,179 +41,191 @@ const SideBar = () => {
     };
   }
   return (
-    <AnimatePresence>
-      {sideBarOpen && (
-        <>
-          <SideBarOverlay
-            onClick={() => setSideBarOpen(false)}
-            initial={{ opacity: 0 }}
-            exit={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          />
-          <TabRoot
-            value={activeTab}
-            onValueChange={(value) => setActiveTab(value)}
-            asChild
-            orientation="vertical"
-          >
-            <MotionContainer
-              animate={{ x: 0 }}
-              transition={{ type: "tween" }}
-              {...motionProps}
-            >
-              <TabList
-                css={{
-                  zIndex: "calc($max - 1)",
-                  display: "flex",
-                  flexDirection: "column",
-                  height: "100%",
-                }}
-              >
-                {["General", "Themes", "Quotes", "Weather"].map((item) => {
-                  const active = item.toLowerCase() === activeTab;
-                  const gen = item.toLowerCase() === "general";
-                  return (
-                    <TabTrigger
-                      key={item}
-                      value={item.toLowerCase()}
-                      position={sideBarPosition}
-                      ref={gen ? buttonRef : undefined}
-                    >
-                      {item}
-                      {active && (
-                        <MenuBg position={sideBarPosition} layoutId="btn-bg" />
-                      )}
-                    </TabTrigger>
-                  );
-                })}
-                <Flex
-                  jc="end"
-                  ai="center"
-                  fd="column"
-                  gap="2"
-                  css={{
-                    flexGrow: 1,
-                    pb: "$4",
-                  }}
-                  id="nav-links"
+    <Dialog.Root open={sideBarOpen} onOpenChange={(t) => setSideBarOpen(t)}>
+      <Dialog.Portal forceMount>
+        <AnimatePresence>
+          {sideBarOpen && (
+            <>
+              <SideBarOverlay asChild>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  exit={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                />
+              </SideBarOverlay>
+              <Dialog.Content>
+                <TabRoot
+                  value={activeTab}
+                  onValueChange={(value) => setActiveTab(value)}
+                  asChild
+                  orientation="vertical"
                 >
-                  <FeedbackModal />
-                  <IconButton
-                    onClick={() => setSideBarOpen(false)}
-                    size="sm"
-                    bg="bgLight"
-                    css={{
-                      boxShadow: "0 0 0 1px $colors$text",
-                      "& svg": {
-                        size: "60%",
-                      },
-                    }}
+                  <MotionContainer
+                    animate={{ x: 0 }}
+                    transition={{ type: "tween" }}
+                    {...motionProps}
                   >
-                    <Hamburger
+                    <TabList
                       css={{
-                        transform:
-                          sideBarPosition === "left"
-                            ? "rotate(-180deg)"
-                            : "none",
-                        color: "$text",
+                        zIndex: "calc($max - 1)",
+                        display: "flex",
+                        flexDirection: "column",
+                        height: "100%",
                       }}
-                    />
-                  </IconButton>
-                </Flex>
-              </TabList>
-              <TabContent
-                value="general"
-                css={{
-                  zIndex: "calc($max - 2)",
-                  height: "100%",
-                  overflow: "hidden",
-                }}
-              >
-                <ScrollArea
-                  css={{
-                    height: "100%",
-                  }}
-                >
-                  <GeneralTab />
-                </ScrollArea>
-              </TabContent>
-              <TabContent
-                value="themes"
-                css={{
-                  zIndex: "calc($max - 2)",
-                  height: "100%",
-                  overflow: "hidden",
-                  "& >*": {
-                    maxWidth: "100%",
-                  },
-                  "& > div > [data-radix-scroll-area-viewport]:first-of-type > div  ":
-                    {
-                      display: "unset !important",
-                      // border: "1px solid black",
-                    },
-                }}
-              >
-                <ScrollArea
-                  css={{
-                    height: "100%",
-                  }}
-                >
-                  <ThemesTab />
-                </ScrollArea>
-              </TabContent>
-              <TabContent
-                value="quotes"
-                css={{
-                  zIndex: "calc($max - 2)",
-                  height: "100%",
-                  overflow: "hidden",
-                  "& >*": {
-                    maxWidth: "100%",
-                  },
-                  "& > div > [data-radix-scroll-area-viewport]:first-of-type > div  ":
-                    {
-                      display: "unset !important",
-                      // border: "1px solid black",
-                    },
-                }}
-              >
-                <ScrollArea
-                  css={{
-                    height: "100%",
-                  }}
-                >
-                  <QuotesTab />
-                </ScrollArea>
-              </TabContent>
-              <TabContent
-                value="weather"
-                css={{
-                  zIndex: "calc($max - 2)",
-                  height: "100%",
-                  overflow: "hidden",
-                  "& >*": {
-                    maxWidth: "100%",
-                  },
-                  "& > div > [data-radix-scroll-area-viewport]:first-of-type > div  ":
-                    {
-                      display: "unset !important",
-                      // border: "1px solid black",
-                    },
-                }}
-              >
-                <ScrollArea
-                  css={{
-                    height: "100%",
-                  }}
-                >
-                  <WeatherTab />
-                </ScrollArea>
-              </TabContent>
-            </MotionContainer>
-          </TabRoot>
-        </>
-      )}
-    </AnimatePresence>
+                    >
+                      {["General", "Themes", "Quotes", "Weather"].map(
+                        (item) => {
+                          const active = item.toLowerCase() === activeTab;
+                          const gen = item.toLowerCase() === "general";
+                          return (
+                            <TabTrigger
+                              key={item}
+                              value={item.toLowerCase()}
+                              position={sideBarPosition}
+                              ref={gen ? buttonRef : undefined}
+                            >
+                              {item}
+                              {active && (
+                                <MenuBg
+                                  position={sideBarPosition}
+                                  layoutId="btn-bg"
+                                />
+                              )}
+                            </TabTrigger>
+                          );
+                        },
+                      )}
+                      <Flex
+                        jc="end"
+                        ai="center"
+                        fd="column"
+                        gap="2"
+                        css={{
+                          flexGrow: 1,
+                          pb: "$4",
+                        }}
+                        id="nav-links"
+                      >
+                        <FeedbackModal />
+                        <IconButton
+                          onClick={() => setSideBarOpen(false)}
+                          size="sm"
+                          bg="bgLight"
+                          css={{
+                            boxShadow: "0 0 0 1px $colors$text",
+                            "& svg": {
+                              size: "60%",
+                            },
+                          }}
+                        >
+                          <Hamburger
+                            css={{
+                              transform:
+                                sideBarPosition === "left"
+                                  ? "rotate(-180deg)"
+                                  : "none",
+                              color: "$text",
+                            }}
+                          />
+                        </IconButton>
+                      </Flex>
+                    </TabList>
+                    <TabContent
+                      value="general"
+                      css={{
+                        zIndex: "calc($max - 2)",
+                        height: "100%",
+                        overflow: "hidden",
+                      }}
+                    >
+                      <ScrollArea
+                        css={{
+                          height: "100%",
+                        }}
+                      >
+                        <GeneralTab />
+                      </ScrollArea>
+                    </TabContent>
+                    <TabContent
+                      value="themes"
+                      css={{
+                        zIndex: "calc($max - 2)",
+                        height: "100%",
+                        overflow: "hidden",
+                        "& >*": {
+                          maxWidth: "100%",
+                        },
+                        "& > div > [data-radix-scroll-area-viewport]:first-of-type > div  ":
+                          {
+                            display: "unset !important",
+                            // border: "1px solid black",
+                          },
+                      }}
+                    >
+                      <ScrollArea
+                        css={{
+                          height: "100%",
+                        }}
+                      >
+                        <ThemesTab />
+                      </ScrollArea>
+                    </TabContent>
+                    <TabContent
+                      value="quotes"
+                      css={{
+                        zIndex: "calc($max - 2)",
+                        height: "100%",
+                        overflow: "hidden",
+                        "& >*": {
+                          maxWidth: "100%",
+                        },
+                        "& > div > [data-radix-scroll-area-viewport]:first-of-type > div  ":
+                          {
+                            display: "unset !important",
+                            // border: "1px solid black",
+                          },
+                      }}
+                    >
+                      <ScrollArea
+                        css={{
+                          height: "100%",
+                        }}
+                      >
+                        <QuotesTab />
+                      </ScrollArea>
+                    </TabContent>
+                    <TabContent
+                      value="weather"
+                      css={{
+                        zIndex: "calc($max - 2)",
+                        height: "100%",
+                        overflow: "hidden",
+                        "& >*": {
+                          maxWidth: "100%",
+                        },
+                        "& > div > [data-radix-scroll-area-viewport]:first-of-type > div  ":
+                          {
+                            display: "unset !important",
+                            // border: "1px solid black",
+                          },
+                      }}
+                    >
+                      <ScrollArea
+                        css={{
+                          height: "100%",
+                        }}
+                      >
+                        <WeatherTab />
+                      </ScrollArea>
+                    </TabContent>
+                  </MotionContainer>
+                </TabRoot>
+              </Dialog.Content>
+            </>
+          )}
+        </AnimatePresence>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 };
 
@@ -269,7 +282,7 @@ const MotionContainer = styled(motion.div, {
   left: 0,
 });
 
-const SideBarOverlay = styled(motion.div, {
+const SideBarOverlay = styled(Dialog.Overlay, {
   position: "fixed",
   inset: 0,
   bg: "rgba(0,0,0,0.25)",
