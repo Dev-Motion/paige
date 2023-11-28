@@ -59,8 +59,7 @@ const MainLayout = () => {
   return (
     <AnimatePresence>
       {isSuccess && (
-        <Grid
-          as={motion.div}
+        <motion.div
           initial={{
             opacity: 0,
           }}
@@ -74,27 +73,26 @@ const MainLayout = () => {
           exit={{
             opacity: 0,
           }}
-          css={{
-            height: "100vh",
-            // gridTemplateRows: "1fr auto",
-            overflow: "hidden",
-          }}
         >
           <Portal root="side_bar_root">
             <Suspense fallback={<Box />}>
               <SideBar />
             </Suspense>
           </Portal>
-          <Box
+          <Grid
             css={{
-              display: "grid",
               gridTemplateAreas: "'center'",
             }}
           >
             <TopBar />
             <Box
               css={{
+                display: "grid",
+                gridTemplateRows: "1fr auto",
+                maxHeight: "100%",
                 gridArea: "center",
+                height: "100vh",
+                overflow: "hidden",
               }}
             >
               <Grid
@@ -129,8 +127,8 @@ const MainLayout = () => {
               </Grid>
               <BottomBar />
             </Box>
-          </Box>
-        </Grid>
+          </Grid>
+        </motion.div>
       )}
     </AnimatePresence>
   );
