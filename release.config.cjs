@@ -4,12 +4,6 @@
 module.exports = {
   branches: ["main"],
   plugins: [
-    [
-      "semantic-release-chrome",
-      {
-        asset: "paige_v${nextRelease.version}_${branch.name}.zip",
-      },
-    ],
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
     [
