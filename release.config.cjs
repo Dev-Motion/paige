@@ -9,7 +9,7 @@ module.exports = {
     [
       "@semantic-release/github",
       {
-        assets: ["paige_v${nextRelease.version}_${branch.name}.zip"],
+        assets: ["dist/**/*.{js,css}"],
         message:
           "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}",
       },
