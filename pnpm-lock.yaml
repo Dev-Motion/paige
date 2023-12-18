@@ -72,8 +72,8 @@ dependencies:
     specifier: ^0.2.0
     version: 0.2.0(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)
   date-fns:
-    specifier: ^2.30.0
-    version: 2.30.0
+    specifier: ^3.0.0
+    version: 3.0.0
   embla-carousel-autoplay:
     specifier: 8.0.0-rc14
     version: 8.0.0-rc14(embla-carousel@8.0.0-rc14)
@@ -5087,11 +5087,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /date-fns@2.30.0:
-    resolution: {integrity: sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==}
-    engines: {node: '>=0.11'}
-    dependencies:
-      '@babel/runtime': 7.22.15
+  /date-fns@3.0.0:
+    resolution: {integrity: sha512-xjDz3rNN9jp+Lh3P/4MeY4E5HkaRnEnrJCcrdRZnKdn42gJlIe6hwrrwVXePRwVR2kh1UcMnz00erYBnHF8PFA==}
     dev: false
 
   /debounce@1.2.1:
