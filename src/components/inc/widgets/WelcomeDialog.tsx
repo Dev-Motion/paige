@@ -4,11 +4,12 @@ import { Dialog, Button, Text, Card, Box, Flex } from "@components/base";
 import useEmblaCarousel, { type EmblaCarouselType } from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { useTour } from "@components/base/Tour";
+import { motion } from "framer-motion";
 
 const carouselImages = [
-  "./images/carousel/1.png",
-  "./images/carousel/2.png",
-  "./images/carousel/3.png",
+  { image: "./images/tour-1.png", alt: "Task Management" },
+  { image: "./images/tour-2.png", alt: "Personalization" },
+  { image: "./images/tour-3.png", alt: "Other Useful widgets" },
 ];
 export default function WelcomeDialog() {
   const { currentStep, goToNextStep, start, endTour } = useTour();
@@ -48,13 +49,14 @@ export default function WelcomeDialog() {
     <Dialog open>
       <Dialog.Content overlay asChild>
         <Card
-          py="6"
           css={{
             width: "100vw",
             maxWidth: 400,
             display: "flex",
             fd: "column",
             gap: "$4",
+            pt: "$4",
+            pb: "$6",
           }}
         >
           <Box px="4">
@@ -65,18 +67,28 @@ export default function WelcomeDialog() {
               }}
             >
               <Flex css={{}}>
-                {carouselImages.map((src) => {
+                {carouselImages.map((img, i) => {
                   return (
                     <Box
-                      key={src}
+                      key={i}
                       css={{
                         flex: "0 0 100%",
                         minWidth: 0,
-                        bg: "rgba($textRGB,0.4)",
-                        height: 300,
                         mr: "$2",
                       }}
-                    />
+                    >
+                      <img
+                        src={img.image}
+                        alt={img.alt}
+                        width={800}
+                        height={480}
+                        loading="lazy"
+                        style={{
+                          width: "100%",
+                          height: "auto",
+                        }}
+                      />
+                    </Box>
                   );
                 })}
               </Flex>
@@ -84,22 +96,31 @@ export default function WelcomeDialog() {
             <Flex
               jc="center"
               ai="center"
-              gap="4"
+              gap="2"
               css={{
                 py: "$2",
               }}
             >
-              {scrollSnaps.map((_, i) => (
-                <Box
-                  key={i}
-                  onClick={() => scrollTo(i)}
-                  css={{
-                    bg: i === selectedIndex ? "$accent" : "rgba($textRGB,0.8)",
-                    size: i === selectedIndex ? 12 : 10,
-                    br: "$pill",
-                  }}
-                />
-              ))}
+              {scrollSnaps.map((_, i) => {
+                const current = i === selectedIndex;
+                return (
+                  <Box
+                    key={i}
+                    onClick={() => scrollTo(i)}
+                    as={motion.div}
+                    layoutId={
+                      current ? "selected-step-index" : `unselected-${i}`
+                    }
+                    css={{
+                      bg: current ? "$accent" : "rgba($textRGB,0.8)",
+                      height: 10,
+                      width: current ? 36 : 10,
+                      br: "$pill",
+                      cursor: "pointer",
+                    }}
+                  />
+                );
+              })}
             </Flex>
           </Box>
           <Flex
@@ -112,21 +133,25 @@ export default function WelcomeDialog() {
             <Text as="h1" fs="2xl" ta="center" fw="bold">
               Welcome to Paige
             </Text>
-            <Text as="p" ta="center">
-              Get started right away and personalize your browsing experience..
-              Create reminders for tasks and get notified when due
+            <Text fs="sm" as="p" ta="center">
+              Your personal new tab companion. Plan, navigate, and personalize
+              your space. Focus, inspire, and achieve with every new tab.
             </Text>
             <Flex
               jc="between"
               css={{
                 pt: "$4",
+                gap: "$2",
+                "&>*": {
+                  flex: 1,
+                },
               }}
             >
               <Button kind="outline" br="md" onClick={endTour}>
                 Skip Tour
               </Button>
               <Button color="accent" br="md" onClick={goToNextStep}>
-                Start Tour
+                Continue
               </Button>
             </Flex>
           </Flex>
