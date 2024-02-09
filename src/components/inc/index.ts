@@ -1,6 +1,5 @@
 export { default as Scaffold } from "./Scaffold";
 export { default as MainLayout } from "./MainLayout";
-export { default as SideBar } from "./SideBar";
 export { default as HoverReveal } from "./HoverToReveal";
 export { default as TagInput } from "./TagInput";
 export { default as GalleryTabs } from "./GalleryTabs";
