@@ -1,6 +1,6 @@
 {
   "name": "Paige",
-  "description": " a space where you can customize your focus, immerse yourself in calm scenes, and find inspiration whenever you open a new tab in your browser",
+  "description": "Your personal new tab companion. Plan, navigate, and personalize your space. Focus, inspire, and achieve with every new tab.",
   "version": "1.0.0",
   "manifest_version": 3,
   "icons": {
@@ -22,8 +22,7 @@
     "favicon",
     "topSites",
     "notifications",
-    "tabs",
-    "activeTab"
+    "tabs"
   ],
   "web_accessible_resources": [
     {
@@ -31,6 +30,5 @@
       "matches": ["<all_urls>"],
       "extension_ids": ["*"]
     }
-  ],
-  "host_permissions": ["http://*/*", "https://*/*"]
+  ]
 }

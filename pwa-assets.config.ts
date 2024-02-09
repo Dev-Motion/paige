@@ -8,7 +8,7 @@ export const minimalPreset: Preset = {
   maskable: {
     sizes: [512],
     resizeOptions: {
-      background: "#D9D9D9",
+      background: "#ffffff",
     },
   },
   apple: {
