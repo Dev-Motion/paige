@@ -6,7 +6,7 @@ import {
   EditIcon,
 } from "@components/icons";
 import { tweetHandler } from "@utils";
-import { Flex, Text, Box, IconButton } from "@components/base";
+import { Flex, Text, IconButton } from "@components/base";
 import { Quote } from "@store/slices/QuotesSlice";
 import useStore from "@store";
 import { shallow } from "zustand/shallow";
@@ -23,7 +23,7 @@ export function QuoteCard(props: QuoteCardProps) {
   const { id, text, author } = props.quote;
   const [favouriteQuotes, setFavouriteQuotes] = useStore(
     (state) => [state.favouriteQuotes, state.setFavouriteQuotes],
-    shallow
+    shallow,
   );
   const tweetText = `I love this quote by ${author}!
     “${text}”`;
@@ -33,7 +33,7 @@ export function QuoteCard(props: QuoteCardProps) {
   function ToggleFavorite(quoteId: string) {
     if (isFavorite(quoteId)) {
       setFavouriteQuotes(
-        favouriteQuotes.filter((favQuote) => favQuote.id !== quoteId)
+        favouriteQuotes.filter((favQuote) => favQuote.id !== quoteId),
       );
     } else {
       setFavouriteQuotes([...favouriteQuotes, props.quote]);
@@ -104,11 +104,7 @@ export function QuoteCard(props: QuoteCardProps) {
           <IconButton
             size="xs"
             as="a"
-            href={tweetHandler(
-              tweetText,
-              ["chroma", "inspring", "inspirational"],
-              "chroma"
-            )}
+            href={tweetHandler(tweetText)}
             target="_blank"
             rel="noreferrer"
           >

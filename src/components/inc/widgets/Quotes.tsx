@@ -120,11 +120,7 @@ function Quotes() {
                   size: 10,
                 },
               }}
-              href={tweetHandler(
-                tweetText,
-                ["chroma", "inspring", "inspirational"],
-                "chroma",
-              )}
+              href={tweetHandler(tweetText)}
               target="_blank"
               rel="noreferrer"
             >

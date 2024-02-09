@@ -115,7 +115,9 @@ export function handleGoals() {
   }
 }
 
-export function tweetHandler(text: string, hashtags: string[], via: string) {
+export function tweetHandler(text: string) {
+  const hashtags = ["paige_devmotion", "inspring", "inspirational"];
+  const via = "paige_devmotion";
   const baseUrl = "https://twitter.com/intent/tweet";
   const url = `${baseUrl}?text=${encodeURI(
     text,
