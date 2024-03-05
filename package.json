@@ -37,7 +37,7 @@
     "axios": "^1.4.0",
     "blurhash": "^2.0.5",
     "cmdk": "^0.2.0",
-    "date-fns": "^2.30.0",
+    "date-fns": "^3.0.0",
     "embla-carousel-autoplay": "8.0.0-rc14",
     "embla-carousel-react": "8.0.0-rc14",
     "framer-motion": "^10.12.11",
