@@ -1,7 +1,7 @@
 {
   "name": "Paige",
   "description": "Your personal new tab companion. Plan, navigate, and personalize your space. Focus, inspire, and achieve with every new tab.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "manifest_version": 3,
   "icons": {
     "16": "/logo/16x16.png",
