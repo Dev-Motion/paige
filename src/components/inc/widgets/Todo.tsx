@@ -196,7 +196,7 @@ function AddTodo() {
             <AddIcon css={{ color: "$text" }} />
           </IconButton>
           <Text fs="sm" fw="medium">
-            Add a todo
+            Add a to-do
           </Text>
         </Flex>
       )}
@@ -249,5 +249,5 @@ export default withTour(Todo, {
   name: "todo",
   title: "Todo",
   description:
-    "Create your To-Dos by clicking on this icon here. Set reminders for your To-Dos to keep you focused",
+    "Create your to-dos by clicking on this icon here. Set reminders for your to-dos to keep you focused",
 });

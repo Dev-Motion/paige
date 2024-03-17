@@ -191,5 +191,5 @@ export default withTour(WeatherWidget, {
   name: "weather",
   title: "Weather Widget",
   description:
-    "Get weather updates and forcasts for free with easy customization",
+    "Get weather updates and forecasts for free with easy customization",
 });
