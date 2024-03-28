@@ -37,5 +37,14 @@
     <div id="side_bar_root"></div>
     <div id="modal_root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      window.onUsersnapLoad = function(api) {
+        api.init();
+      };
+      var script = document.createElement('script');
+      script.defer = 1;
+      script.src = 'https://widget.usersnap.com/global/load/02e015b6-5f57-4b2b-be5d-fa21664609dd?onload=onUsersnapLoad';
+      document.getElementsByTagName('head')[0].appendChild(script);
+    </script>
   </body>
 </html>
