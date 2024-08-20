@@ -78,8 +78,8 @@ dependencies:
     specifier: 8.0.0-rc14
     version: 8.0.0-rc14(embla-carousel@8.0.0-rc14)
   embla-carousel-react:
-    specifier: 8.0.0-rc14
-    version: 8.0.0-rc14(react@18.2.0)
+    specifier: 8.2.0
+    version: 8.2.0(react@18.2.0)
   framer-motion:
     specifier: ^10.12.11
     version: 10.12.11(react-dom@18.2.0)(react@18.2.0)
@@ -5317,26 +5317,30 @@ packages:
       embla-carousel: 8.0.0-rc14
     dev: false
 
-  /embla-carousel-react@8.0.0-rc14(react@18.2.0):
-    resolution: {integrity: sha512-2b9vXACEcn0qja4QyaFMfCgFbFhumV3krOCGr9+jlQiuXt5z/EyfiYYziDsm70DhTtxtg/uKEGflIqZSfWRYKg==}
+  /embla-carousel-react@8.2.0(react@18.2.0):
+    resolution: {integrity: sha512-dWqbmaEBQjeAcy/EKrcAX37beVr0ubXuHPuLZkx27z58V1FIvRbbMb4/c3cLZx0PAv/ofngX2QFrwUB+62SPnw==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.1 || ^18.0.0
     dependencies:
-      embla-carousel: 8.0.0-rc14
-      embla-carousel-reactive-utils: 8.0.0-rc14(embla-carousel@8.0.0-rc14)
+      embla-carousel: 8.2.0
+      embla-carousel-reactive-utils: 8.2.0(embla-carousel@8.2.0)
       react: 18.2.0
     dev: false
 
-  /embla-carousel-reactive-utils@8.0.0-rc14(embla-carousel@8.0.0-rc14):
-    resolution: {integrity: sha512-r153bynAo9eTBuWWggPWLYnE9xqVOYmkkeMbAuGX8pkUisJN8aTLMW9b7CYOzjURRB7z85EmYRbeBg+axQzc9g==}
+  /embla-carousel-reactive-utils@8.2.0(embla-carousel@8.2.0):
+    resolution: {integrity: sha512-ZdaPNgMydkPBiDRUv+wRIz3hpZJ3LKrTyz+XWi286qlwPyZFJDjbzPBiXnC3czF9N/nsabSc7LTRvGauUzwKEg==}
     peerDependencies:
-      embla-carousel: 8.0.0-rc14
+      embla-carousel: 8.2.0
     dependencies:
-      embla-carousel: 8.0.0-rc14
+      embla-carousel: 8.2.0
     dev: false
 
   /embla-carousel@8.0.0-rc14:
     resolution: {integrity: sha512-/NLkMFZ7xKryRVYeUjmhbfV63Vr07saPBDwAX2TPMbcaiWwfQfU5Xsc2AiCMZANtwmzsjRK6gSBa7hOy/VXu6g==}
+    dev: false
+
+  /embla-carousel@8.2.0:
+    resolution: {integrity: sha512-rf2GIX8rab9E6ZZN0Uhz05746qu2KrDje9IfFyHzjwxLwhvGjUt6y9+uaY1Sf+B0OPSa3sgas7BE2hWZCtopTA==}
     dev: false
 
   /emoji-regex@8.0.0:
@@ -9285,6 +9289,7 @@ packages:
 
   /workbox-google-analytics@7.0.0:
     resolution: {integrity: sha512-MEYM1JTn/qiC3DbpvP2BVhyIH+dV/5BjHk756u9VbwuAhu0QHyKscTnisQuz21lfRpOwiS9z4XdqeVAKol0bzg==}
+    deprecated: It is not compatible with newer versions of GA starting with v4, as long as you are using GAv3 it should be ok, but the package is not longer being maintained
     dependencies:
       workbox-background-sync: 7.0.0
       workbox-core: 7.0.0
