@@ -131,8 +131,8 @@ devDependencies:
     specifier: ^9.2.5
     version: 9.2.5(semantic-release@22.0.10)
   '@total-typescript/ts-reset':
-    specifier: ^0.5.0
-    version: 0.5.1
+    specifier: ^0.6.0
+    version: 0.6.1
   '@types/chrome':
     specifier: ^0.0.253
     version: 0.0.253
@@ -4040,8 +4040,8 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@total-typescript/ts-reset@0.5.1:
-    resolution: {integrity: sha512-AqlrT8YA1o7Ff5wPfMOL0pvL+1X+sw60NN6CcOCqs658emD6RfiXhF7Gu9QcfKBH7ELY2nInLhKSCWVoNL70MQ==}
+  /@total-typescript/ts-reset@0.6.1:
+    resolution: {integrity: sha512-cka47fVSo6lfQDIATYqb/vO1nvFfbPw7uWLayIXIhGETj0wcOOlrlkobOMDNQOFr9QOafegUPq13V2+6vtD7yg==}
     dev: true
 
   /@types/cacheable-request@6.0.3:
@@ -8416,6 +8416,7 @@ packages:
   /source-map@0.8.0-beta.0:
     resolution: {integrity: sha512-2ymg6oRBpebeZi9UUNsgQ89bhx01TcTkmNTGnNO88imTmbSgy4nfujrgVEFKWpMTEGA11EDkTt7mqObTPdigIA==}
     engines: {node: '>= 8'}
+    deprecated: The work that was done in this beta branch won't be included in future versions
     dependencies:
       whatwg-url: 7.1.0
     dev: true
@@ -9285,6 +9286,7 @@ packages:
 
   /workbox-google-analytics@7.0.0:
     resolution: {integrity: sha512-MEYM1JTn/qiC3DbpvP2BVhyIH+dV/5BjHk756u9VbwuAhu0QHyKscTnisQuz21lfRpOwiS9z4XdqeVAKol0bzg==}
+    deprecated: It is not compatible with newer versions of GA starting with v4, as long as you are using GAv3 it should be ok, but the package is not longer being maintained
     dependencies:
       workbox-background-sync: 7.0.0
       workbox-core: 7.0.0
